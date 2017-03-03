@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+
+    android:fillViewport="true">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+
+    android:theme="@style/AppTheme1">
+
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="10dp"
+
+    android:clickable="false"
+    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardUseCompatPadding="true"
+    card_view:contentPadding="5dp"
+    card_view:cardBackgroundColor="@android:color/background_light"
+
+    android:id="@+id/cv">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            card_view:srcCompat="@drawable/ic_nurse"
+            android:gravity="center"
+
+            />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/edittextdialtil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            >
+            <EditText
+                android:id="@+id/edittextdial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:hint="Email"
+                android:gravity="center"
+                android:inputType="textEmailAddress"
+
+
+                />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/edittextdialtil1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+            <EditText
+                android:id="@+id/edittextdial1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:hint="Password"
+                android:gravity="center"
+                android:inputType="textPassword"
+
+
+                />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AccentButton"
+            android:layout_marginTop="10dp"
+            android:padding="16dp"
+            android:text="Log In"/>
+
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+</RelativeLayout>
+</ScrollView>
