@@ -50,7 +50,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
 
     static
 
-    public class ViewHolder extends RecyclerView.ViewHolder  {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // TODO - Your view members
         public Patient item;
@@ -69,7 +69,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
+            view.setOnClickListener(this);
         }
 
 
@@ -86,6 +86,10 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         }
 
 
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 
 
