@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".PendingAppointments"></activity>
+        <activity android:name=".PendingAppointments" />
+        <activity android:name=".QuestionsActivity"></activity>
     </application>
 
 </manifest>

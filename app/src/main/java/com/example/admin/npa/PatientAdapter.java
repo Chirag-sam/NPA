@@ -1,6 +1,7 @@
 package com.example.admin.npa;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,6 +44,12 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.setData(myItems.get(position));
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, QuestionsActivity.class));
+            }
+        });
     }
 
 
