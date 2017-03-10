@@ -1,8 +1,14 @@
 package com.example.admin.npa;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,14 +27,21 @@ public class MainActivity extends AppCompatActivity {
     Button butt2;
     @BindView(R.id.butt3)
     Button butt3;
-    @BindView(R.id.butt4)
-    Button butt4;
+
     @BindView(R.id.activity_main)
     RelativeLayout activityMain;
+    private DrawerLayout dl;
+    private ActionBarDrawerToggle abdt;
+
+
     @OnClick(R.id.butt2)
-    void submit()
-    {
-        startActivity(new Intent(MainActivity.this,PendingAppointments.class));
+    void submit() {
+        startActivity(new Intent(MainActivity.this, PendingAppointments.class));
+    }
+
+    @OnClick(R.id.butt3)
+    void completed() {
+        startActivity(new Intent(MainActivity.this, CompletedAppointments.class));
     }
 
     @Override
@@ -37,5 +50,77 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        dl = (DrawerLayout) findViewById(R.id.dl);
+        abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
+
+        dl.addDrawerListener(abdt);
+        abdt.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                int id = menuItem.getItemId();
+
+                if (id == R.id.logout) {
+
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
+                    builder.setMessage("Are You Sure?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                    builder.setNegativeButton("No", null);
+                    builder.show();
+                } else if (id == R.id.tac) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
+                    builder.setTitle("Terms and conditions");
+                    builder.setMessage("T & C");
+                    builder.setPositiveButton("OK", null);
+                    // builder.setNegativeButton("Cancel", null);
+                    builder.show();
+                } else if (id == R.id.settings) {
+
+                }
+
+                return true;
+            }
+        });
+
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
+        builder.setMessage("Are You Sure you want to exit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(MainActivity.this, LogIn.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("Exit me", true);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", null);
+        builder.show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (abdt.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 }

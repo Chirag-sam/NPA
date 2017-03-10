@@ -1,58 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_main"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="60dp"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:gravity="bottom"
-    tools:context="com.example.admin.npa.MainActivity"
-    android:background="@color/colorWhite">
+    android:layout_height="match_parent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:gravity="bottom"
+        android:paddingBottom="60dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.admin.npa.MainActivity">
     <ImageView
+        android:id="@+id/iv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_nurse"
+        android:layout_marginBottom="100dp"
         android:gravity="center"
-        android:id="@+id/iv"
-        android:layout_marginBottom="60dp"/>
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_nurse" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
         android:id="@+id/butt1"
-        android:text="synchronize"
-        android:theme="@style/AccentButton1"
-        android:layout_below="@+id/iv"/>
-
-    <Button
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_below="@+id/iv"
+        android:drawableLeft="@drawable/ic_sync_black_24dp"
+        android:text="synchronize"
+        android:theme="@style/AccentButton1" />
+
+    <Button
         android:id="@+id/butt2"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
         android:layout_below="@+id/butt1"
+        android:drawableLeft="@drawable/ic_assignment_black_24dp"
         android:text="Pending appointments"
         android:theme="@style/AccentButton1"/>
     <Button
+        android:id="@+id/butt3"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:id="@+id/butt3"
         android:layout_below="@+id/butt2"
+        android:drawableLeft="@drawable/ic_assignment_turned_in_black_24dp"
         android:text="Completed appointments"
         android:theme="@style/AccentButton1"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:id="@+id/butt4"
-        android:layout_below="@+id/butt3"
-        android:theme="@style/AccentButton1"
-        android:text="Terms and conditions"
-
-        />
 
 
+    </RelativeLayout>
 
-</RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/primary"
+        app:elevation="5dp"
+        app:headerLayout="@layout/navigation_header"
+        app:itemBackground="@color/primary"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:menu="@menu/navigation_menu">
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

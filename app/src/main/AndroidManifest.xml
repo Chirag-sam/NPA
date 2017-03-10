@@ -20,7 +20,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".PendingAppointments" />
         <activity android:name=".QuestionsActivity" />
-        <activity android:name=".temporary"></activity>
+        <activity android:name=".temporary" />
+        <activity android:name=".CompletedAppointments"></activity>
     </application>
 
 </manifest>

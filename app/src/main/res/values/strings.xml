@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">NPA</string>
     <string name="Forgot"><u>Forgot Password</u></string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
 </resources>
 

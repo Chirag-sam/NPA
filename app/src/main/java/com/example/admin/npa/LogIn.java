@@ -39,6 +39,9 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         ButterKnife.bind(this);
+        if (getIntent().getBooleanExtra("Exit me", false)) {
+            finish();
+        }
 
     }
 
@@ -54,8 +57,8 @@ public class LogIn extends AppCompatActivity {
         String email = edittextdial.getText().toString();
         String password = edittextdial1.getText().toString();
 
-        edittextdial.setError(null);
-        edittextdial1.setError(null);
+        edittextdialtil1.setError(null);
+        edittextdialtil.setError(null);
 
         TextInputLayout email1 = (TextInputLayout) findViewById(R.id.edittextdialtil);
         TextInputLayout pass1 = (TextInputLayout) findViewById(R.id.edittextdialtil1);
