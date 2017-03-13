@@ -28,31 +28,32 @@
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_nurse" />
 
-    <Button
-        android:id="@+id/butt1"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_below="@+id/iv"
-        android:drawableLeft="@drawable/ic_sync_black_24dp"
-        android:text="synchronize"
-        android:theme="@style/AccentButton1" />
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/butt1"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@+id/iv"
 
-    <Button
+            android:elevation="4dp"
+            android:filterTouchesWhenObscured="true" android:text="synchronize"
+            android:theme="@style/AccentButton1"/>
+
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/butt2"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_below="@+id/butt1"
-        android:drawableLeft="@drawable/ic_assignment_black_24dp"
+
         android:text="Pending appointments"
-        android:theme="@style/AccentButton1"/>
-    <Button
+        android:theme="@style/AccentButton1" android:filterTouchesWhenObscured="true"/>
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/butt3"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_below="@+id/butt2"
-        android:drawableLeft="@drawable/ic_assignment_turned_in_black_24dp"
+
         android:text="Completed appointments"
-        android:theme="@style/AccentButton1"/>
+        android:theme="@style/AccentButton1" android:filterTouchesWhenObscured="true"/>
 
 
     </RelativeLayout>
