@@ -51,9 +51,17 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     // Login Table Columns names
 
     private static final String RESPONSE_ID = "pid";
-    private static final String RESPONSE_QID = "repdate";
-    private static final String PATIENT_ANSWER = "gender";
-    private static final String PATIENT_AGE = "age";
+    private static final String RESPONSE_QID = "qid";
+    private static final String RESPONSE_ANSWER = "gender";
+
+    private static final String TABLE_QUESTION = "response";
+
+    // Login Table Columns names
+
+    private static final String QUESTION_ID = "qid";
+    private static final String QUESTION_DESC = "qdesc";
+    private static final String QUESTION_TYPE = "restype";
+
 
     public DatabaseOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,9 +75,20 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_NURSE_TABLE);
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT + "("
                 + PATIENT_NAME + " TEXT," + PATIENT_ID + " TEXT NOT NULL PRIMARY KEY,"
-                + PATIENT_REPDATE + " INTEGER," + PATIENT_GENDER + " TEXT," + PATIENT_AGE + " TEXT "
+                + PATIENT_REPDATE + " TEXT," + PATIENT_GENDER + " TEXT," + PATIENT_AGE + " TEXT "
                 + ")";
         sqLiteDatabase.execSQL(CREATE_PATIENT_TABLE);
+
+        String CREATE_RESPONSE_TABLE = "CREATE TABLE " + TABLE_RESPONSE + "("
+                + RESPONSE_ID + " TEXT," + RESPONSE_QID + " TEXT NOT NULL PRIMARY KEY,"
+                + RESPONSE_ANSWER + " TEXT "
+                + ")";
+        sqLiteDatabase.execSQL(CREATE_RESPONSE_TABLE);
+        String CREATE_QUESTION_TABLE = "CREATE TABLE " + TABLE_QUESTION + "("
+                + QUESTION_ID + " TEXT  NOT NULL PRIMARY KEY ," + QUESTION_DESC + " TEXT,"
+                + QUESTION_TYPE + " TEXT "
+                + ")";
+        sqLiteDatabase.execSQL(CREATE_QUESTION_TABLE);
         Log.d(TAG, "Database tables created");
     }
 
@@ -78,6 +97,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NURSE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PATIENT);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_RESPONSE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
 
         // Create tables again
         onCreate(sqLiteDatabase);
@@ -117,6 +138,36 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.close(); // Closing database connection
 
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
+    }
+
+    public void addResponse(Response N) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(RESPONSE_ID, N.getPid());
+        values.put(RESPONSE_QID, N.getQid());
+        values.put(RESPONSE_ANSWER, N.getAnswer());
+
+        // Inserting Row
+        long id = db.insert(TABLE_RESPONSE, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New Nurse inserted into sqlite: " + id);
+    }
+
+    public void addQuestion(Question N) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(QUESTION_ID, N.getQid());
+        values.put(QUESTION_DESC, N.getQdesc());
+        values.put(QUESTION_TYPE, N.getRestype());
+
+        // Inserting Row
+        long id = db.insert(TABLE_QUESTION, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New Qn inserted into sqlite: " + id);
     }
 
     /**
@@ -160,6 +211,44 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return N;
     }
 
+    public Response getResponse() {
+        Response N = new Response();
+        String selectQuery = "SELECT  * FROM " + TABLE_RESPONSE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            N = new Response(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+
+        }
+        cursor.close();
+        db.close();
+        // return user
+
+        return N;
+    }
+
+    public Question getQuestion() {
+        Question N = new Question();
+        String selectQuery = "SELECT  * FROM " + TABLE_QUESTION;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            N = new Question(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+
+        }
+        cursor.close();
+        db.close();
+        // return user
+
+        return N;
+    }
+
     /**
      * Re crate database Delete all tables and create them again
      * */
@@ -176,6 +265,24 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         // Delete All Rows
         db.delete(TABLE_PATIENT, null, null);
+        db.close();
+
+        Log.d(TAG, "Deleted all Patient info from sqlite");
+    }
+
+    public void deleteResponseComplete() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_RESPONSE, null, null);
+        db.close();
+
+        Log.d(TAG, "Deleted all Patient info from sqlite");
+    }
+
+    public void deleteQuestionComplete() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Delete All Rows
+        db.delete(TABLE_QUESTION, null, null);
         db.close();
 
         Log.d(TAG, "Deleted all Patient info from sqlite");
