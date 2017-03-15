@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        db.addUser(new Nurse("zx","asd","sad","zxc","asd","asd","asd"));
+        db.addNurse(new Nurse("zx","asd","sad","zxc","asd","asd","asd"));
         dl = (DrawerLayout) findViewById(R.id.dl);
         abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
 

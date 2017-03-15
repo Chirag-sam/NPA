@@ -19,6 +19,7 @@ public class CompletedAppointments extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_appointments);
         ButterKnife.bind(this);

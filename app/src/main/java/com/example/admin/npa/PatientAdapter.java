@@ -47,7 +47,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, temporary.class));
+                mContext.startActivity(new Intent(mContext, QuestionsActivity.class));
             }
         });
     }
