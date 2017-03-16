@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
+import java.io.IOError;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -71,17 +73,42 @@ public class QuestionsActivity extends AppCompatActivity {
     Button mNext;
     ArrayList<QuestionDataHolder> l=new ArrayList<>();
     int posx=0;
+    @OnClick(R.id.back)
+    void setbackqn()
+    {
+        if (posx>0) {
+            posx=posx-1;
+            setAnsType(posx);
+        }
+        else {
+            posx = 0;
+            setAnsType(posx);
+        }
+    }
     @OnClick (R.id.next)
     void setnextquest()
     {
         if (posx<l.size()){
         int i=Integer.parseInt(l.get(posx).getRestype());
+
         switch (i) {
 
             case 1:     //Checkbox
 
                 if (mCh1.isChecked()||mCh2.isChecked()||mCh3.isChecked()||mCh4.isChecked()||mCh5.isChecked())
-                { l.get(posx).setAnswer("asdasd");
+                {   String x="";
+                    if (mCh1.isChecked())
+                        x=x.concat(mCh1.getText().toString());
+                    if (mCh2.isChecked())
+                        x=x.concat(mCh2.getText().toString());
+                    if (mCh3.isChecked())
+                        x=x.concat(mCh3.getText().toString());
+                    if (mCh4.isChecked())
+                        x=x.concat(mCh4.getText().toString());
+                    if (mCh5.isChecked())
+                        x=x.concat(mCh5.getText().toString());
+                    l.get(posx).setAnswer(x);
+                    Log.e("nextqb", "setnextquest: "+x);
                     posx=posx+1;
                     setAnsType(posx);
                     }
@@ -101,7 +128,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     RadioButton b = (RadioButton) findViewById(selected);
 
 // Now you can get the text or whatever you want from the "selected" radio button
-
+                    Log.e("asxz", "setnextquest: "+b.getText().toString() );
                     l.get(posx).setAnswer(b.getText().toString());
                     posx=posx+1;
                     setAnsType(posx);
@@ -113,7 +140,7 @@ public class QuestionsActivity extends AppCompatActivity {
             case 3:
                 //Slider
                 int y=mSeekBar.getProgress();
-                l.get(posx).setAnswer(String.valueOf(i));
+                l.get(posx).setAnswer(String.valueOf(y));
                 posx=posx+1;
                 setAnsType(posx);
 
@@ -134,7 +161,10 @@ public class QuestionsActivity extends AppCompatActivity {
 
             default:
                 break;
-        }}
+        }
+        if (posx==l.size())
+            Toast.makeText(QuestionsActivity.this,"Answers Have been saved!",Toast.LENGTH_LONG).show();
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +176,11 @@ public class QuestionsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         l.add(new QuestionDataHolder("1","How would you describe your pain","1",null));
         l.add(new QuestionDataHolder("1","How bad are you hurt zxczxc?","2",null));
+        l.add(new QuestionDataHolder("1","How bad are you hurt njsajxzmc jasndm?","2",null));
         l.add(new QuestionDataHolder("1","On a Scale 0 to 5 How would you describe your pain","3",null));
         l.add(new QuestionDataHolder("1","Anything to add?????? ","4",null));
+        l.add(new QuestionDataHolder("1","On a scale of 0 to 5 describe your pain","4",null));
+
 
         setAnsType(posx);
       /*  if (message.equals("1")) {
@@ -171,29 +204,83 @@ public class QuestionsActivity extends AppCompatActivity {
         switch (j) {
 
             case 1:     //Checkbox
+                mCh1.setChecked(false);
+                mCh2.setChecked(false);
+                mCh3.setChecked(false);
+                mCh4.setChecked(false);
+                mCh5.setChecked(false);
                 mMcqmany.setVisibility(View.VISIBLE);
                 mMcqone.setVisibility(View.GONE);
                 mEdittextqntil.setVisibility(View.GONE);
                 mSeekBar.setVisibility(View.GONE);
+                if(l.get(i).getAnswer()!=null) {
+
+                    String x=l.get(i).getAnswer();
+                    Log.e("asjsajjsa.jV", "setAnsType: "+x);
+                    if (x.contains("Very mild"))
+                        mCh1.setChecked(true);
+
+                     if (x.contains("Mild"))
+                       mCh2.setChecked(true);
+
+                     if (x.contains("Strong"))
+                        mCh3.setChecked(true);
+
+                     if (x.contains("Extreme"))
+                        mCh4.setChecked(true);
+
+                     if (x.contains("Unbearable"))
+                        mCh5.setChecked(true);
+
+
+                }
+
                 break;
 
             case 2:     //Radio
+                mMcqone.clearCheck();
                 mMcqmany.setVisibility(View.GONE);
                 mMcqone.setVisibility(View.VISIBLE);
                 mEdittextqntil.setVisibility(View.GONE);
                 mSeekBar.setVisibility(View.GONE);
+                if (l.get(i).getAnswer()!=null) {
+                String x=l.get(i).getAnswer();
+                    Log.e("asxzcsa", "setAnsType: "+x);
+                    if (x.equals("Very mild"))
+                        mRdb1.setChecked(true);
+                    else if (x.equals("Mild"))
+                        mRdb2.setChecked(true);
+                    else if (x.equals("Strong"))
+                        mRdb3.setChecked(true);
+                    else if (x.equals("Extreme"))
+                        mRdb4.setChecked(true);
+                    else if (x.equals("Unbearable"))
+                        mRdb5.setChecked(true);
+
+                }
                 break;
             case 3:      //Slider
+                mSeekBar.setProgress(0);
                 mMcqmany.setVisibility(View.GONE);
                 mMcqone.setVisibility(View.GONE);
                 mEdittextqntil.setVisibility(View.GONE);
                 mSeekBar.setVisibility(View.VISIBLE);
+                if (l.get(i).getAnswer()!=null) {
+                    String x=l.get(i).getAnswer();
+                    mSeekBar.setProgress(Integer.parseInt(x));
+
+                }
                 break;
             case 4:     //EditText
+                mEdittextqn.setText(null);
                 mMcqmany.setVisibility(View.GONE);
                 mMcqone.setVisibility(View.GONE);
                 mEdittextqntil.setVisibility(View.VISIBLE);
                 mSeekBar.setVisibility(View.GONE);
+                if (l.get(i).getAnswer()!=null) {
+                    String x=l.get(i).getAnswer();
+                    mEdittextqn.setText(x);
+                }
                 break;
 
 

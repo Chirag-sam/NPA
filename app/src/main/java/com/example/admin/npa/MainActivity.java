@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     void sync() {
 
 
-        Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG);
+        Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.butt2)
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        db.addNurse(new Nurse("zx","asd","sad","zxc","asd","asd","asd"));
+        db.addNurse(new Nurse("Vijay","329","sad","zxc","asd","asd","asd"));
         dl = (DrawerLayout) findViewById(R.id.dl);
         abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
 

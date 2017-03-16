@@ -16,7 +16,7 @@ public class PendingAppointments extends AppCompatActivity {
     RecyclerView recycler;
     ArrayList<Patient>list=new ArrayList<>();
     PatientAdapter adapter;
-
+    DatabaseOpenHelper db = new DatabaseOpenHelper(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +24,7 @@ public class PendingAppointments extends AppCompatActivity {
         ButterKnife.bind(this);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setHasFixedSize(false);
+
         list.add(new Patient(1,"Bill",true,"24/10/2099","jhghsdgj","Rabies","237848723"));
         list.add(new Patient(2,"Mary",false,"4/10/2099","jhghsdgj","Malaria","237848723"));
         list.add(new Patient(3,"Newt",true,"2/10/2099","jhghsdgj","Common Cold","237848723"));
