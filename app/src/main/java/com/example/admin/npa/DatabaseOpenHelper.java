@@ -54,7 +54,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String RESPONSE_QID = "qid";
     private static final String RESPONSE_ANSWER = "gender";
 
-    private static final String TABLE_QUESTION = "response";
+    private static final String TABLE_QUESTION = "questions";
 
     // Login Table Columns names
 
@@ -73,18 +73,18 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 + NURSE_AVAIL + " INTEGER," + NURSE_NOTASKS + " TEXT," + NURSE_TASKCOMP + " TEXT," + NURSE_TASKPEND + " TEXT," + NURSE_REPORTDATE + " TEXT"
                 +")";
         sqLiteDatabase.execSQL(CREATE_NURSE_TABLE);
-        String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT + "("
+        String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT + " ("
                 + PATIENT_NAME + " TEXT," + PATIENT_ID + " TEXT NOT NULL PRIMARY KEY,"
                 + PATIENT_REPDATE + " TEXT," + PATIENT_GENDER + " TEXT," + PATIENT_AGE + " TEXT "
                 + ")";
         sqLiteDatabase.execSQL(CREATE_PATIENT_TABLE);
 
-        String CREATE_RESPONSE_TABLE = "CREATE TABLE " + TABLE_RESPONSE + "("
+        String CREATE_RESPONSE_TABLE = "CREATE TABLE " + TABLE_RESPONSE + " ("
                 + RESPONSE_ID + " TEXT," + RESPONSE_QID + " TEXT NOT NULL PRIMARY KEY,"
                 + RESPONSE_ANSWER + " TEXT "
                 + ")";
         sqLiteDatabase.execSQL(CREATE_RESPONSE_TABLE);
-        String CREATE_QUESTION_TABLE = "CREATE TABLE " + TABLE_QUESTION + "("
+        String CREATE_QUESTION_TABLE = "CREATE TABLE " + TABLE_QUESTION + " ("
                 + QUESTION_ID + " TEXT  NOT NULL PRIMARY KEY ," + QUESTION_DESC + " TEXT,"
                 + QUESTION_TYPE + " TEXT "
                 + ")";
