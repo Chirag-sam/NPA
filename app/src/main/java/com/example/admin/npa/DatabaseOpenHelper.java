@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.HashMap;
-
 /**
  * Created by krsnv on 13-Mar-17.
  */
@@ -16,10 +14,10 @@ import java.util.HashMap;
 public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = DatabaseOpenHelper.class.getSimpleName();
-
+    private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -28,13 +26,11 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String TABLE_NURSE = "nurse";
 
     // Login Table Columns names
+    private static final String NURSE_ID = "nid";
+    private static final String NURSE_UNAME= "uname";
+    private static final String NURSE_PASS= "password";
     private static final String NURSE_NAME = "name";
-    private static final String NURSE_ID = "id";
-    private static final String NURSE_AVAIL = "avail";
-    private static final String NURSE_NOTASKS = "notasks";
-    private static final String NURSE_TASKCOMP = "taskcomp";
-    private static final String NURSE_TASKPEND= "taskpend";
-    private static final String NURSE_REPORTDATE = "reportdate";
+    private static final String NURSE_LASTSYNC= "lastsync";
 
     private static final String TABLE_PATIENT = "patient";
 
@@ -63,15 +59,29 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String QUESTION_TYPE = "restype";
 
 
+    public static synchronized DatabaseOpenHelper getInstance(Context context) {
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new DatabaseOpenHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
     public DatabaseOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String CREATE_NURSE_TABLE = "CREATE TABLE " + TABLE_NURSE + "("
-                + NURSE_NAME + " TEXT,"+ NURSE_ID + " TEXT NOT NULL PRIMARY KEY,"
-                + NURSE_AVAIL + " INTEGER," + NURSE_NOTASKS + " TEXT," + NURSE_TASKCOMP + " TEXT," + NURSE_TASKPEND + " TEXT," + NURSE_REPORTDATE + " TEXT"
-                +")";
+        String CREATE_NURSE_TABLE = "CREATE TABLE " + TABLE_NURSE +
+                "( "+
+                NURSE_ID + " TEXT NOT NULL PRIMARY KEY,"+
+                NURSE_UNAME + " TEXT,"+
+                NURSE_PASS + " TEXT,"+
+                NURSE_NAME + " TEXT,"+
+                NURSE_LASTSYNC + " TEXT "+
+                ")";
         sqLiteDatabase.execSQL(CREATE_NURSE_TABLE);
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT + " ("
                 + PATIENT_NAME + " TEXT," + PATIENT_ID + " TEXT NOT NULL PRIMARY KEY,"
@@ -91,21 +101,22 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_QUESTION_TABLE);
         Log.d(TAG, "Database tables created");
     }
-
-
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NURSE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_PATIENT);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_RESPONSE);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
-
-        // Create tables again
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion != newVersion) {
+            // Simplest implementation is to drop all old tables and recreate them
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NURSE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PATIENT);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_RESPONSE);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
+            onCreate(db);
+        }
     }
 
+
+
     public void addPatient(PatientJ N) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(PATIENT_NAME, N.getName()); // Name
@@ -122,26 +133,23 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
     public void addNurse(Nurse N) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db =getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(NURSE_NAME, N.getName()); // Name
-        values.put(NURSE_ID, N.getId()); // Email
-        values.put(NURSE_AVAIL, N.getAvail()); // Email
-        values.put(NURSE_NOTASKS, N.getAvail());
-        values.put(NURSE_TASKCOMP, N.getTaskcomp());
-        values.put(NURSE_TASKPEND, N.getTaskpend());
-        values.put(NURSE_REPORTDATE, N.getReportdate());// Created At
+        values.put(NURSE_ID, N.getNid());
+        values.put(NURSE_UNAME, N.getUname());
+        values.put(NURSE_PASS, N.getPassword());
+        values.put(NURSE_NAME, N.getName());
+        values.put(NURSE_LASTSYNC, N.getLastsync());
 
-        // Inserting Row
         long id = db.insert(TABLE_NURSE, null, values);
-        db.close(); // Closing database connection
-
+        db.close();
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
+
     }
 
-    public void addResponse(Response N) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void addResponse(ResponseQn N) {
+        SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(RESPONSE_ID, N.getPid());
@@ -156,7 +164,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
     public void addQuestion(Question N) {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(QUESTION_ID, N.getQid());
@@ -182,7 +190,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N=new Nurse(cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7));
+            N=new Nurse(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
 
         }
         cursor.close();
@@ -190,6 +198,23 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // return user
 
         return N;
+    }
+    public boolean getLoginsession() {
+        String selectQuery = "SELECT  count(*) FROM " + TABLE_NURSE;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        int icount = cursor.getInt(0);
+        if(icount==1)
+            return true;
+        else {
+            deleteNurseComplete();
+            return false;}
+
+        // return user
+
     }
 
     public PatientJ getPatient() {
@@ -211,8 +236,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return N;
     }
 
-    public Response getResponse() {
-        Response N = new Response();
+    public ResponseQn getResponse() {
+        ResponseQn N = new ResponseQn();
         String selectQuery = "SELECT  * FROM " + TABLE_RESPONSE;
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -220,7 +245,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N = new Response(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            N = new ResponseQn(cursor.getString(1), cursor.getString(2), cursor.getString(3));
 
         }
         cursor.close();
@@ -253,7 +278,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
      * Re crate database Delete all tables and create them again
      * */
     public void deleteNurseComplete() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         // Delete All Rows
         db.delete(TABLE_NURSE, null, null);
         db.close();
@@ -262,7 +287,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
     public void deletePatientComplete() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         // Delete All Rows
         db.delete(TABLE_PATIENT, null, null);
         db.close();
@@ -287,4 +312,5 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         Log.d(TAG, "Deleted all Patient info from sqlite");
     }
+
 }

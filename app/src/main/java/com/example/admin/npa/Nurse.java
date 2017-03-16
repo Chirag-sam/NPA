@@ -9,89 +9,65 @@ import java.util.List;
  */
 
 public class Nurse {
-
+        @SerializedName("nid")
+        public String nid;
+         @SerializedName("uname")
+        public String uname;
+         @SerializedName("password")
+        public String password;
         @SerializedName("name")
         public String name;
-        @SerializedName("id")
-        public String id;
-        @SerializedName("avail")
-        public String avail;
-        @SerializedName("notasks")
-        public String notasks;
-        @SerializedName("taskcomp")
-        public String taskcomp;
-        @SerializedName("taskpend")
-        public String taskpend;
-        @SerializedName("reportdate")
-        public String reportdate;
+        @SerializedName("lastsync")
+        public String lastsync;
 
         public Nurse() {
         }
 
-        public Nurse(String name, String id, String avail, String notasks, String taskcomp, String taskpend, String reportdate) {
-            this.name = name;
-            this.id = id;
-            this.avail = avail;
-            this.notasks = notasks;
-            this.taskcomp = taskcomp;
-            this.taskpend = taskpend;
-            this.reportdate = reportdate;
-        }
+    public Nurse(String nid, String uname, String password, String name, String lastsync) {
+        this.nid = nid;
+        this.uname = uname;
+        this.password = password;
+        this.name = name;
+        this.lastsync = lastsync;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public String getNid() {
+        return nid;
+    }
 
-        public void setName(String name) {
-            this.name = name;
-        }
+    public String getUname() {
+        return uname;
+    }
 
-        public String getId() {
-            return id;
-        }
+    public String getPassword() {
+        return password;
+    }
 
-        public void setId(String id) {
-            this.id = id;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public String getAvail() {
-            return avail;
-        }
+    public String getLastsync() {
+        return lastsync;
+    }
 
-        public void setAvail(String avail) {
-            this.avail = avail;
-        }
+    public void setNid(String nid) {
+        this.nid = nid;
+    }
 
-        public String getNotasks() {
-            return notasks;
-        }
+    public void setUname(String uname) {
+        this.uname = uname;
+    }
 
-        public void setNotasks(String notasks) {
-            this.notasks = notasks;
-        }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-        public String getTaskcomp() {
-            return taskcomp;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public void setTaskcomp(String taskcomp) {
-            this.taskcomp = taskcomp;
-        }
-
-        public String getTaskpend() {
-            return taskpend;
-        }
-
-        public void setTaskpend(String taskpend) {
-            this.taskpend = taskpend;
-        }
-
-        public String getReportdate() {
-            return reportdate;
-        }
-
-        public void setReportdate(String reportdate) {
-            this.reportdate = reportdate;
-        }
-
+    public void setLastsync(String lastsync) {
+        this.lastsync = lastsync;
+    }
 }

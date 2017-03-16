@@ -5,16 +5,21 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -32,7 +37,7 @@ public class LogIn extends AppCompatActivity {
     CardView cv;
     @BindView(R.id.butt)
     Button butt;
-
+    DatabaseOpenHelper mHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,11 @@ public class LogIn extends AppCompatActivity {
         if (getIntent().getBooleanExtra("Exit me", false)) {
             finish();
         }
+
+        mHelper = DatabaseOpenHelper.getInstance(this);
+        if(mHelper.getLoginsession())
+        { startActivity(new Intent(LogIn.this, MainActivity.class));
+            finish();}
 
     }
 
@@ -64,12 +74,12 @@ public class LogIn extends AppCompatActivity {
         TextInputLayout pass1 = (TextInputLayout) findViewById(R.id.edittextdialtil1);
 
         if (isEditTextEmpty(email)) {
-            edittextdial.setError("Feild cannot be empty!");
+            edittextdial.setError("Field cannot be empty!");
             focusView = email1;
             cancel = true;
         }
         if (isEditTextEmpty(password)) {
-            edittextdialtil1.setError("Feild cannot be empty!");
+            edittextdialtil1.setError("Field cannot be empty!");
             focusView = pass1;
             cancel = true;
         }
@@ -83,7 +93,31 @@ public class LogIn extends AppCompatActivity {
             // form field with an error.
             focusView.requestFocus();
         } else {
+
+
+            RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
+            Call<Nurse> call = client.Login(email,password);
+            call.enqueue(new Callback<Nurse>() {
+                @Override
+                public void onResponse(Call<Nurse> call, Response<Nurse> response) {
+                    int statusCode = response.code();
+                    Nurse N = response.body();
+                    mHelper.addNurse(N);
+
+                    startActivity(new Intent(LogIn.this, MainActivity.class));
+                    finish();
+                }
+
+                @Override
+                public void onFailure(Call<Nurse> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e("Fail", "onFailure: ");
+                }
+            });
+
+            mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17"));
             startActivity(new Intent(LogIn.this, MainActivity.class));
+            finish();
         }
     }
 

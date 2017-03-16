@@ -23,16 +23,24 @@
         android:id="@+id/iv"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_nurse" />
+<TextView android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+            android:layout_below="@id/iv"
+          android:id="@+id/welcome"
+          android:textSize="20dp"
+          android:gravity="center"
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="100dp"
 
+/>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/butt1"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_below="@+id/iv"
+            android:layout_below="@+id/welcome"
 
             android:elevation="4dp"
             android:filterTouchesWhenObscured="true" android:text="synchronize"

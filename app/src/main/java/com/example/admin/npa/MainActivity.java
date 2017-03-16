@@ -14,6 +14,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-    DatabaseOpenHelper db = new DatabaseOpenHelper(this);
+
+    DatabaseOpenHelper mHelper;
     @BindView(R.id.iv)
     ImageView iv;
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     AppCompatButton mButt2;
     @BindView(R.id.butt3)
     AppCompatButton mButt3;
+    @BindView(R.id.welcome)
+    TextView mWelcome;
     private DrawerLayout dl;
     private ActionBarDrawerToggle abdt;
 
@@ -60,14 +64,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        db.addNurse(new Nurse("Vijay","329","sad","zxc","asd","asd","asd"));
+        // db.addNurse(new Nurse("Vijay","329","sad","zxc","asd","asd","asd"));
         dl = (DrawerLayout) findViewById(R.id.dl);
         abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
-
+        mHelper = DatabaseOpenHelper.getInstance(this);
         dl.addDrawerListener(abdt);
         abdt.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        Nurse n=mHelper.getNurseDetails();
+        mWelcome.setText("Welcome! "+n.getName()+"\n Last Sync:"+n.getLastsync());
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -83,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
+                            mHelper.deleteNurseComplete();
+                            startActivity(new Intent(MainActivity.this, LogIn.class));
+                            finish();
                         }
                     });
                     builder.setNegativeButton("No", null);
@@ -114,11 +121,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(MainActivity.this, LogIn.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("Exit me", true);
-                startActivity(intent);
+
+
                 finish();
+                System.exit(0);
             }
         });
         builder.setNegativeButton("No", null);

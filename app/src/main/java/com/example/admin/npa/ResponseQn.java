@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Admin on 3/15/2017.
  */
 
-public class Response {
+public class ResponseQn {
 
     @SerializedName("pid")
     public String pid;
@@ -17,13 +17,13 @@ public class Response {
     @SerializedName("answer")
     public String answer;
 
-    public Response(String pid, String qid, String answer) {
+    public ResponseQn(String pid, String qid, String answer) {
         this.pid = pid;
         this.qid = qid;
         this.answer = answer;
     }
 
-    public Response() {
+    public ResponseQn() {
     }
 
     public String getPid() {
