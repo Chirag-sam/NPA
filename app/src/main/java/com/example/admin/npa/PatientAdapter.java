@@ -18,10 +18,10 @@ import butterknife.ButterKnife;
 
 public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHolder> {
 
-    private List<Patient> myItems;
+    private List<PatientJ> myItems;
     private Context mContext;
 
-    public PatientAdapter(List<Patient> myItems, Context mContext) {
+    public PatientAdapter(List<PatientJ> myItems, Context mContext) {
         this.myItems = myItems;
         this.mContext = mContext;
     }
@@ -60,7 +60,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // TODO - Your view members
-        public Patient item;
+        public PatientJ item;
         @BindView(R.id.iv)
         ImageView iv;
         @BindView(R.id.name)
@@ -80,14 +80,14 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         }
 
 
-        public void setData(Patient item) {
+        public void setData(PatientJ item) {
             this.item = item;
-            if (item.isGender())
+            if (item.getGender().equals("M"))
                 iv.setImageResource(R.drawable.ic_man_shape);
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
             name.setText(item.getName());
-            date.setText(item.getDate());
-            illness.setText(item.getIllness());
+            date.setText(item.getRepdate());
+            illness.setText(item.getDisease());
 
             // TODO set data to view
         }

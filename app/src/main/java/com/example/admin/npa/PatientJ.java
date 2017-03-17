@@ -10,24 +10,23 @@ import java.util.List;
 
 public class PatientJ {
 
-    @SerializedName("name")
-    public String name;
     @SerializedName("pid")
     public String pid;
-    @SerializedName("repdate")
-    public String repdate;
+    @SerializedName("name")
+    public String name;
     @SerializedName("gender")
     public String gender;
     @SerializedName("age")
     public String age;
+    @SerializedName("repdate")
+    public String repdate;
+    @SerializedName("disease")
+    public String disease;
+    @SerializedName("nid")
+    public String nid;
+    @SerializedName("status")
+    public String status;
 
-    public PatientJ(String name, String pid, String repdate, String gender, String age) {
-        this.name = name;
-        this.pid = pid;
-        this.repdate = repdate;
-        this.gender = gender;
-        this.age = age;
-    }
 
     public PatientJ() {
     }
@@ -70,6 +69,41 @@ public class PatientJ {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
+    }
+
+    public String getDisease() {
+        return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public PatientJ(String pid, String name, String gender, String age, String repdate, String disease, String nid, String status) {
+        this.pid = pid;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.repdate = repdate;
+        this.disease = disease;
+        this.nid = nid;
+        this.status = status;
     }
 }
 

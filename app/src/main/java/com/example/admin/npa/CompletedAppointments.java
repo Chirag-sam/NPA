@@ -13,9 +13,9 @@ import butterknife.ButterKnife;
 public class CompletedAppointments extends AppCompatActivity {
     @BindView(R.id.recycler)
     RecyclerView recycler;
-    ArrayList<Patient> list = new ArrayList<>();
+    ArrayList<PatientJ> list = new ArrayList<>();
     PatientAdapter adapter;
-
+    DatabaseOpenHelper mHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -25,9 +25,13 @@ public class CompletedAppointments extends AppCompatActivity {
         ButterKnife.bind(this);
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setHasFixedSize(false);
-        list.add(new Patient(1, "Logan", true, "24/10/2099", "jhghsdgj", "Rabies", "237848723"));
-        list.add(new Patient(2, "Peter", false, "4/10/2099", "jhghsdgj", "Malaria", "237848723"));
-        list.add(new Patient(3, "Jack", true, "2/10/2099", "jhghsdgj", "Common Cold", "237848723"));
+        mHelper = DatabaseOpenHelper.getInstance(this);
+        list.add(new PatientJ("1","Bill","M","23","23/10/17","Rabies","1","pending"));
+        list.add(new PatientJ("2","Mary","F","23","23/10/17","Malaria","1","pending"));
+        list.add(new PatientJ("3","Newt","M","23","23/10/17","Common Cold","1","pending"));
+        mHelper.addallpatients(list);
+        list.clear();
+        list=mHelper.getAllPatients();
         adapter = new PatientAdapter(list, this);
         recycler.setAdapter(adapter);
     }

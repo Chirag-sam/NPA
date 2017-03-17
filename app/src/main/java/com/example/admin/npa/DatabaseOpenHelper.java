@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by krsnv on 13-Mar-17.
  */
@@ -17,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -35,11 +38,14 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String TABLE_PATIENT = "patient";
 
     // Login Table Columns names
-    private static final String PATIENT_NAME = "name";
     private static final String PATIENT_ID = "pid";
-    private static final String PATIENT_REPDATE = "repdate";
+    private static final String PATIENT_NAME = "name";
     private static final String PATIENT_GENDER = "gender";
     private static final String PATIENT_AGE = "age";
+    private static final String PATIENT_REPDATE = "repdate";
+    private static final String PATIENT_DISEASE = "disease";
+    private static final String PATIENT_NID = "nid";
+    private static final String PATIENT_STATUS = "status";
 
 
     private static final String TABLE_RESPONSE = "response";
@@ -83,10 +89,17 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 NURSE_LASTSYNC + " TEXT "+
                 ")";
         sqLiteDatabase.execSQL(CREATE_NURSE_TABLE);
-        String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT + " ("
-                + PATIENT_NAME + " TEXT," + PATIENT_ID + " TEXT NOT NULL PRIMARY KEY,"
-                + PATIENT_REPDATE + " TEXT," + PATIENT_GENDER + " TEXT," + PATIENT_AGE + " TEXT "
-                + ")";
+        String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT +
+                " ("+
+                PATIENT_ID + " TEXT NOT NULL PRIMARY KEY," +
+                PATIENT_NAME + " TEXT," +
+                PATIENT_GENDER + " TEXT," +
+                PATIENT_AGE + " TEXT "+
+                PATIENT_REPDATE + " TEXT," +
+                PATIENT_DISEASE + " TEXT," +
+                PATIENT_NID + " TEXT," +
+                PATIENT_STATUS + " TEXT" +
+                 ")";
         sqLiteDatabase.execSQL(CREATE_PATIENT_TABLE);
 
         String CREATE_RESPONSE_TABLE = "CREATE TABLE " + TABLE_RESPONSE + " ("
@@ -119,17 +132,42 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(PATIENT_NAME, N.getName()); // Name
-        values.put(PATIENT_ID, N.getPid()); // Email
-        values.put(PATIENT_REPDATE, N.getRepdate()); // Email
+        values.put(PATIENT_ID, N.getPid());
+        values.put(PATIENT_NAME, N.getName());
         values.put(PATIENT_GENDER, N.getGender());
-        values.put(PATIENT_AGE, N.getAge());
+        values.put(PATIENT_AGE, N.getAge());// Name         // Email
+        values.put(PATIENT_REPDATE, N.getRepdate());
+        values.put(PATIENT_DISEASE, N.getDisease());
+        values.put(PATIENT_NID, N.getNid());
+        values.put(PATIENT_STATUS, N.getStatus());
 
         // Inserting Row
         long id = db.insert(TABLE_PATIENT, null, values);
         db.close(); // Closing database connection
 
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
+    }
+    public void addallpatients(ArrayList<PatientJ> List) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        for (PatientJ N:List) {
+            addPatient(N);
+            /*
+            ContentValues values = new ContentValues();
+            values.put(PATIENT_ID, N.getPid());
+            values.put(PATIENT_NAME, N.getName());
+            values.put(PATIENT_GENDER, N.getGender());
+            values.put(PATIENT_AGE, N.getAge());// Name         // Email
+            values.put(PATIENT_REPDATE, N.getRepdate());
+            values.put(PATIENT_DISEASE, N.getDisease());
+            values.put(PATIENT_NID, N.getNid());
+            values.put(PATIENT_STATUS, N.getStatus());
+
+            // Inserting Row
+            long id = db.insert(TABLE_PATIENT, null, values);*/
+        }
+        db.close(); // Closing database connection
+
     }
 
     public void addNurse(Nurse N) {
@@ -226,7 +264,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N = new PatientJ(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+            N = new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
 
         }
         cursor.close();
@@ -255,6 +293,28 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return N;
     }
 
+    public ArrayList<PatientJ> getAllPatients() {
+        ArrayList<PatientJ> patientlist = new ArrayList<PatientJ>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_PATIENT;
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+
+              patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7)));
+
+                // Adding contact to list
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        // return contact list
+        return patientlist;
+    }
     public Question getQuestion() {
         Question N = new Question();
         String selectQuery = "SELECT  * FROM " + TABLE_QUESTION;
