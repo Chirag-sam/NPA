@@ -125,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             mHelper.deleteNurseComplete();
+                            mHelper.deletePatientComplete();
+                            mHelper.deleteQuestionComplete();
+                            mHelper.deleteResponseComplete();
                             startActivity(new Intent(MainActivity.this, LogIn.class));
                             finish();
                         }
