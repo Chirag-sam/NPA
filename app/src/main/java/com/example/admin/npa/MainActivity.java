@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,8 +44,42 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout dl;
     private ActionBarDrawerToggle abdt;
 
+
     @OnClick(R.id.butt1)
     void sync() {
+        ArrayList<PatientJ> list=new ArrayList<>();
+        list.add(new PatientJ("1","Bill","M","23","23/10/17","Rabies","pending"));
+        list.add(new PatientJ("2","Mary","F","23","23/10/17","Malaria","pending"));
+        list.add(new PatientJ("3","Newt","M","23","23/10/17","Common Cold","completed"));
+        list.add(new PatientJ("4","Logan","F","23","23/10/17","Malaria","pending"));
+        list.add(new PatientJ("5","Dean","M","23","23/10/17","Common Cold","pending"));
+        list.add(new PatientJ("6","Simone","F","23","23/10/17","Malaria","completed"));
+        list.add(new PatientJ("7","Jay","M","23","23/10/17","Common Cold","pending"));
+
+        ArrayList<Question>questions=new ArrayList<>();
+        questions.add(new Question("1r","How Would You Describe your pain?","1","Rabies"));
+        questions.add(new Question("2r","Does your pain radiate?","2","Rabies"));
+        questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","3","Rabies"));
+        questions.add(new Question("4r","What provokes your pain?","4","Rabies"));
+        questions.add(new Question("5r","Did this happen Before","4","Rabies"));
+
+        questions.add(new Question("1m","When Did the symptoms start?","4","Malaria"));
+        questions.add(new Question("2m","Is the pain progressing?","2","Malaria"));
+        questions.add(new Question("3m","Does your body show any signs of fever?","1","Malaria"));
+        questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","3","Malaria"));
+        questions.add(new Question("5m","Describe your pain in words.","4","Malaria"));
+
+        questions.add(new Question("1c","When Did the symptoms start?","4","Common Cold"));
+        questions.add(new Question("2c","Is the pain progressing?","1","Common Cold"));
+        questions.add(new Question("3c","Does your body show any signs of fever?","1","Common Cold"));
+        questions.add(new Question("4c","Have you taken any medications,if so what ?","4","Common Cold"));
+        questions.add(new Question("5c","Any prior medical history","4","Common Cold"));
+
+
+
+        mHelper.addallqns(questions);
+        mHelper.addallpatients(list);
+
 
 
         Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();

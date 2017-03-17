@@ -17,11 +17,31 @@ public class Question {
     public String qdesc;
     @SerializedName("restype")
     public String restype;
+    @SerializedName("diseasetype")
+    public String diseasetype;
+    public String answer;
 
-    public Question(String qid, String qdesc, String restype) {
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Question(String qid, String qdesc, String restype, String diseasetype) {
         this.qid = qid;
         this.qdesc = qdesc;
         this.restype = restype;
+        this.diseasetype = diseasetype;
+    }
+
+    public String getDiseasetype() {
+        return diseasetype;
+    }
+
+    public void setDiseasetype(String diseasetype) {
+        this.diseasetype = diseasetype;
     }
 
     public Question() {

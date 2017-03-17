@@ -26,12 +26,8 @@ public class CompletedAppointments extends AppCompatActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
         recycler.setHasFixedSize(false);
         mHelper = DatabaseOpenHelper.getInstance(this);
-        list.add(new PatientJ("1","Bill","M","23","23/10/17","Rabies","1","pending"));
-        list.add(new PatientJ("2","Mary","F","23","23/10/17","Malaria","1","pending"));
-        list.add(new PatientJ("3","Newt","M","23","23/10/17","Common Cold","1","pending"));
-        mHelper.addallpatients(list);
-        list.clear();
-        list=mHelper.getAllPatients();
+
+        list=mHelper.getAllPatientcomp();
         adapter = new PatientAdapter(list, this);
         recycler.setAdapter(adapter);
     }

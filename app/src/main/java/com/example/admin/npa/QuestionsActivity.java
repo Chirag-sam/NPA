@@ -71,7 +71,9 @@ public class QuestionsActivity extends AppCompatActivity {
     Button mBack;
     @BindView(R.id.next)
     Button mNext;
-    ArrayList<QuestionDataHolder> l=new ArrayList<>();
+    DatabaseOpenHelper mHelper;
+    PatientJ p;
+    ArrayList<Question> l=new ArrayList<>();
     int posx=0;
     @OnClick(R.id.back)
     void setbackqn()
@@ -163,25 +165,27 @@ public class QuestionsActivity extends AppCompatActivity {
                 break;
         }
         if (posx==l.size())
+        {
+            mHelper.addallresponse(l,p.getPid());
+            p.setStatus("completed");
+            mHelper.updatepatient(p);
             Toast.makeText(QuestionsActivity.this,"Answers Have been saved!",Toast.LENGTH_LONG).show();
+            finish();
+        }
+
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mHelper = DatabaseOpenHelper.getInstance(this);
         Bundle bundle = getIntent().getExtras();
-        //String message = bundle.getString("message");
+        String uid = bundle.getString("uid");
+        p=mHelper.getPatient(uid);
+        l=mHelper.getallquestions(p.getDisease());
+
         setContentView(R.layout.questioncard);
         ButterKnife.bind(this);
-        l.add(new QuestionDataHolder("1","How would you describe your pain","1",null));
-        l.add(new QuestionDataHolder("1","How bad are you hurt zxczxc?","2",null));
-        l.add(new QuestionDataHolder("1","How bad are you hurt njsajxzmc jasndm?","2",null));
-        l.add(new QuestionDataHolder("1","On a Scale 0 to 5 How would you describe your pain","3",null));
-        l.add(new QuestionDataHolder("1","Anything to add?????? ","4",null));
-        l.add(new QuestionDataHolder("1","On a scale of 0 to 5 describe your pain","4",null));
-
-
         setAnsType(posx);
       /*  if (message.equals("1")) {
             setContentView(arr[0]);
