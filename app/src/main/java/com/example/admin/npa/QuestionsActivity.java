@@ -1,5 +1,6 @@
 package com.example.admin.npa;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -170,6 +171,7 @@ public class QuestionsActivity extends AppCompatActivity {
             p.setStatus("completed");
             mHelper.updatepatient(p);
             Toast.makeText(QuestionsActivity.this,"Answers Have been saved!",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(QuestionsActivity.this,ResultActivity.class));
             finish();
         }
 
