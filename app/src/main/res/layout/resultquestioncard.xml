@@ -39,6 +39,7 @@
             android:layout_toRightOf="@+id/qno"
 
             android:text="When did the symptoms start?"
+            android:textColor="@android:color/black"
             android:textSize="20dp" />
         <TextView
             android:id="@+id/answer"

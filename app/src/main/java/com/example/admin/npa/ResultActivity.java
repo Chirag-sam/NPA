@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         pid=getIntent().getExtras().getString("pid");
+        Log.e("sadxxz", "onCreate: "+pid );
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -94,11 +96,11 @@ public class ResultActivity extends AppCompatActivity {
 
             ButterKnife.bind(this, rootView);
 
-            recyclerv.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
+            recyclerv.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerv.setHasFixedSize(false);
-            mHelper = DatabaseOpenHelper.getInstance(rootView.getContext());
+            mHelper = DatabaseOpenHelper.getInstance(getActivity());
             list=mHelper.getallResponse(pid);
-
+            Log.e("zxczxc", "onCreateView: "+list.get(0).getQid() );
 
             adapter = new ResultQuestionAdapter(list);
             recyclerv.setAdapter(adapter);

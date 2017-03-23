@@ -20,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION =13;
+    private static final int DATABASE_VERSION =14;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -338,7 +338,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     public List<Question> getallResponse(String pid) {
         List<Question> N = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_RESPONSE+ " WHERE '"+RESPONSE_ID+"'="+pid;
+        String selectQuery = "SELECT  * FROM " + TABLE_RESPONSE+ " WHERE "+RESPONSE_ID+"='"+pid+"'";
 
 
         SQLiteDatabase db = getWritableDatabase();
