@@ -115,11 +115,13 @@ public class LogIn extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Nurse> call, Throwable t) {
+                    edittextdialtil.setError("Invalid Username");
+                    edittextdialtil1.setError("Invalid Password");
                     // Log error here since request failed
-                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
-                    startActivity(new Intent(LogIn.this, MainActivity.class));
-                  finish();
-                    Log.e("Fail", "onFailure: ");
+//                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
+//                    startActivity(new Intent(LogIn.this, MainActivity.class));
+//                  finish();
+//                    Log.e("Fail", "onFailure: ");
                 }
             });
 

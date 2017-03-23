@@ -40,12 +40,15 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     // Login Table Columns names
     private static final String PATIENT_ID = "pid";
-    private static final String PATIENT_NAME = "name";
+    private static final String PATIENT_NURSEID = "nurseid";
+    private static final String PATIENT_FNAME = "fname";
+    private static final String PATIENT_LNAME = "lname";
     private static final String PATIENT_GENDER = "gender";
-    private static final String PATIENT_AGE = "age";
-    private static final String PATIENT_REPDATE = "repdate";
+    private static final String PATIENT_DOB = "dob";
     private static final String PATIENT_DISEASE = "disease";
+    private static final String PATIENT_APPDATE = "repdate";
     private static final String PATIENT_STATUS = "status";
+
 
 
     private static final String TABLE_RESPONSE = "response";
@@ -98,11 +101,12 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT +
                 " ("+
                 PATIENT_ID + " TEXT NOT NULL PRIMARY KEY," +
-                PATIENT_NAME + " TEXT," +
+                PATIENT_NURSEID + " TEXT," +
+                PATIENT_FNAME + " TEXT," +
+                PATIENT_LNAME + " TEXT ,"+
                 PATIENT_GENDER + " TEXT," +
-                PATIENT_AGE + " TEXT ,"+
-                PATIENT_REPDATE + " TEXT," +
-                PATIENT_DISEASE + " TEXT," +
+                PATIENT_DOB + " TEXT," +
+                PATIENT_APPDATE + " TEXT" +
                 PATIENT_STATUS + " TEXT" +
                  ")";
         sqLiteDatabase.execSQL(CREATE_PATIENT_TABLE);

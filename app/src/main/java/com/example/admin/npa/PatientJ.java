@@ -12,16 +12,22 @@ public class PatientJ {
 
     @SerializedName("pid")
     public String pid;
-    @SerializedName("name")
-    public String name;
+    @SerializedName("nurseid")
+    public String nurseid;
+
+    @SerializedName("fname")
+    public String fname;
+    @SerializedName("lname")
+    public String lname;
     @SerializedName("gender")
     public String gender;
-    @SerializedName("age")
-    public String age;
-    @SerializedName("repdate")
-    public String repdate;
-    @SerializedName("disease")
+    @SerializedName("dob")
+    public String dob;
+    @SerializedName("diseaseid")
     public String disease;
+    @SerializedName("appdate")
+    public String appdate;
+
     @SerializedName("status")
     public String status;
 
@@ -29,12 +35,16 @@ public class PatientJ {
     public PatientJ() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public PatientJ(String pid, String nurseid, String fname, String lname, String gender, String dob, String disease, String appdate, String status) {
+        this.pid = pid;
+        this.nurseid = nurseid;
+        this.fname = fname;
+        this.lname = lname;
+        this.gender = gender;
+        this.dob = dob;
+        this.disease = disease;
+        this.appdate = appdate;
+        this.status = status;
     }
 
     public String getPid() {
@@ -45,12 +55,28 @@ public class PatientJ {
         this.pid = pid;
     }
 
-    public String getRepdate() {
-        return repdate;
+    public String getNurseid() {
+        return nurseid;
     }
 
-    public void setRepdate(String repdate) {
-        this.repdate = repdate;
+    public void setNurseid(String nurseid) {
+        this.nurseid = nurseid;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public String getGender() {
@@ -61,14 +87,13 @@ public class PatientJ {
         this.gender = gender;
     }
 
-    public String getAge() {
-        return age;
+    public String getDob() {
+        return dob;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setDob(String dob) {
+        this.dob = dob;
     }
-
 
     public String getDisease() {
         return disease;
@@ -78,21 +103,19 @@ public class PatientJ {
         this.disease = disease;
     }
 
+    public String getAppdate() {
+        return appdate;
+    }
+
+    public void setAppdate(String appdate) {
+        this.appdate = appdate;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public PatientJ(String pid, String name, String gender, String age, String repdate, String disease, String status) {
-        this.pid = pid;
-        this.name = name;
-        this.gender = gender;
-        this.age = age;
-        this.repdate = repdate;
-        this.disease = disease;
         this.status = status;
     }
 }
