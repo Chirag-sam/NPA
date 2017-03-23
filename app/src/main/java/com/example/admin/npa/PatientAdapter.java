@@ -84,11 +84,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
 
         public void setData(PatientJ item) {
             this.item = item;
-            if (item.getGender().equals("M"))
+            if (item.getGender().equals("Male"))
                 iv.setImageResource(R.drawable.ic_man_shape);
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
-            name.setText(item.getName());
-            date.setText(item.getRepdate());
+            name.setText(item.getFname()+ " "+item.getLname());
+            date.setText(item.getAppdate());
             illness.setText(item.getDisease());
 
             // TODO set data to view

@@ -20,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION =14;
+    private static final int DATABASE_VERSION =15;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -106,7 +106,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 PATIENT_LNAME + " TEXT ,"+
                 PATIENT_GENDER + " TEXT," +
                 PATIENT_DOB + " TEXT," +
-                PATIENT_APPDATE + " TEXT" +
+                PATIENT_DISEASE + " TEXT," +
+                PATIENT_APPDATE + " TEXT," +
                 PATIENT_STATUS + " TEXT" +
                  ")";
         sqLiteDatabase.execSQL(CREATE_PATIENT_TABLE);
@@ -147,11 +148,13 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(PATIENT_ID, N.getPid());
-        values.put(PATIENT_NAME, N.getName());
+        values.put(PATIENT_NURSEID, N.getNurseid());
+        values.put(PATIENT_FNAME, N.getFname());
+        values.put(PATIENT_LNAME, N.getLname());// Name         // Email
         values.put(PATIENT_GENDER, N.getGender());
-        values.put(PATIENT_AGE, N.getAge());// Name         // Email
-        values.put(PATIENT_REPDATE, N.getRepdate());
+        values.put(PATIENT_DOB, N.getDob());
         values.put(PATIENT_DISEASE, N.getDisease());
+        values.put(PATIENT_APPDATE, N.getAppdate());
         values.put(PATIENT_STATUS, N.getStatus());
 
         // Inserting Row
@@ -165,13 +168,14 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(PATIENT_ID, N.getPid());
-        values.put(PATIENT_NAME, N.getName());
+        values.put(PATIENT_NURSEID, N.getNurseid());
+        values.put(PATIENT_FNAME, N.getFname());
+        values.put(PATIENT_LNAME, N.getLname());// Name         // Email
         values.put(PATIENT_GENDER, N.getGender());
-        values.put(PATIENT_AGE, N.getAge());// Name         // Email
-        values.put(PATIENT_REPDATE, N.getRepdate());
+        values.put(PATIENT_DOB, N.getDob());
         values.put(PATIENT_DISEASE, N.getDisease());
+        values.put(PATIENT_APPDATE, N.getAppdate());
         values.put(PATIENT_STATUS, N.getStatus());
-
         // Inserting Row
         long id = db.update(TABLE_PATIENT, values, PATIENT_ID+" = '"+N.getPid()+"'",null);
         db.close(); // Closing database connection
@@ -330,7 +334,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N = new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
+            N = new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8));
 
         }
         cursor.close();
@@ -375,7 +379,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-              patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
+              patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8)));
 
                 // Adding contact to list
             } while (cursor.moveToNext());
@@ -397,7 +401,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
+                patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8)));
 
                 // Adding contact to list
             } while (cursor.moveToNext());

@@ -1,5 +1,6 @@
 package com.example.admin.npa;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -98,9 +99,11 @@ public class LogIn extends AppCompatActivity {
             focusView.requestFocus();
         } else {
 
-
+            ProgressDialog p=new ProgressDialog(this);
             RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
             Call<Nurse> call = client.Login(email,password);
+            p.setMessage("Authenticating");
+            p.show();
             call.enqueue(new Callback<Nurse>() {
                 @Override
                 public void onResponse(Call<Nurse> call, Response<Nurse> response) {
@@ -108,19 +111,21 @@ public class LogIn extends AppCompatActivity {
                     Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
                      Nurse N= response.body();
                     mHelper.addNurse(N);
-
+                    p.dismiss();
                     startActivity(new Intent(LogIn.this, MainActivity.class));
                     finish();
                 }
 
                 @Override
                 public void onFailure(Call<Nurse> call, Throwable t) {
-                    edittextdialtil.setError("Invalid Username");
-                    edittextdialtil1.setError("Invalid Password");
+//                    edittextdialtil.setError("Invalid Username");
+//                    edittextdialtil1.setError("Invalid Password");
+//
                     // Log error here since request failed
-//                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
-//                    startActivity(new Intent(LogIn.this, MainActivity.class));
-//                  finish();
+                    p.dismiss();
+                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
+                    startActivity(new Intent(LogIn.this, MainActivity.class));
+                  finish();
 //                    Log.e("Fail", "onFailure: ");
                 }
             });

@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.butt1)
     void sync() {
         ArrayList<PatientJ> list=new ArrayList<>();
-        list.add(new PatientJ("1","Bill","M","23","23/10/17","Rabies","pending"));
-        list.add(new PatientJ("2","Mary","F","23","23/10/17","Malaria","pending"));
-        list.add(new PatientJ("3","Newt","M","23","23/10/17","Common Cold","completed"));
-        list.add(new PatientJ("4","Logan","F","23","23/10/17","Malaria","pending"));
-        list.add(new PatientJ("5","Dean","M","23","23/10/17","Common Cold","pending"));
-        list.add(new PatientJ("6","Simone","F","23","23/10/17","Malaria","completed"));
-        list.add(new PatientJ("7","Jay","M","23","23/10/17","Common Cold","pending"));
+        list.add(new PatientJ("1","12","Dolores","Abernathy","Female","23/10/97","Rabies","23/10/17","pending"));
+        list.add(new PatientJ("2","12","Peter","Abernathy","Male","23/10/57","Common Cold","23/10/17","pending"));
+        list.add(new PatientJ("3","12","Bernard","Lowe","Male","23/10/67","Malaria","23/10/17","pending"));
+        list.add(new PatientJ("4","12","Elsie","Hughes","Female","23/10/87","Rabies","23/10/17","completed"));
+        list.add(new PatientJ("5","12","Robert","Ford","Male","23/10/97","Rabies","23/10/17","completed"));
+        list.add(new PatientJ("6","12","Maeve","M","Female","23/10/87","Malaria","23/10/17","pending"));
+
 
         ArrayList<Question>questions=new ArrayList<>();
         questions.add(new Question("1r","How Would You Describe your pain?","1","Rabies"));
