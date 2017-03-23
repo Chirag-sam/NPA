@@ -31,8 +31,7 @@ public class ResultActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    DatabaseOpenHelper mHelper;
-    List<Question> list=new ArrayList<>();
+   static String pid;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -42,14 +41,13 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        String pid=getIntent().getExtras().getString("pid");
+        pid=getIntent().getExtras().getString("pid");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mHelper = DatabaseOpenHelper.getInstance(ResultActivity.this);
-        list=mHelper.getallResponse(pid);
+
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -74,7 +72,8 @@ public class ResultActivity extends AppCompatActivity {
         ResultQuestionAdapter adapter;
         @BindView(R.id.recyclerv)
         RecyclerView recyclerv;
-
+        DatabaseOpenHelper mHelper;
+        List<Question> list=new ArrayList<>();
         public ResultFragment() {
         }
 
@@ -97,9 +96,11 @@ public class ResultActivity extends AppCompatActivity {
 
             recyclerv.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
             recyclerv.setHasFixedSize(false);
+            mHelper = DatabaseOpenHelper.getInstance(rootView.getContext());
+            list=mHelper.getallResponse(pid);
 
 
-            //adapter = new PatientAdapter(list, this);
+            adapter = new ResultQuestionAdapter(list);
             recyclerv.setAdapter(adapter);
             return rootView;
         }

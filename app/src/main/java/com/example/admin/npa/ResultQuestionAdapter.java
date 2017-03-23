@@ -20,9 +20,9 @@ public class ResultQuestionAdapter extends RecyclerView.Adapter<ResultQuestionAd
     private List<Question> myItems;
     private ItemListener myListener;
 
-    public ResultQuestionAdapter(List<Question> items, ItemListener listener) {
+    public ResultQuestionAdapter(List<Question> items) {
         myItems = items;
-        myListener = listener;
+
     }
 
     public void setListener(ItemListener listener) {
