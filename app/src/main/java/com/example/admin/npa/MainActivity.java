@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         abdt.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Nurse n=mHelper.getNurseDetails();
-        mWelcome.setText("Welcome! "+n.getName()+"\n Last Sync:"+n.getLastsync());
+        mWelcome.setText("Welcome! "+n.getFirstname()+"\n "+n.getLastname());
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

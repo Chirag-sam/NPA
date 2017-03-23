@@ -18,9 +18,9 @@ import retrofit2.http.Query;
  */
 
 public interface RetrofitInterface {
-    @GET("login.jsp")
+    @GET("json_Validate.jsp")
     Call<Nurse> Login(
-            @Query("uname") String username,
+            @Query("username") String username,
             @Query("password") String password);
 
 

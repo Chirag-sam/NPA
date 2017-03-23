@@ -20,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION =11;
+    private static final int DATABASE_VERSION =12;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -32,8 +32,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String NURSE_ID = "nid";
     private static final String NURSE_UNAME= "uname";
     private static final String NURSE_PASS= "password";
-    private static final String NURSE_NAME = "name";
-    private static final String NURSE_LASTSYNC= "lastsync";
+    private static final String NURSE_FIRSTNAME = "firstname";
+    private static final String NURSE_LASTNAME= "lastname";
+    private static final String NURSE_GENDER= "gender";
 
     private static final String TABLE_PATIENT = "patient";
 
@@ -53,6 +54,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String RESPONSE_ID = "pid";
     private static final String RESPONSE_QID = "qid";
+    private static final String RESPONSE_QUESTION= "question";
     private static final String RESPONSE_ANSWER = "answer";
 
     private static final String TABLE_QUESTION = "questions";
@@ -86,8 +88,11 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 NURSE_ID + " TEXT NOT NULL PRIMARY KEY,"+
                 NURSE_UNAME + " TEXT,"+
                 NURSE_PASS + " TEXT,"+
-                NURSE_NAME + " TEXT,"+
-                NURSE_LASTSYNC + " TEXT "+
+                NURSE_FIRSTNAME + " TEXT,"+
+                NURSE_LASTNAME+ " TEXT, "+
+
+                NURSE_GENDER+ " TEXT "+
+
                 ")";
         sqLiteDatabase.execSQL(CREATE_NURSE_TABLE);
         String CREATE_PATIENT_TABLE = "CREATE TABLE " + TABLE_PATIENT +
@@ -105,6 +110,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         String CREATE_RESPONSE_TABLE = "CREATE TABLE " + TABLE_RESPONSE + " ("
                 + RESPONSE_ID + " TEXT," +
                 RESPONSE_QID + " TEXT ,"
+                +RESPONSE_QUESTION+" TEXT ,"
                 + RESPONSE_ANSWER + " TEXT "
                 + ")";
         sqLiteDatabase.execSQL(CREATE_RESPONSE_TABLE);
@@ -221,9 +227,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(NURSE_ID, N.getNid());
         values.put(NURSE_UNAME, N.getUname());
         values.put(NURSE_PASS, N.getPassword());
-        values.put(NURSE_NAME, N.getName());
-        values.put(NURSE_LASTSYNC, N.getLastsync());
-
+        values.put(NURSE_FIRSTNAME, N.getFirstname());
+        values.put(NURSE_LASTNAME, N.getLastname());
+        values.put(NURSE_GENDER, N.getGender());
         long id = db.insert(TABLE_NURSE, null, values);
         db.close();
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
@@ -236,6 +242,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(RESPONSE_ID,uid);
         values.put(RESPONSE_QID, N.getQid());
+        values.put(RESPONSE_QUESTION,N.getQdesc());
         values.put(RESPONSE_ANSWER, N.getAnswer());
 
         // Inserting Row
@@ -283,7 +290,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N=new Nurse(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4));
+            N=new Nurse(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
 
         }
         cursor.close();
@@ -329,21 +336,25 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         return N;
     }
 
-    public ResponseQn getResponse() {
-        ResponseQn N = new ResponseQn();
-        String selectQuery = "SELECT  * FROM " + TABLE_RESPONSE;
+    public List<Question> getallResponse(String pid) {
+        List<Question> N = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_RESPONSE+ " WHERE '"+RESPONSE_ID+"'="+pid;
 
-        SQLiteDatabase db = this.getReadableDatabase();
+
+        SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        // Move to first row
-        cursor.moveToFirst();
-        if (cursor.getCount() > 0) {
-            N = new ResponseQn(cursor.getString(1), cursor.getString(2), cursor.getString(3));
 
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+
+                N.add(new Question(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+
+                // Adding contact to list
+            } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        // return user
 
         return N;
     }

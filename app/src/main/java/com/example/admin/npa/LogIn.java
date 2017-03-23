@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -38,6 +40,7 @@ public class LogIn extends AppCompatActivity {
     @BindView(R.id.butt)
     Button butt;
     DatabaseOpenHelper mHelper;
+    List<Nurse> ls=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +81,17 @@ public class LogIn extends AppCompatActivity {
             focusView = email1;
             cancel = true;
         }
+
         if (isEditTextEmpty(password)) {
             edittextdialtil1.setError("Field cannot be empty!");
             focusView = pass1;
             cancel = true;
         }
-        if (!isValidEmail(email)) {
-            email1.setError("Invalid e-mail address");
-            focusView = email1;
-            cancel = true;
-        }
+//        if (!isValidEmail(email)) {
+//            email1.setError("Invalid e-mail address");
+//            focusView = email1;
+//            cancel = true;
+//        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -101,7 +105,8 @@ public class LogIn extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Nurse> call, Response<Nurse> response) {
                     int statusCode = response.code();
-                    Nurse N = response.body();
+                    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
+                     Nurse N= response.body();
                     mHelper.addNurse(N);
 
                     startActivity(new Intent(LogIn.this, MainActivity.class));
@@ -115,9 +120,9 @@ public class LogIn extends AppCompatActivity {
                 }
             });
 
-            mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17"));
-            startActivity(new Intent(LogIn.this, MainActivity.class));
-            finish();
+//            mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
+//            startActivity(new Intent(LogIn.this, MainActivity.class));
+//            finish();
         }
     }
 

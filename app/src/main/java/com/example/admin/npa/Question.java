@@ -25,6 +25,12 @@ public class Question {
         return answer;
     }
 
+    public Question(String qid, String qdesc, String answer) {
+        this.qid = qid;
+        this.qdesc = qdesc;
+        this.answer = answer;
+    }
+
     public void setAnswer(String answer) {
         this.answer = answer;
     }

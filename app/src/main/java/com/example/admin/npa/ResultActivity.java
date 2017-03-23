@@ -7,12 +7,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +31,8 @@ public class ResultActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    DatabaseOpenHelper mHelper;
+    List<Question> list=new ArrayList<>();
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -38,12 +42,14 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-
+        String pid=getIntent().getExtras().getString("pid");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mHelper = DatabaseOpenHelper.getInstance(ResultActivity.this);
+        list=mHelper.getallResponse(pid);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -65,6 +71,9 @@ public class ResultActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        ResultQuestionAdapter adapter;
+        @BindView(R.id.recyclerv)
+        RecyclerView recyclerv;
 
         public ResultFragment() {
         }
@@ -81,11 +90,19 @@ public class ResultActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_result, container, false);
 
+            ButterKnife.bind(this, rootView);
+
+            recyclerv.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
+            recyclerv.setHasFixedSize(false);
+
+
+            //adapter = new PatientAdapter(list, this);
+            recyclerv.setAdapter(adapter);
             return rootView;
         }
-
 
 
     }
@@ -132,7 +149,7 @@ public class ResultActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position==0)
+            if (position == 0)
                 return ResultFragment.newInstance();
             else return ReportFragment.newInstance();
 

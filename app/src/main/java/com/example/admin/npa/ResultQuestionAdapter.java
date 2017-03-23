@@ -17,10 +17,10 @@ import butterknife.ButterKnife;
 public class ResultQuestionAdapter extends RecyclerView.Adapter<ResultQuestionAdapter.ViewHolder> {
 
 
-    private List<QuestionDataHolder> myItems;
+    private List<Question> myItems;
     private ItemListener myListener;
 
-    public ResultQuestionAdapter(List<QuestionDataHolder> items, ItemListener listener) {
+    public ResultQuestionAdapter(List<Question> items, ItemListener listener) {
         myItems = items;
         myListener = listener;
     }
@@ -46,7 +46,7 @@ public class ResultQuestionAdapter extends RecyclerView.Adapter<ResultQuestionAd
     }
 
     public interface ItemListener {
-        void onItemClick(QuestionDataHolder item);
+        void onItemClick(Question item);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -59,7 +59,7 @@ public class ResultQuestionAdapter extends RecyclerView.Adapter<ResultQuestionAd
         @BindView(R.id.cv)
         CardView cv;
         // TODO - Your view members
-        public QuestionDataHolder item;
+        public Question item;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -68,7 +68,7 @@ public class ResultQuestionAdapter extends RecyclerView.Adapter<ResultQuestionAd
             // TODO instantiate/assign view members
         }
 
-        public void setData(QuestionDataHolder item,int position) {
+        public void setData(Question item,int position) {
             this.item = item;
             qno.setText(String.valueOf(position+1));
             qntext.setText(item.getQdesc());
