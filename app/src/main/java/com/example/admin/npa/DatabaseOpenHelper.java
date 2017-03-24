@@ -182,10 +182,14 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
     }
-    public void addallpatients(ArrayList<PatientJ> List) {
+    public void addallpatients(List<PatientJ> List,String nid) {
         SQLiteDatabase db = getWritableDatabase();
 
         for (PatientJ N:List) {
+            if (N.getStatus()==null)
+                N.setStatus("pending");
+            if (N.getNurseid()==null)
+                N.setNurseid(nid);
             addPatient(N);
             /*
             ContentValues values = new ContentValues();
@@ -370,7 +374,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     public ArrayList<PatientJ> getAllPatientspend() {
         ArrayList<PatientJ> patientlist = new ArrayList<PatientJ>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_PATIENT+ " WHERE "+PATIENT_STATUS + " = 'pending'";
+        String selectQuery = "SELECT  * FROM " + TABLE_PATIENT+ " WHERE "+PATIENT_STATUS + " = 'pending' OR "+PATIENT_STATUS + " IS NULL";
 
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

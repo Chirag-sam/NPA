@@ -4,6 +4,8 @@ import android.util.Base64;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
+import java.util.List;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -23,5 +25,10 @@ public interface RetrofitInterface {
             @Query("username") String username,
             @Query("password") String password);
 
+    @GET("json_Sync.jsp")
+    Call<List<PatientJ>> getallpatients(
+            @Query("nid") String nid);
+//http://192.168.0.101:8080/HIK2.0/Dashboard/json_Sync.jsp?nid=20170322110413929
+    //http://192.168.0.101:8080/HIK2.0/Dashboard/json_Validate.jsp?username=test101&password=password
 
 }

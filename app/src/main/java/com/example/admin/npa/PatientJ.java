@@ -27,8 +27,6 @@ public class PatientJ {
     public String disease;
     @SerializedName("appdate")
     public String appdate;
-
-    @SerializedName("status")
     public String status;
 
 

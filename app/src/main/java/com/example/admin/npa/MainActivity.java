@@ -1,5 +1,6 @@
 package com.example.admin.npa;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,22 +12,27 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-
+    Nurse n=new Nurse();
     DatabaseOpenHelper mHelper;
     @BindView(R.id.iv)
     ImageView iv;
@@ -48,41 +54,73 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.butt1)
     void sync() {
         ArrayList<PatientJ> list=new ArrayList<>();
-        list.add(new PatientJ("1","12","Dolores","Abernathy","Female","23/10/97","Rabies","23/10/17","pending"));
-        list.add(new PatientJ("2","12","Peter","Abernathy","Male","23/10/57","Common Cold","23/10/17","pending"));
-        list.add(new PatientJ("3","12","Bernard","Lowe","Male","23/10/67","Malaria","23/10/17","pending"));
-        list.add(new PatientJ("4","12","Elsie","Hughes","Female","23/10/87","Rabies","23/10/17","completed"));
-        list.add(new PatientJ("5","12","Robert","Ford","Male","23/10/97","Rabies","23/10/17","completed"));
-        list.add(new PatientJ("6","12","Maeve","M","Female","23/10/87","Malaria","23/10/17","pending"));
-
-
-        ArrayList<Question>questions=new ArrayList<>();
-        questions.add(new Question("1r","How Would You Describe your pain?","1","Rabies"));
-        questions.add(new Question("2r","Does your pain radiate?","2","Rabies"));
-        questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","3","Rabies"));
-        questions.add(new Question("4r","What provokes your pain?","4","Rabies"));
-        questions.add(new Question("5r","Did this happen Before","4","Rabies"));
-
-        questions.add(new Question("1m","When Did the symptoms start?","4","Malaria"));
-        questions.add(new Question("2m","Is the pain progressing?","2","Malaria"));
-        questions.add(new Question("3m","Does your body show any signs of fever?","1","Malaria"));
-        questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","3","Malaria"));
-        questions.add(new Question("5m","Describe your pain in words.","4","Malaria"));
-
-        questions.add(new Question("1c","When Did the symptoms start?","4","Common Cold"));
-        questions.add(new Question("2c","Is the pain progressing?","1","Common Cold"));
-        questions.add(new Question("3c","Does your body show any signs of fever?","1","Common Cold"));
-        questions.add(new Question("4c","Have you taken any medications,if so what ?","4","Common Cold"));
-        questions.add(new Question("5c","Any prior medical history","4","Common Cold"));
 
 
 
-        mHelper.addallqns(questions);
-        mHelper.addallpatients(list);
+        ProgressDialog p=new ProgressDialog(this);
+        RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
+        Call<List<PatientJ>> call = client.getallpatients(n.getNid());
+        p.setMessage("Authenticating");
+        p.show();
+        call.enqueue(new Callback<List<PatientJ>>() {
+            @Override
+            public void onResponse(Call<List<PatientJ>> call, Response<List<PatientJ>> response) {
+                int statusCode = response.code();
+                Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
+                List<PatientJ> ls=new ArrayList<PatientJ>();
+                ls= response.body();
+                mHelper.addallpatients(ls,n.getNid());
+                p.dismiss();
+                Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<PatientJ>> call, Throwable t) {
+//
+                // Log error here since request failed
+                p.dismiss();
+                Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
+//                list.add(new PatientJ("1","12","Dolores","Abernathy","Female","23/10/97","Rabies","23/10/17","pending"));
+//                list.add(new PatientJ("2","12","Peter","Abernathy","Male","23/10/57","Common Cold","23/10/17","pending"));
+//                list.add(new PatientJ("3","12","Bernard","Lowe","Male","23/10/67","Malaria","23/10/17","pending"));
+//                list.add(new PatientJ("4","12","Elsie","Hughes","Female","23/10/87","Rabies","23/10/17","completed"));
+//                list.add(new PatientJ("5","12","Robert","Ford","Male","23/10/97","Rabies","23/10/17","completed"));
+//                list.add(new PatientJ("6","12","Maeve","M","Female","23/10/87","Malaria","23/10/17","pending"));
+//                mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
+//                mHelper.addallpatients(list);
+
+            }
+        });
+
+//
+//
+//        ArrayList<Question>questions=new ArrayList<>();
+//        questions.add(new Question("1r","How Would You Describe your pain?","1","Rabies"));
+//        questions.add(new Question("2r","Does your pain radiate?","2","Rabies"));
+//        questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","3","Rabies"));
+//        questions.add(new Question("4r","What provokes your pain?","4","Rabies"));
+//        questions.add(new Question("5r","Did this happen Before","4","Rabies"));
+//
+//        questions.add(new Question("1m","When Did the symptoms start?","4","Malaria"));
+//        questions.add(new Question("2m","Is the pain progressing?","2","Malaria"));
+//        questions.add(new Question("3m","Does your body show any signs of fever?","1","Malaria"));
+//        questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","3","Malaria"));
+//        questions.add(new Question("5m","Describe your pain in words.","4","Malaria"));
+//
+//        questions.add(new Question("1c","When Did the symptoms start?","4","Common Cold"));
+//        questions.add(new Question("2c","Is the pain progressing?","1","Common Cold"));
+//        questions.add(new Question("3c","Does your body show any signs of fever?","1","Common Cold"));
+//        questions.add(new Question("4c","Have you taken any medications,if so what ?","4","Common Cold"));
+//        questions.add(new Question("5c","Any prior medical history","4","Common Cold"));
+//
+//
+//
+//        mHelper.addallqns(questions);
 
 
 
-        Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+
+
     }
 
     @OnClick(R.id.butt2)
@@ -107,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         dl.addDrawerListener(abdt);
         abdt.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Nurse n=mHelper.getNurseDetails();
+        n=mHelper.getNurseDetails();
         mWelcome.setText("Welcome! "+n.getFirstname()+"\n "+n.getLastname());
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 

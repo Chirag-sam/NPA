@@ -110,6 +110,8 @@ public class LogIn extends AppCompatActivity {
                     int statusCode = response.code();
                     Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
                      Nurse N= response.body();
+                    N.setUname(email);
+                    N.setPassword(password);
                     mHelper.addNurse(N);
                     p.dismiss();
                     startActivity(new Intent(LogIn.this, MainActivity.class));
@@ -118,15 +120,15 @@ public class LogIn extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Nurse> call, Throwable t) {
-//                    edittextdialtil.setError("Invalid Username");
-//                    edittextdialtil1.setError("Invalid Password");
-//
-                    // Log error here since request failed
+                    edittextdialtil.setError("Invalid Username");
+                    edittextdialtil1.setError("Invalid Password");
+                    Log.e("Fail", "onFailure: ");
+                 //    Log error here since request failed
                     p.dismiss();
-                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
-                    startActivity(new Intent(LogIn.this, MainActivity.class));
-                  finish();
-//                    Log.e("Fail", "onFailure: ");
+//                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
+//                    startActivity(new Intent(LogIn.this, MainActivity.class));
+//                  finish();
+//
                 }
             });
 
