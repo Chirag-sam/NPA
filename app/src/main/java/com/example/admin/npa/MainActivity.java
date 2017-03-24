@@ -60,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
         ProgressDialog p=new ProgressDialog(this);
         RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
         Call<List<PatientJ>> call = client.getallpatients(n.getNid());
-        p.setMessage("Authenticating");
+        p.setMessage("Syncing Patients");
         p.show();
         call.enqueue(new Callback<List<PatientJ>>() {
             @Override
             public void onResponse(Call<List<PatientJ>> call, Response<List<PatientJ>> response) {
                 int statusCode = response.code();
-                Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
+            //    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
                 List<PatientJ> ls=new ArrayList<PatientJ>();
                 ls= response.body();
                 mHelper.addallpatients(ls,n.getNid());
@@ -92,7 +92,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//
+        List<String> dis=new ArrayList<>();
+        dis=mHelper.getalldiseases();
+
+        Call<List<Question>> call1=client.getallqns(dis);
+        p.setMessage("Syncing Qns");
+        p.show();
+        call1.enqueue(new Callback<List<Question>>() {
+            @Override
+            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                List<Question> questions=new ArrayList<Question>();
+                questions= response.body();
+                mHelper.addallqns(questions);
+                p.dismiss();
+                Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<Question>> call, Throwable t) {
+            p.dismiss();
+            }
+        });
+
+
 //
 //        ArrayList<Question>questions=new ArrayList<>();
 //        questions.add(new Question("1r","How Would You Describe your pain?","1","Rabies"));

@@ -208,7 +208,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         db.close(); // Closing database connection
 
     }
-    public void addallqns(ArrayList<Question> List) {
+    public void addallqns(List<Question> List) {
         SQLiteDatabase db = getWritableDatabase();
 
         for (Question N:List) {
@@ -415,7 +415,28 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // return contact list
         return patientlist;
     }
+    public ArrayList<String> getalldiseases() {
+        ArrayList<String> questions = new ArrayList<String>();
+        // Select All Query
+        String selectQuery = "SELECT  "+PATIENT_DISEASE+" FROM " + TABLE_PATIENT;
 
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+
+                questions.add(cursor.getString(0));
+
+                // Adding contact to list
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        // return contact list
+        return questions;
+    }
     public ArrayList<Question> getallquestions(String diseasetype) {
         ArrayList<Question> questions = new ArrayList<Question>();
         // Select All Query
