@@ -102,28 +102,28 @@ public class QuestionsActivity extends AppCompatActivity {
                 {   String x="";
                     int sc=0;
                     if (mCh1.isChecked())
-                    {   sc+=6;
-                        x=x.concat(mCh1.getText().toString());
+                    {   sc+=1;
+                        x=x.concat(mCh1.getText().toString()+",");
                     }
                     if (mCh2.isChecked())
-                    {   sc+=7;
-                        x=x.concat(mCh2.getText().toString());
+                    {   sc+=2;
+                        x=x.concat(mCh2.getText().toString()+",");
                     }
                     if (mCh3.isChecked())
-                    {   sc+=8;
-                        x=x.concat(mCh3.getText().toString());
+                    {   sc+=3;
+                        x=x.concat(mCh3.getText().toString()+",");
                     }
                     if (mCh4.isChecked())
-                    {   sc+=9;
-                        x=x.concat(mCh4.getText().toString());
+                    {   sc+=4;
+                        x=x.concat(mCh4.getText().toString()+",");
                     }
                     if (mCh5.isChecked())
-                    {   sc+=10;
-                        x=x.concat(mCh5.getText().toString());
+                    {   sc+=5;
+                        x=x.concat(mCh5.getText().toString()+",");
                     }
                     l.get(posx).setScore(String.valueOf(sc));
                     l.get(posx).setAnswer(x);
-                    l.get(posx).setMaxscore("40");
+                    l.get(posx).setMaxscore("15");
                     Log.e("nextqb", "setnextquest: "+x);
                     posx=posx+1;
                     setAnsType(posx);
@@ -146,18 +146,18 @@ public class QuestionsActivity extends AppCompatActivity {
 // Now you can get the text or whatever you want from the "selected" radio button
                     Log.e("asxz", "setnextquest: "+b.getText().toString() );
                     if (b.getText().toString().equals("None"))
-                        sc=6;
+                        sc=1;
                     else if (b.getText().toString().equals("Mild"))
-                        sc=7;
+                        sc=2;
                     else if (b.getText().toString().equals("Moderate"))
-                        sc=8;
+                        sc=3;
                     else if (b.getText().toString().equals("Severe"))
-                        sc=9;
+                        sc=4;
                     else if (b.getText().toString().equals("Extreme"))
-                        sc=10;
+                        sc=5;
                     l.get(posx).setAnswer(b.getText().toString());
                     l.get(posx).setScore(String.valueOf(sc));
-                    l.get(posx).setMaxscore("10");
+                    l.get(posx).setMaxscore("5");
                     posx=posx+1;
                     setAnsType(posx);
 
@@ -183,8 +183,8 @@ public class QuestionsActivity extends AppCompatActivity {
                     Toast.makeText(QuestionsActivity.this,"Cant be empty",Toast.LENGTH_SHORT).show();
                 else {
                     l.get(posx).setAnswer(mEdittextqn.getText().toString());
-                    l.get(posx).setScore("0");
-                    l.get(posx).setMaxscore("0");
+                    l.get(posx).setScore("1");
+                    l.get(posx).setMaxscore("1");
                     posx=posx+1;
                     setAnsType(posx);
                 }

@@ -368,7 +368,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                N.add(new Question(cursor.getString(1), cursor.getString(2), cursor.getString(3)));
+                N.add(new Question(cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getString(5)));
 
                 // Adding contact to list
             } while (cursor.moveToNext());

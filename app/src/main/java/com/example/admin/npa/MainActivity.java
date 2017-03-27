@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.butt1)
     void sync() {
-        ArrayList<PatientJ> list=new ArrayList<>();
+        List<PatientJ> list=new ArrayList<>();
 
 
 
@@ -103,14 +103,37 @@ public class MainActivity extends AppCompatActivity {
                 // Log error here since request failed
                 p.dismiss();
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
-//                list.add(new PatientJ("1","12","Dolores","Abernathy","Female","23/10/97","Rabies","23/10/17","pending"));
-//                list.add(new PatientJ("2","12","Peter","Abernathy","Male","23/10/57","Common Cold","23/10/17","pending"));
-//                list.add(new PatientJ("3","12","Bernard","Lowe","Male","23/10/67","Malaria","23/10/17","pending"));
-//                list.add(new PatientJ("4","12","Elsie","Hughes","Female","23/10/87","Rabies","23/10/17","completed"));
-//                list.add(new PatientJ("5","12","Robert","Ford","Male","23/10/97","Rabies","23/10/17","completed"));
-//                list.add(new PatientJ("6","12","Maeve","M","Female","23/10/87","Malaria","23/10/17","pending"));
-//                mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
-//                mHelper.addallpatients(list);
+                list.add(new PatientJ("1","12","Dolores","Abernathy","Female","10/10/1997","DIA-123","23/10/17","pending"));
+                list.add(new PatientJ("2","12","Peter","Abernathy","Male","10/10/1957","TUB-123","23/10/17","pending"));
+                list.add(new PatientJ("3","12","Bernard","Lowe","Male","10/10/1967","CBR-331","23/10/17","pending"));
+                list.add(new PatientJ("4","12","Elsie","Hughes","Female","10/10/1987","DIA-123","23/10/17","completed"));
+                list.add(new PatientJ("5","12","Robert","Ford","Male","10/10/1997","DIA-123","23/10/17","completed"));
+                list.add(new PatientJ("6","12","Maeve","M","Female","10/10/1987","CBR-331","23/10/17","pending"));
+
+                mHelper.addallpatients(list,n.getNid());
+
+                ArrayList<Question>questions=new ArrayList<>();
+                questions.add(new Question("1r","How Would You Describe your pain?","1","DIA-123"));
+                questions.add(new Question("2r","Does your pain radiate?","2","DIA-123"));
+                questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","3","DIA-123"));
+                questions.add(new Question("4r","What provokes your pain?","4","DIA-123"));
+                questions.add(new Question("5r","Did this happen Before","4","DIA-123"));
+
+                questions.add(new Question("1m","When Did the symptoms start?","4","TUB-123"));
+                questions.add(new Question("2m","Is the pain progressing?","2","TUB-123"));
+                questions.add(new Question("3m","Does your body show any signs of fever?","1","TUB-123"));
+                questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","3","TUB-123"));
+                questions.add(new Question("5m","Describe your pain in words.","4","TUB-123"));
+
+                questions.add(new Question("1c","When Did the symptoms start?","4","CBR-331"));
+                questions.add(new Question("2c","Is the pain progressing?","1","CBR-331"));
+                questions.add(new Question("3c","Does your body show any signs of fever?","1","CBR-331"));
+                questions.add(new Question("4c","Have you taken any medications,if so what ?","4","CBR-331"));
+                questions.add(new Question("5c","Any prior medical history","4","CBR-331"));
+
+
+
+                mHelper.addallqns(questions);
 
             }
         });

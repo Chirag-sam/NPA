@@ -14,12 +14,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+import static com.example.admin.npa.PatientAdapter.getage;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -32,7 +37,7 @@ public class ResultActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-   static String pid;
+    static String pid;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -42,8 +47,8 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        pid=getIntent().getExtras().getString("pid");
-        Log.e("sadxxz", "onCreate: "+pid );
+        pid = getIntent().getExtras().getString("pid");
+        Log.e("sadxxz", "onCreate: " + pid);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -75,7 +80,17 @@ public class ResultActivity extends AppCompatActivity {
         @BindView(R.id.recyclerv)
         RecyclerView recyclerv;
         DatabaseOpenHelper mHelper;
-        List<Question> list=new ArrayList<>();
+        List<Question> list = new ArrayList<>();
+        @BindView(R.id.iv)
+        ImageView mIv;
+        @BindView(R.id.name)
+        TextView mName;
+        @BindView(R.id.date)
+        TextView mDate;
+        @BindView(R.id.illness)
+        TextView mIllness;
+        Unbinder mUnbinder;
+
         public ResultFragment() {
         }
 
@@ -94,13 +109,20 @@ public class ResultActivity extends AppCompatActivity {
 
             View rootView = inflater.inflate(R.layout.fragment_result, container, false);
 
-            ButterKnife.bind(this, rootView);
+            mUnbinder = ButterKnife.bind(this, rootView);
 
             recyclerv.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerv.setHasFixedSize(false);
             mHelper = DatabaseOpenHelper.getInstance(getActivity());
-            list=mHelper.getallResponse(pid);
-            Log.e("zxczxc", "onCreateView: "+list.get(0).getQid() );
+            list = mHelper.getallResponse(pid);
+            PatientJ p = mHelper.getPatient(pid);
+            if (p.getGender().equals("Male"))
+                mIv.setImageResource(R.drawable.ic_man_shape);
+            else mIv.setImageResource(R.drawable.ic_woman_silhouette);
+            mName.setText(p.getFname() + " " + p.getLname() + ", " + getage(p.getDob()));
+            mDate.setText(p.getAppdate());
+            mIllness.setText(p.getDisease());
+            Log.e("zxczxc", "onCreateView: " + list.get(0).getQid());
 
             adapter = new ResultQuestionAdapter(list);
             recyclerv.setAdapter(adapter);
@@ -108,6 +130,11 @@ public class ResultActivity extends AppCompatActivity {
         }
 
 
+        @Override
+        public void onDestroyView() {
+            super.onDestroyView();
+            mUnbinder.unbind();
+        }
     }
 
     public static class ReportFragment extends Fragment {
@@ -116,7 +143,11 @@ public class ResultActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
+        @BindView(R.id.gauge)
+        GaugeView mGauge;
+        Unbinder unbinder;
+        DatabaseOpenHelper mHelper;
+        List<Question> list = new ArrayList<>();
         public ReportFragment() {
         }
 
@@ -134,7 +165,18 @@ public class ResultActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_report, container, false);
 
+            unbinder = ButterKnife.bind(this, rootView);
+            mHelper = DatabaseOpenHelper.getInstance(getActivity());
+            list = mHelper.getallResponse(pid);
+            PatientJ p = mHelper.getPatient(pid);
+            mGauge.setData(list);
             return rootView;
+        }
+
+        @Override
+        public void onDestroyView() {
+            super.onDestroyView();
+            unbinder.unbind();
         }
     }
 

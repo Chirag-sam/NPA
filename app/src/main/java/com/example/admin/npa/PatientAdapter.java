@@ -10,7 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,9 +30,6 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         this.myItems = myItems;
         this.mContext = mContext;
     }
-
-
-
 
 
     @Override
@@ -47,14 +49,12 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(mContext,QuestionsActivity.class);
-                i.putExtra("uid",myItems.get(position).getPid());
+                Intent i = new Intent(mContext, QuestionsActivity.class);
+                i.putExtra("uid", myItems.get(position).getPid());
                 mContext.startActivity(i);
             }
         });
     }
-
-
 
 
     static
@@ -84,10 +84,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
 
         public void setData(PatientJ item) {
             this.item = item;
+
             if (item.getGender().equals("Male"))
                 iv.setImageResource(R.drawable.ic_man_shape);
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
-            name.setText(item.getFname()+ " "+item.getLname());
+            name.setText(item.getFname() + " " + item.getLname()+", "+getage(item.getDob()));
             date.setText(item.getAppdate());
             illness.setText(item.getDisease());
 
@@ -101,7 +102,24 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         }
     }
 
+    public static String getage(String date) {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        Calendar cal = Calendar.getInstance();
+        Calendar currentDate = Calendar.getInstance();
+        try {
+            cal.setTime(df.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int age = currentDate.get(Calendar.YEAR) - cal.get(Calendar.YEAR);
 
+        if (currentDate.get(Calendar.DAY_OF_YEAR) < cal.get(Calendar.DAY_OF_YEAR)) {
+            age--;
+        }
 
+        Integer ageInt = age;
+
+        return ageInt.toString();
+    }
 }
                                 

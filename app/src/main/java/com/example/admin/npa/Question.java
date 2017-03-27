@@ -59,6 +59,14 @@ public class Question {
         this.diseasetype = diseasetype;
     }
 
+    public Question(String qid, String qdesc, String answer, String score, String maxscore) {
+        this.qid = qid;
+        this.qdesc = qdesc;
+        this.answer = answer;
+        this.score = score;
+        this.maxscore = maxscore;
+    }
+
     public String getDiseasetype() {
         return diseasetype;
     }

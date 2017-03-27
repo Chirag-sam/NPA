@@ -12,5 +12,9 @@
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+<com.example.admin.npa.GaugeView android:layout_width="match_parent"
+                                 android:layout_height="300dp"
 
+                    android:id="@+id/gauge"
+/>
 </RelativeLayout>
