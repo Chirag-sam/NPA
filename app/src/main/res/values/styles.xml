@@ -20,7 +20,9 @@
         <item name="android:textColor">@android:color/background_light</item>
 
     </style>
-
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:gravity">center</item>
+    </style>
     <style name="AccentButton1" parent="Widget.AppCompat.Button">
         <item name="colorButtonNormal">@color/primary</item>
         <item name="android:textColor">@android:color/background_light</item>

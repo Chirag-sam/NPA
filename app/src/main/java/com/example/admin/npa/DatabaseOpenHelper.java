@@ -20,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION =15;
+    private static final int DATABASE_VERSION =16;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -59,6 +59,10 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String RESPONSE_QID = "qid";
     private static final String RESPONSE_QUESTION= "question";
     private static final String RESPONSE_ANSWER = "answer";
+    private static final String RESPONSE_SCORE = "score";
+    private static final String RESPONSE_MAXSCORE = "maxscore";
+
+
 
     private static final String TABLE_QUESTION = "questions";
 
@@ -116,7 +120,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 + RESPONSE_ID + " TEXT," +
                 RESPONSE_QID + " TEXT ,"
                 +RESPONSE_QUESTION+" TEXT ,"
-                + RESPONSE_ANSWER + " TEXT "
+                + RESPONSE_ANSWER + " TEXT, "
+                + RESPONSE_SCORE + " TEXT, "
+                + RESPONSE_MAXSCORE + " TEXT "
                 + ")";
         sqLiteDatabase.execSQL(CREATE_RESPONSE_TABLE);
         String CREATE_QUESTION_TABLE = "CREATE TABLE " + TABLE_QUESTION + " ("
@@ -256,6 +262,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(RESPONSE_QID, N.getQid());
         values.put(RESPONSE_QUESTION,N.getQdesc());
         values.put(RESPONSE_ANSWER, N.getAnswer());
+        values.put(RESPONSE_SCORE, N.getScore());
+        values.put(RESPONSE_MAXSCORE, N.getMaxscore());
 
         // Inserting Row
         long id = db.insert(TABLE_RESPONSE, null, values);

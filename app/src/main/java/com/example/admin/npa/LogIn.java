@@ -122,6 +122,8 @@ public class LogIn extends AppCompatActivity {
                 public void onFailure(Call<Nurse> call, Throwable t) {
                     edittextdialtil.setError("Invalid Username");
                     edittextdialtil1.setError("Invalid Password");
+
+
                     Log.e("Fail", "onFailure: ");
                  //    Log error here since request failed
                     p.dismiss();

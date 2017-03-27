@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Very mild"
+                android:text="None"
                 android:textSize="20dp" />
 
             <CheckBox
@@ -87,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Strong"
+                android:text="Moderate"
                 android:textSize="20dp" />
 
             <CheckBox
@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Extreme"
+                android:text="Severe"
                 android:textSize="20dp" />
 
             <CheckBox
@@ -103,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Unbearable"
+                android:text="Extreme"
                 android:textSize="20dp" />
         </LinearLayout>
 
@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Very mild"
+                    android:text="None"
                     android:textSize="20dp" />
 
                 <RadioButton
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Strong"
+                    android:text="Moderate"
                     android:textSize="20dp" />
 
                 <RadioButton
@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Extreme"
+                    android:text="Severe"
                     android:textSize="20dp" />
 
                 <RadioButton
@@ -152,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="Unbearable"
+                    android:text="Extreme"
                     android:textSize="20dp" />
             </RadioGroup>
             <SeekBar

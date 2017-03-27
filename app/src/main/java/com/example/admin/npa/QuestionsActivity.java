@@ -100,17 +100,30 @@ public class QuestionsActivity extends AppCompatActivity {
 
                 if (mCh1.isChecked()||mCh2.isChecked()||mCh3.isChecked()||mCh4.isChecked()||mCh5.isChecked())
                 {   String x="";
+                    int sc=0;
                     if (mCh1.isChecked())
+                    {   sc+=6;
                         x=x.concat(mCh1.getText().toString());
+                    }
                     if (mCh2.isChecked())
+                    {   sc+=7;
                         x=x.concat(mCh2.getText().toString());
+                    }
                     if (mCh3.isChecked())
+                    {   sc+=8;
                         x=x.concat(mCh3.getText().toString());
+                    }
                     if (mCh4.isChecked())
+                    {   sc+=9;
                         x=x.concat(mCh4.getText().toString());
+                    }
                     if (mCh5.isChecked())
+                    {   sc+=10;
                         x=x.concat(mCh5.getText().toString());
+                    }
+                    l.get(posx).setScore(String.valueOf(sc));
                     l.get(posx).setAnswer(x);
+                    l.get(posx).setMaxscore("40");
                     Log.e("nextqb", "setnextquest: "+x);
                     posx=posx+1;
                     setAnsType(posx);
@@ -129,10 +142,22 @@ public class QuestionsActivity extends AppCompatActivity {
 
 // Gets a reference to our "selected" radio button
                     RadioButton b = (RadioButton) findViewById(selected);
-
+                    int sc=0;
 // Now you can get the text or whatever you want from the "selected" radio button
                     Log.e("asxz", "setnextquest: "+b.getText().toString() );
+                    if (b.getText().toString().equals("None"))
+                        sc=6;
+                    else if (b.getText().toString().equals("Mild"))
+                        sc=7;
+                    else if (b.getText().toString().equals("Moderate"))
+                        sc=8;
+                    else if (b.getText().toString().equals("Severe"))
+                        sc=9;
+                    else if (b.getText().toString().equals("Extreme"))
+                        sc=10;
                     l.get(posx).setAnswer(b.getText().toString());
+                    l.get(posx).setScore(String.valueOf(sc));
+                    l.get(posx).setMaxscore("10");
                     posx=posx+1;
                     setAnsType(posx);
 
@@ -144,6 +169,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 //Slider
                 int y=mSeekBar.getProgress();
                 l.get(posx).setAnswer(String.valueOf(y));
+                l.get(posx).setScore(String.valueOf(y));
+                l.get(posx).setMaxscore("5");
                 posx=posx+1;
                 setAnsType(posx);
 
@@ -153,9 +180,11 @@ public class QuestionsActivity extends AppCompatActivity {
 
 
                 if (TextUtils.isEmpty(mEdittextqn.getText().toString().trim()))
-                    Toast.makeText(QuestionsActivity.this,"Choose one",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QuestionsActivity.this,"Cant be empty",Toast.LENGTH_SHORT).show();
                 else {
                     l.get(posx).setAnswer(mEdittextqn.getText().toString());
+                    l.get(posx).setScore("0");
+                    l.get(posx).setMaxscore("0");
                     posx=posx+1;
                     setAnsType(posx);
                 }
@@ -225,19 +254,19 @@ public class QuestionsActivity extends AppCompatActivity {
 
                     String x=l.get(i).getAnswer();
                     Log.e("asjsajjsa.jV", "setAnsType: "+x);
-                    if (x.contains("Very mild"))
+                    if (x.contains("None"))
                         mCh1.setChecked(true);
 
                      if (x.contains("Mild"))
                        mCh2.setChecked(true);
 
-                     if (x.contains("Strong"))
+                     if (x.contains("Moderate"))
                         mCh3.setChecked(true);
 
-                     if (x.contains("Extreme"))
+                     if (x.contains("Severe"))
                         mCh4.setChecked(true);
 
-                     if (x.contains("Unbearable"))
+                     if (x.contains("Extreme"))
                         mCh5.setChecked(true);
 
 
@@ -254,15 +283,15 @@ public class QuestionsActivity extends AppCompatActivity {
                 if (l.get(i).getAnswer()!=null) {
                 String x=l.get(i).getAnswer();
                     Log.e("asxzcsa", "setAnsType: "+x);
-                    if (x.equals("Very mild"))
+                    if (x.equals("None"))
                         mRdb1.setChecked(true);
                     else if (x.equals("Mild"))
                         mRdb2.setChecked(true);
-                    else if (x.equals("Strong"))
+                    else if (x.equals("Moderate"))
                         mRdb3.setChecked(true);
-                    else if (x.equals("Extreme"))
+                    else if (x.equals("Severe"))
                         mRdb4.setChecked(true);
-                    else if (x.equals("Unbearable"))
+                    else if (x.equals("Extreme"))
                         mRdb5.setChecked(true);
 
                 }

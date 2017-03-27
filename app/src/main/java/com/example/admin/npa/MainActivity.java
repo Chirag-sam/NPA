@@ -70,8 +70,31 @@ public class MainActivity extends AppCompatActivity {
                 List<PatientJ> ls=new ArrayList<PatientJ>();
                 ls= response.body();
                 mHelper.addallpatients(ls,n.getNid());
+                ArrayList<Question>questions=new ArrayList<>();
+                questions.add(new Question("1r","How Would You Describe your pain?","1","DIA-123"));
+                questions.add(new Question("2r","Does your pain radiate?","2","DIA-123"));
+                questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","3","DIA-123"));
+                questions.add(new Question("4r","What provokes your pain?","4","DIA-123"));
+                questions.add(new Question("5r","Did this happen Before","4","DIA-123"));
+
+                questions.add(new Question("1m","When Did the symptoms start?","4","TUB-123"));
+                questions.add(new Question("2m","Is the pain progressing?","2","TUB-123"));
+                questions.add(new Question("3m","Does your body show any signs of fever?","1","TUB-123"));
+                questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","3","TUB-123"));
+                questions.add(new Question("5m","Describe your pain in words.","4","TUB-123"));
+
+                questions.add(new Question("1c","When Did the symptoms start?","4","CBR-331"));
+                questions.add(new Question("2c","Is the pain progressing?","1","CBR-331"));
+                questions.add(new Question("3c","Does your body show any signs of fever?","1","CBR-331"));
+                questions.add(new Question("4c","Have you taken any medications,if so what ?","4","CBR-331"));
+                questions.add(new Question("5c","Any prior medical history","4","CBR-331"));
+
+
+
+                mHelper.addallqns(questions);
                 p.dismiss();
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+
             }
 
             @Override
@@ -91,53 +114,33 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        List<String> dis=new ArrayList<>();
-        dis=mHelper.getalldiseases();
-
-        Call<List<Question>> call1=client.getallqns(dis);
-        p.setMessage("Syncing Qns");
-        p.show();
-        call1.enqueue(new Callback<List<Question>>() {
-            @Override
-            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
-                List<Question> questions=new ArrayList<Question>();
-                questions= response.body();
-                mHelper.addallqns(questions);
-                p.dismiss();
-                Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<List<Question>> call, Throwable t) {
-            p.dismiss();
-            }
-        });
-
-
 //
-//        ArrayList<Question>questions=new ArrayList<>();
-//        questions.add(new Question("1r","How Would You Describe your pain?","1","Rabies"));
-//        questions.add(new Question("2r","Does your pain radiate?","2","Rabies"));
-//        questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","3","Rabies"));
-//        questions.add(new Question("4r","What provokes your pain?","4","Rabies"));
-//        questions.add(new Question("5r","Did this happen Before","4","Rabies"));
+//        List<String> dis=new ArrayList<>();
+//        dis=mHelper.getalldiseases();
 //
-//        questions.add(new Question("1m","When Did the symptoms start?","4","Malaria"));
-//        questions.add(new Question("2m","Is the pain progressing?","2","Malaria"));
-//        questions.add(new Question("3m","Does your body show any signs of fever?","1","Malaria"));
-//        questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","3","Malaria"));
-//        questions.add(new Question("5m","Describe your pain in words.","4","Malaria"));
+//        Call<List<Question>> call1=client.getallqns(dis);
+//        p.setMessage("Syncing Qns");
+//        p.show();
+//        call1.enqueue(new Callback<List<Question>>() {
+//            @Override
+//            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+//                List<Question> questions=new ArrayList<Question>();
+//                questions= response.body();
+//                mHelper.addallqns(questions);
+//                p.dismiss();
+//                Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+//            }
 //
-//        questions.add(new Question("1c","When Did the symptoms start?","4","Common Cold"));
-//        questions.add(new Question("2c","Is the pain progressing?","1","Common Cold"));
-//        questions.add(new Question("3c","Does your body show any signs of fever?","1","Common Cold"));
-//        questions.add(new Question("4c","Have you taken any medications,if so what ?","4","Common Cold"));
-//        questions.add(new Question("5c","Any prior medical history","4","Common Cold"));
+//            @Override
+//            public void onFailure(Call<List<Question>> call, Throwable t) {
+//            p.dismiss();
+//                Log.e("jghffh", "onFailure: " );
+//                Snackbar.make(findViewById(R.id.activity_main), "Sync failed adding fake qns", Snackbar.LENGTH_LONG).show();
 //
 //
 //
-//        mHelper.addallqns(questions);
+//            }
+//        });
 
 
 

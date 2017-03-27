@@ -20,7 +20,8 @@ public class Question {
     @SerializedName("diseasetype")
     public String diseasetype;
     public String answer;
-
+    public String score;
+    public String maxscore;
     public String getAnswer() {
         return answer;
     }
@@ -29,6 +30,22 @@ public class Question {
         this.qid = qid;
         this.qdesc = qdesc;
         this.answer = answer;
+    }
+
+    public String getMaxscore() {
+        return maxscore;
+    }
+
+    public void setMaxscore(String maxscore) {
+        this.maxscore = maxscore;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 
     public void setAnswer(String answer) {

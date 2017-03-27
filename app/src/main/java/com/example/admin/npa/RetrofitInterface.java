@@ -30,7 +30,7 @@ public interface RetrofitInterface {
     Call<List<PatientJ>> getallpatients(
             @Query("nid") String nid);
 
-    @GET("json_Sync.jsp")
+    @GET("json_SyncQns.jsp")
     Call<List<Question>> getallqns(
             @Query("disease")List<String> x);
     //1	20170322110413929	Shade2105	pen121	Vignesh	B	Male
