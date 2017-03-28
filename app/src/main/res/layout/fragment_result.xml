@@ -4,39 +4,42 @@
     android:layout_height="match_parent"
 
     tools:context="com.example.admin.npa.ResultActivity$ResultFragment">
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                        android:id="@+id/cv"
-                                        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
 
-                                        android:layout_height="wrap_content"
-                                        android:clickable="false"
-                                        android:focusable="true"
-                                        card_view:cardBackgroundColor="@android:color/background_light"
-                                        card_view:cardCornerRadius="4dp"
-                                        card_view:cardElevation="3dp"
-                                        card_view:cardUseCompatPadding="true"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
-                                        card_view:contentPadding="8dp">
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@android:color/background_light"
+        card_view:cardCornerRadius="4dp"
+
+        card_view:cardElevation="3dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:contentPadding="10dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/iv"
-                android:layout_width="75dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/illness"
                 android:layout_alignTop="@+id/name"
                 android:layout_marginRight="20dp"
                 card_view:srcCompat="@drawable/ic_man_shape"
-            />
+                />
 
             <ImageView
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/personpic"
                 android:layout_marginRight="10dp"
+                android:layout_alignTop="@+id/name"
 
                 card_view:srcCompat="@drawable/ic_person_black_24dp"
                 android:layout_toRightOf="@+id/iv"/>
@@ -44,24 +47,24 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/personpic"
                 android:gravity="bottom"
                 android:layout_toRightOf="@+id/personpic"
                 android:text="Name"
 
-                android:textSize="20dp" />
+                android:textSize="18dp" />
             <ImageView
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/datpic"
                 android:layout_marginRight="10dp"
                 android:layout_below="@+id/name"
+                android:layout_alignTop="@+id/date"
+
                 card_view:srcCompat="@drawable/ic_date_range_black_24dp"
                 android:layout_toRightOf="@+id/iv"/>
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/date"
-                android:layout_alignBottom="@+id/datpic"
                 android:gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,20 +74,21 @@
 
                 android:textSize="16dp" />
             <ImageView
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/diseasepic"
                 android:layout_marginRight="10dp"
                 android:layout_below="@+id/date"
+                android:layout_alignTop="@+id/illness"
+
                 card_view:srcCompat="@drawable/ic_health_care"
                 android:layout_toRightOf="@+id/iv"/>
             <TextView
+                android:layout_marginTop="8dp"
                 android:id="@+id/illness"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/date"
-                android:layout_alignBottom="@+id/diseasepic"
                 android:layout_toRightOf="@+id/diseasepic"
                 android:gravity="bottom"
                 android:text="Illness"
@@ -93,8 +97,6 @@
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
-
     <android.support.v7.widget.RecyclerView
         android:layout_below="@id/cv"
         android:id="@+id/recyclerv"
