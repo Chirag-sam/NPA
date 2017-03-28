@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.sccomponents.widgets.ScArcGauge;
+import com.sccomponents.widgets.ScGauge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +94,6 @@ public class ResultActivity extends AppCompatActivity {
         @BindView(R.id.illness)
         TextView mIllness;
         Unbinder mUnbinder;
-
         public ResultFragment() {
         }
 
@@ -115,6 +118,7 @@ public class ResultActivity extends AppCompatActivity {
             recyclerv.setHasFixedSize(false);
             mHelper = DatabaseOpenHelper.getInstance(getActivity());
             list = mHelper.getallResponse(pid);
+            Nurse n=mHelper.getNurseDetails();
             PatientJ p = mHelper.getPatient(pid);
             if (p.getGender().equals("Male"))
                 mIv.setImageResource(R.drawable.ic_man_shape);
@@ -122,6 +126,7 @@ public class ResultActivity extends AppCompatActivity {
             mName.setText(p.getFname() + " " + p.getLname() + ", " + getage(p.getDob()));
             mDate.setText(p.getAppdate());
             mIllness.setText(p.getDisease());
+
             Log.e("zxczxc", "onCreateView: " + list.get(0).getQid());
 
             adapter = new ResultQuestionAdapter(list);
@@ -144,10 +149,38 @@ public class ResultActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
         @BindView(R.id.gauge)
-        GaugeView mGauge;
+        ScArcGauge mGauge;
         Unbinder unbinder;
         DatabaseOpenHelper mHelper;
         List<Question> list = new ArrayList<>();
+        @BindView(R.id.indicator)
+        ImageView indicator;
+        @BindView(R.id.iv)
+        ImageView iv;
+        @BindView(R.id.personpic)
+        ImageView personpic;
+        @BindView(R.id.name)
+        TextView name;
+        @BindView(R.id.datpic)
+        ImageView datpic;
+        @BindView(R.id.date)
+        TextView date;
+        @BindView(R.id.diseasepic)
+        ImageView diseasepic;
+        @BindView(R.id.illness)
+        TextView illness;
+        @BindView(R.id.cv)
+        CardView cv;
+        @BindView(R.id.riskscore)
+        TextView riskscore;
+        @BindView(R.id.providername)
+        TextView providername;
+        @BindView(R.id.appointmentdate)
+        TextView appointmentdate;
+        @BindView(R.id.reportdate)
+        TextView reportdate;
+
+
         public ReportFragment() {
         }
 
@@ -169,7 +202,30 @@ public class ResultActivity extends AppCompatActivity {
             mHelper = DatabaseOpenHelper.getInstance(getActivity());
             list = mHelper.getallResponse(pid);
             PatientJ p = mHelper.getPatient(pid);
-            mGauge.setData(list);
+            Nurse n=mHelper.getNurseDetails();
+            if (p.getGender().equals("Male"))
+                iv.setImageResource(R.drawable.ic_man_shape);
+            else iv.setImageResource(R.drawable.ic_woman_silhouette);
+            name.setText(p.getFname() + " " + p.getLname() + ", " + getage(p.getDob()));
+            date.setText(p.getAppdate());
+            illness.setText(p.getDisease());
+            riskscore.setText("Risk Score: "+gettotal(list)+"/"+getmaxtotal(list));
+            providername.setText("Provider Name: "+n.getFirstname()+" "+n.getLastname());
+            appointmentdate.setText("Appointment Date: "+p.getAppdate());
+            reportdate.setText("Reporting Date: "+p.getAppdate());
+
+            indicator.setPivotX(30f);
+            indicator.setPivotY(30f);
+            float angle = mGauge.percentageToAngle(getpercentage(list));
+            indicator.setRotation(angle);
+
+            mGauge.setOnEventListener(new ScGauge.OnEventListener() {
+                @Override
+                public void onValueChange(float v, float v1) {
+                    float angle = mGauge.percentageToAngle(v1);
+                    indicator.setRotation(angle);
+                }
+            });
             return rootView;
         }
 
@@ -177,6 +233,16 @@ public class ResultActivity extends AppCompatActivity {
         public void onDestroyView() {
             super.onDestroyView();
             unbinder.unbind();
+        }
+
+        float getpercentage(List<Question> data) {
+
+
+            float total = getmaxtotal(data);
+
+            float ptotal = gettotal(data);
+
+            return ((ptotal / total) * 100);
         }
     }
 
@@ -217,5 +283,23 @@ public class ResultActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+    public static float gettotal(List<Question> data)
+    {
+        float ptotal = 0;
+
+        for (int j = 0; j < data.size(); j++)
+
+            ptotal += Float.parseFloat(data.get(j).getScore());
+        return ptotal;
+    }
+    public static float getmaxtotal(List<Question> data)
+    {
+        float total=0;
+        for (int i = 0; i < data.size(); i++)
+
+            total += Float.parseFloat(data.get(i).getMaxscore());
+
+    return total;
     }
 }

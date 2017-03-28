@@ -207,13 +207,14 @@ public class GaugeView extends View{
 
     private float[] pieSegment(){
 
-        float[] segValues = new float[this.data.size()];
-        float Total = getTotal();
-
-        for (int i = 0; i < this.data.size(); i++){
-
-            segValues[i] = (Float.parseFloat(this.data.get(i).getMaxscore())/Total) *180;
-        }
+        float[] segValues ={60,60,60};
+//        float[] segValues = new float[this.data.size()];
+//        float Total = getTotal();
+//
+//        for (int i = 0; i < this.data.size(); i++){
+//
+//            segValues[i] = (Float.parseFloat(this.data.get(i).getMaxscore())/Total) *180;
+//        }
 
         return segValues;
     }
@@ -247,7 +248,11 @@ public class GaugeView extends View{
     public void setData(List<Question> data){
 
         this.data = data;
-        angle=(int)((getScoretot()/getTotal())*180);
+
+        //angle=(int)((getScoretot()/getTotal())*180);
+
+        Log.e("Guage", "setData: "+getScoretot()+" "+getTotal() +" "+angle);
+        //angle=70;
         invalidate();
     }
 
