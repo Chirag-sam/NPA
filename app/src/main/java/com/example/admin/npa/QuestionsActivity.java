@@ -22,11 +22,18 @@ import org.json.JSONException;
 
 import java.io.IOError;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.admin.npa.ResultActivity.getmaxtotal;
+import static com.example.admin.npa.ResultActivity.gettotal;
 
 public class QuestionsActivity extends AppCompatActivity {
     int arr[] = {R.layout.questionlayoutmcqmany, R.layout.questionlayoutmcqone, R.layout.questionlayoutslider, R.layout.questionedittext};
@@ -198,6 +205,12 @@ public class QuestionsActivity extends AppCompatActivity {
         {
             mHelper.addallresponse(l,p.getPid());
             p.setStatus("completed");
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS",Locale.US);
+            String strDate = sdf.format(cal.getTime());
+            p.setRepdate(strDate);
+            p.setRepscore(String.valueOf(gettotal(l)));
+            p.setRepmaxscore(String.valueOf(getmaxtotal(l)));
             mHelper.updatepatient(p);
             Toast.makeText(QuestionsActivity.this,"Answers Have been saved!",Toast.LENGTH_LONG).show();
             Intent x=new Intent(QuestionsActivity.this,ResultActivity.class);

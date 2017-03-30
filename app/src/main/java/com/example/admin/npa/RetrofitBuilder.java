@@ -3,6 +3,8 @@ package com.example.admin.npa;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import okhttp3.OkHttpClient;
+
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -11,8 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitBuilder {
-    public static final  String API_BASE_URL = "http://192.168.0.102:8080/HIK2.0/Dashboard/";
-
+    public static final  String API_BASE_URL = "http://LOCALHOST:8080/HIK2.0/Dashboard/";
 
     public static  OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addNetworkInterceptor(new StethoInterceptor());
 
@@ -31,4 +32,5 @@ public class RetrofitBuilder {
         return retrofit.create(serviceClass);
     }
     RetrofitInterface nurse =  retrofit.create(RetrofitInterface.class);
+
 }

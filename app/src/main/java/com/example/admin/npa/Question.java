@@ -9,8 +9,8 @@ import java.util.List;
  */
 
 public class Question {
-
-
+    @SerializedName("pid")
+    public String pid;
     @SerializedName("qid")
     public String qid;
     @SerializedName("qdesc")
@@ -19,11 +19,23 @@ public class Question {
     public String restype;
     @SerializedName("diseasetype")
     public String diseasetype;
+    @SerializedName("answer")
     public String answer;
+    @SerializedName("score")
     public String score;
+    @SerializedName("maxscore")
     public String maxscore;
     public String getAnswer() {
         return answer;
+    }
+
+    public Question(String pid, String qid, String qdesc, String answer, String score, String maxscore) {
+        this.pid = pid;
+        this.qid = qid;
+        this.qdesc = qdesc;
+        this.answer = answer;
+        this.score = score;
+        this.maxscore = maxscore;
     }
 
     public Question(String qid, String qdesc, String answer) {

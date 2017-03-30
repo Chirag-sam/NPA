@@ -11,8 +11,10 @@ import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -30,9 +32,9 @@ public interface RetrofitInterface {
     Call<List<PatientJ>> getallpatients(
             @Query("nid") String nid);
 
-    @GET("json_SyncQns.jsp")
-    Call<List<Question>> getallqns(
-            @Query("disease")List<String> x);
+    @POST("https://jsonplaceholder.typicode.com/posts")
+    Call<PostReport> postreporttoserver(
+            @Body PostReport postReport);
     //1	20170322110413929	Shade2105	pen121	Vignesh	B	Male
 
 //http://192.168.0.101:8080/HIK2.0/Dashboard/json_Sync.jsp?nid=20170322110413929

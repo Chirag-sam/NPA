@@ -25,10 +25,11 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
 
     private List<PatientJ> myItems;
     private Context mContext;
-
-    public PatientAdapter(List<PatientJ> myItems, Context mContext) {
+    boolean type=false;
+    public PatientAdapter(List<PatientJ> myItems, Context mContext,boolean type) {
         this.myItems = myItems;
         this.mContext = mContext;
+        this.type=type;
     }
 
 
@@ -49,9 +50,16 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (type){
                 Intent i = new Intent(mContext, QuestionsActivity.class);
                 i.putExtra("uid", myItems.get(position).getPid());
-                mContext.startActivity(i);
+                mContext.startActivity(i);}
+                else {
+                    Intent i = new Intent(mContext, ResultActivity.class);
+                    i.putExtra("pid", myItems.get(position).getPid());
+                    mContext.startActivity(i);}
+
+
             }
         });
     }

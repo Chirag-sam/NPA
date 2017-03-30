@@ -212,7 +212,7 @@ public class ResultActivity extends AppCompatActivity {
             riskscore.setText("Risk Score: "+gettotal(list)+"/"+getmaxtotal(list));
             providername.setText("Provider Name: "+n.getFirstname()+" "+n.getLastname());
             appointmentdate.setText("Appointment Date: "+p.getAppdate());
-            reportdate.setText("Reporting Date: "+p.getAppdate());
+            reportdate.setText("Reporting Date: "+p.getRepdate());
 
             indicator.setPivotX(30f);
             indicator.setPivotY(30f);

@@ -28,7 +28,7 @@ public class CompletedAppointments extends AppCompatActivity {
         mHelper = DatabaseOpenHelper.getInstance(this);
 
         list=mHelper.getAllPatientcomp();
-        adapter = new PatientAdapter(list, this);
+        adapter = new PatientAdapter(list, this,false);
         recycler.setAdapter(adapter);
     }
 }

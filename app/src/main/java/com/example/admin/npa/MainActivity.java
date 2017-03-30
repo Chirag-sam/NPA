@@ -59,9 +59,23 @@ public class MainActivity extends AppCompatActivity {
 
         ProgressDialog p=new ProgressDialog(this);
         RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
+        PostReport postReport=new PostReport( mHelper.getAllPatientcomp(),mHelper.getallpatientsResponse());
+        Call<PostReport> call0= client.postreporttoserver(postReport);
+        call0.enqueue(new Callback<PostReport>() {
+            @Override
+            public void onResponse(Call<PostReport> call, Response<PostReport> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<PostReport> call, Throwable t) {
+
+            }
+        });
         Call<List<PatientJ>> call = client.getallpatients(n.getNid());
         p.setMessage("Syncing Patients");
         p.show();
+
         call.enqueue(new Callback<List<PatientJ>>() {
             @Override
             public void onResponse(Call<List<PatientJ>> call, Response<List<PatientJ>> response) {

@@ -27,7 +27,7 @@ public class PendingAppointments extends AppCompatActivity {
         mHelper = DatabaseOpenHelper.getInstance(this);
 
         list=mHelper.getAllPatientspend();
-        adapter=new PatientAdapter(list,this);
+        adapter=new PatientAdapter(list,this,true);
         recycler.setAdapter(adapter);
 
     }
