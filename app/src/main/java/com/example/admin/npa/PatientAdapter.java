@@ -53,7 +53,9 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
                 if (type){
                 Intent i = new Intent(mContext, QuestionsActivity.class);
                 i.putExtra("uid", myItems.get(position).getPid());
-                mContext.startActivity(i);}
+                mContext.startActivity(i);
+                    ((PendingAppointments)mContext).finish();
+                }
                 else {
                     Intent i = new Intent(mContext, ResultActivity.class);
                     i.putExtra("pid", myItems.get(position).getPid());
