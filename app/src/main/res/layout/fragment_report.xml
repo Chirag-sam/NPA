@@ -157,8 +157,8 @@
 
 <com.example.admin.npa.GaugeView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
+    android:layout_height="300dp"
+    android:layout_marginBottom="20dp"
     android:layout_below="@+id/cv1"
     android:id="@+id/gauge"
     />

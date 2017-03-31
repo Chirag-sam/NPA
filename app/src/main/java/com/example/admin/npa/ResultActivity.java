@@ -214,7 +214,8 @@ public class ResultActivity extends AppCompatActivity {
             providername.setText("Provider Name: " + n.getFirstname() + " " + n.getLastname());
             appointmentdate.setText("Appointment Date: " + p.getAppdate());
             reportdate.setText("Reporting Date: " + p.getRepdate());
-            gauge.setTargetValue(60);
+            float percent=getpercentage(list);
+            gauge.setTargetValue(percent);
 
 //            indicator.setPivotX(30f);
 //            indicator.setPivotY(30f);

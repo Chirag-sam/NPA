@@ -62,9 +62,9 @@ public class GaugeView extends View {
             Color.argb(5, 255, 255, 255) };
     public static final float[] OUTER_SHADOW_POS = { 0.90f, 0.95f, 0.99f };
 
-    public static final float[] RANGE_VALUES = {16.0f, 25.0f, 40.0f, 100.0f};
-    public static final int[] RANGE_COLORS = {Color.rgb(231, 32, 43), Color.rgb(232, 111, 33),
-            Color.rgb(232, 231, 33), Color.rgb(27, 202, 33)};
+    public static final float[] RANGE_VALUES = {25.0f, 50.0f, 75.0f, 100.0f};
+    public static final int[] RANGE_COLORS = {Color.rgb(27, 202, 33),
+            Color.rgb(232, 231, 33), Color.rgb(232, 111, 33), Color.rgb(231, 32, 43)};
 
     public static final int TEXT_SHADOW_COLOR = Color.argb(100, 0, 0, 0);
     public static final int TEXT_VALUE_COLOR = Color.WHITE;
@@ -82,7 +82,7 @@ public class GaugeView extends View {
     private boolean mShowInnerRim;
     private boolean mShowScale;
     private boolean mShowRanges;
-    private boolean mShowNeedle;
+  private boolean mShowNeedle;
     private boolean mShowText;
 
     private float mOuterShadowWidth;
@@ -409,8 +409,8 @@ public class GaugeView extends View {
 
     public Paint getDefaultFacePaint() {
         final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setShader(new RadialGradient(0.5f, 0.5f, mFaceRect.width() / 2, new int[]{Color.rgb(50, 132, 206), Color.rgb(36, 89, 162),
-                Color.rgb(27, 59, 131)}, new float[]{0.5f, 0.96f, 0.99f}, TileMode.MIRROR));
+        paint.setShader(new RadialGradient(0.5f, 0.5f, mFaceRect.width() / 2, new int[]{Color.rgb(0, 188, 212), Color.rgb(117,117, 117),
+                Color.rgb(255, 255, 255)}, new float[]{0.5f, 0.96f, 0.99f}, TileMode.MIRROR));
         return paint;
     }
 
