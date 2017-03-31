@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         ProgressDialog p=new ProgressDialog(this);
         RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
-        PostReport postReport=new PostReport( mHelper.getAllPatientcomp(),mHelper.getallpatientsResponse());
+        PostReport postReport=new PostReport( mHelper.getAllPatients(),mHelper.getallpatientsResponse());
         Call<PostReport> call0= client.postreporttoserver(postReport);
         call0.enqueue(new Callback<PostReport>() {
             @Override

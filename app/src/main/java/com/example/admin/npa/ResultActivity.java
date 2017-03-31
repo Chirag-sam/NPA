@@ -18,9 +18,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sccomponents.widgets.ScArcGauge;
-import com.sccomponents.widgets.ScGauge;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +91,7 @@ public class ResultActivity extends AppCompatActivity {
         @BindView(R.id.illness)
         TextView mIllness;
         Unbinder mUnbinder;
+
         public ResultFragment() {
         }
 
@@ -118,7 +116,7 @@ public class ResultActivity extends AppCompatActivity {
             recyclerv.setHasFixedSize(false);
             mHelper = DatabaseOpenHelper.getInstance(getActivity());
             list = mHelper.getallResponse(pid);
-            Nurse n=mHelper.getNurseDetails();
+            Nurse n = mHelper.getNurseDetails();
             PatientJ p = mHelper.getPatient(pid);
             if (p.getGender().equals("Male"))
                 mIv.setImageResource(R.drawable.ic_man_shape);
@@ -148,13 +146,14 @@ public class ResultActivity extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        @BindView(R.id.gauge)
-        ScArcGauge mGauge;
+
         Unbinder unbinder;
         DatabaseOpenHelper mHelper;
         List<Question> list = new ArrayList<>();
-        @BindView(R.id.indicator)
-        ImageView indicator;
+        //        @BindView(R.id.gauge)
+//        ScArcGauge mGauge;
+//        @BindView(R.id.indicator)
+//        ImageView indicator;
         @BindView(R.id.iv)
         ImageView iv;
         @BindView(R.id.personpic)
@@ -179,6 +178,8 @@ public class ResultActivity extends AppCompatActivity {
         TextView appointmentdate;
         @BindView(R.id.reportdate)
         TextView reportdate;
+        @BindView(R.id.gauge)
+        GaugeView gauge;
 
 
         public ReportFragment() {
@@ -202,30 +203,31 @@ public class ResultActivity extends AppCompatActivity {
             mHelper = DatabaseOpenHelper.getInstance(getActivity());
             list = mHelper.getallResponse(pid);
             PatientJ p = mHelper.getPatient(pid);
-            Nurse n=mHelper.getNurseDetails();
+            Nurse n = mHelper.getNurseDetails();
             if (p.getGender().equals("Male"))
                 iv.setImageResource(R.drawable.ic_man_shape);
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
             name.setText(p.getFname() + " " + p.getLname() + ", " + getage(p.getDob()));
             date.setText(p.getAppdate());
             illness.setText(p.getDisease());
-            riskscore.setText("Risk Score: "+gettotal(list)+"/"+getmaxtotal(list));
-            providername.setText("Provider Name: "+n.getFirstname()+" "+n.getLastname());
-            appointmentdate.setText("Appointment Date: "+p.getAppdate());
-            reportdate.setText("Reporting Date: "+p.getRepdate());
+            riskscore.setText("Risk Score: " + gettotal(list) + "/" + getmaxtotal(list));
+            providername.setText("Provider Name: " + n.getFirstname() + " " + n.getLastname());
+            appointmentdate.setText("Appointment Date: " + p.getAppdate());
+            reportdate.setText("Reporting Date: " + p.getRepdate());
+            gauge.setTargetValue(60);
 
-            indicator.setPivotX(30f);
-            indicator.setPivotY(30f);
-            float angle = mGauge.percentageToAngle(getpercentage(list));
-            indicator.setRotation(angle);
-
-            mGauge.setOnEventListener(new ScGauge.OnEventListener() {
-                @Override
-                public void onValueChange(float v, float v1) {
-                    float angle = mGauge.percentageToAngle(v1);
-                    indicator.setRotation(angle);
-                }
-            });
+//            indicator.setPivotX(30f);
+//            indicator.setPivotY(30f);
+//            float angle = mGauge.percentageToAngle(getpercentage(list));
+//            indicator.setRotation(angle);
+//
+//            mGauge.setOnEventListener(new ScGauge.OnEventListener() {
+//                @Override
+//                public void onValueChange(float v, float v1) {
+//                    float angle = mGauge.percentageToAngle(v1);
+//                    indicator.setRotation(angle);
+//                }
+//            });
             return rootView;
         }
 
@@ -284,8 +286,8 @@ public class ResultActivity extends AppCompatActivity {
             return null;
         }
     }
-    public static float gettotal(List<Question> data)
-    {
+
+    public static float gettotal(List<Question> data) {
         float ptotal = 0;
 
         for (int j = 0; j < data.size(); j++)
@@ -293,13 +295,13 @@ public class ResultActivity extends AppCompatActivity {
             ptotal += Float.parseFloat(data.get(j).getScore());
         return ptotal;
     }
-    public static float getmaxtotal(List<Question> data)
-    {
-        float total=0;
+
+    public static float getmaxtotal(List<Question> data) {
+        float total = 0;
         for (int i = 0; i < data.size(); i++)
 
             total += Float.parseFloat(data.get(i).getMaxscore());
 
-    return total;
+        return total;
     }
 }

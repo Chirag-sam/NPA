@@ -456,6 +456,28 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // return contact list
         return patientlist;
     }
+    public ArrayList<PatientJ> getAllPatients() {
+        ArrayList<PatientJ> patientlist = new ArrayList<PatientJ>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_PATIENT;
+
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+
+                patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11)));
+
+                // Adding contact to list
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        // return contact list
+        return patientlist;
+    }
     public ArrayList<String> getalldiseases() {
         ArrayList<String> questions = new ArrayList<String>();
         // Select All Query
