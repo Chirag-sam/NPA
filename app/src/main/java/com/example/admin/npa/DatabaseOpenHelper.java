@@ -20,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION =18;
+    private static final int DATABASE_VERSION =19;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -35,6 +35,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String NURSE_FIRSTNAME = "firstname";
     private static final String NURSE_LASTNAME= "lastname";
     private static final String NURSE_GENDER= "gender";
+    private static final String NURSE_LASTSYNC= "lastsync";
 
     private static final String TABLE_PATIENT = "patient";
 
@@ -100,8 +101,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 NURSE_PASS + " TEXT,"+
                 NURSE_FIRSTNAME + " TEXT,"+
                 NURSE_LASTNAME+ " TEXT, "+
+                NURSE_GENDER+ " TEXT, "+
+                NURSE_LASTSYNC+ " TEXT "+
 
-                NURSE_GENDER+ " TEXT "+
 
                 ")";
         sqLiteDatabase.execSQL(CREATE_NURSE_TABLE);
@@ -259,6 +261,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(NURSE_FIRSTNAME, N.getFirstname());
         values.put(NURSE_LASTNAME, N.getLastname());
         values.put(NURSE_GENDER, N.getGender());
+        values.put(NURSE_LASTSYNC, N.getLastsync());
         long id = db.insert(TABLE_NURSE, null, values);
         db.close();
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
@@ -321,7 +324,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N=new Nurse(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
+            N=new Nurse(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
 
         }
         cursor.close();
@@ -338,6 +341,8 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         int icount = cursor.getInt(0);
+        cursor.close();
+        db.close();
         if(icount==1)
             return true;
         else {
@@ -346,6 +351,41 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         // return user
 
+    }
+
+    public int getcountcompleted()
+    {
+        String selectQuery = "SELECT count(*) FROM " + TABLE_PATIENT+" WHERE "+PATIENT_STATUS+" ='completed' ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Move to first row
+        cursor.moveToFirst();
+        int icount = cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+        // return user
+
+        return icount;
+    }
+    public int getcountpending()
+    {
+        String selectQuery = "SELECT count(*) FROM " + TABLE_PATIENT+" WHERE "+PATIENT_STATUS+" ='pending' ";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Move to first row
+        cursor.moveToFirst();
+        int icount = cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+        // return user
+
+        return icount;
     }
 
     public PatientJ getPatient(String uid) {

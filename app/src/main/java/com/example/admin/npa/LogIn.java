@@ -123,7 +123,7 @@ public class LogIn extends AppCompatActivity {
                     edittextdialtil.setError("Invalid Username");
                     edittextdialtil1.setError("Invalid Password");
 
-                mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
+                mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","James","Male","23/2/17"));
                     Log.e("Fail", "onFailure: ");
                  //    Log error here since request failed
                     p.dismiss();

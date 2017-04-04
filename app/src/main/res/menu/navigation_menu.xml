@@ -12,10 +12,6 @@
         android:checked="false"
         android:icon="@drawable/ic_assignment_black_24dp"
         android:title="Terms and conditions" />
-    <item
-        android:id="@+id/settings"
-        android:checked="false"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Settings" />
+
 
 </menu>

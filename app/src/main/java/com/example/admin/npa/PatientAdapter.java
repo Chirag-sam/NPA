@@ -79,8 +79,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         TextView name;
         @BindView(R.id.date)
         TextView date;
-        @BindView(R.id.illness)
-        TextView illness;
+
         @BindView(R.id.cv)
         CardView cv;
 
@@ -100,7 +99,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
             name.setText(item.getFname() + " " + item.getLname()+", "+getage(item.getDob()));
             date.setText(item.getAppdate());
-            illness.setText(item.getDisease());
+
 
             // TODO set data to view
         }

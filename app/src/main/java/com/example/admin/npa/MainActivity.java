@@ -148,7 +148,15 @@ public class MainActivity extends AppCompatActivity {
 
 
                 mHelper.addallqns(questions);
+                mWelcome.setText(
+                        "Name: "+n.getFirstname()+" "+n.getLastname()+
+                                "\nCompleted Assessments :"+mHelper.getcountcompleted()+"/"+(mHelper.getcountpending()+mHelper.getcountcompleted())+
+                                "\nUnsynced Assessments  :"+mHelper.getcountcompleted()+
+                                "\nLast Sync :"+n.getLastsync()
 
+
+
+                );
             }
         });
 //
@@ -208,7 +216,15 @@ public class MainActivity extends AppCompatActivity {
         abdt.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         n=mHelper.getNurseDetails();
-        mWelcome.setText("Welcome! "+n.getFirstname()+"\n "+n.getLastname());
+        mWelcome.setText(
+                "Name: "+n.getFirstname()+" "+n.getLastname()+
+                "\nCompleted Assessments :"+mHelper.getcountcompleted()+"/"+(mHelper.getcountpending()+mHelper.getcountcompleted())+
+                "\nUnsynced Assessments  :"+mHelper.getcountcompleted()+
+                "\nLast Sync :"+n.getLastsync()
+
+
+
+        );
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -278,5 +294,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mWelcome.setText(
+                "Name: "+n.getFirstname()+" "+n.getLastname()+
+                        "\nCompleted Assessments :"+mHelper.getcountcompleted()+"/"+(mHelper.getcountpending()+mHelper.getcountcompleted())+
+                        "\nUnsynced Assessments  :"+mHelper.getcountcompleted()+
+                        "\nLast Sync :"+n.getLastsync()
+
+
+
+        );
     }
 }

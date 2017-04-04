@@ -5,42 +5,68 @@
     android:id="@+id/dl"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<ScrollView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorWhite"
-        android:gravity="center"
+                    android:gravity="center"
         android:paddingBottom="16dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.example.admin.npa.MainActivity">
+        <android.support.v7.widget.CardView
+
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+            android:id="@+id/cv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardBackgroundColor="@android:color/background_light"
+            card_view:cardCornerRadius="4dp"
+
+            card_view:cardElevation="3dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:contentPadding="5dp">
+            <RelativeLayout android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:gravity="center"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_nurse" />
+        android:layout_marginRight="5dp"
+        card_view:srcCompat="@drawable/ic_nurse" />
 <TextView android:layout_width="match_parent"
           android:layout_height="wrap_content"
-            android:layout_below="@id/iv"
+            android:layout_toRightOf="@id/iv"
           android:id="@+id/welcome"
-          android:textSize="20dp"
-          android:gravity="center"
-          android:layout_marginTop="20dp"
+
+
 
 
 />
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/butt1"
             android:layout_width="match_parent"
+
             android:layout_height="55dp"
-            android:layout_below="@+id/welcome"
+            android:layout_below="@+id/cv"
 
             android:elevation="4dp"
             android:filterTouchesWhenObscured="true" android:text="synchronize"
@@ -52,7 +78,7 @@
         android:layout_height="55dp"
         android:layout_below="@+id/butt1"
 
-        android:text="Pending appointments"
+        android:text="Pending Assessments"
         android:theme="@style/AccentButton1" android:filterTouchesWhenObscured="true"/>
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/butt3"
@@ -60,11 +86,21 @@
         android:layout_height="55dp"
         android:layout_below="@+id/butt2"
 
-        android:text="Completed appointments"
+        android:text="Completed Assessments"
         android:theme="@style/AccentButton1" android:filterTouchesWhenObscured="true"/>
 
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@+id/butt3"
 
+                  android:gravity="bottom|center"
+                  android:padding="10dp"
+                  android:text="HIK Technology© All rights Reserved "
+
+        />
     </RelativeLayout>
+</ScrollView>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

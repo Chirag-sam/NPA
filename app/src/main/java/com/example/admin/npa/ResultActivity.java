@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -52,6 +54,9 @@ public class ResultActivity extends AppCompatActivity {
         Log.e("sadxxz", "onCreate: " + pid);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -65,6 +70,16 @@ public class ResultActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -125,7 +140,7 @@ public class ResultActivity extends AppCompatActivity {
             mDate.setText(p.getAppdate());
             mIllness.setText(p.getDisease());
 
-            Log.e("zxczxc", "onCreateView: " + list.get(0).getQid());
+            //Log.e("zxczxc", "onCreateView: " + list.get(0).getQid());
 
             adapter = new ResultQuestionAdapter(list);
             recyclerv.setAdapter(adapter);
@@ -210,10 +225,10 @@ public class ResultActivity extends AppCompatActivity {
             name.setText(p.getFname() + " " + p.getLname() + ", " + getage(p.getDob()));
             date.setText(p.getAppdate());
             illness.setText(p.getDisease());
-            riskscore.setText("Risk Score: " + gettotal(list) + "/" + getmaxtotal(list));
-            providername.setText("Provider Name: " + n.getFirstname() + " " + n.getLastname());
+            riskscore.setText("Asessment Score: " + gettotal(list) + "/" + getmaxtotal(list));
+            providername.setText("Assessed by: " + n.getFirstname() + " " + n.getLastname());
             appointmentdate.setText("Appointment Date: " + p.getAppdate());
-            reportdate.setText("Reporting Date: " + p.getRepdate());
+            reportdate.setText("Assessment Date: " + p.getRepdate());
             float percent=getpercentage(list);
             gauge.setTargetValue(percent);
 

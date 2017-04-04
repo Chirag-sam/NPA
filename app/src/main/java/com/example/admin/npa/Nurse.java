@@ -21,6 +21,7 @@ public class Nurse {
          public String lastname;
     @SerializedName("gender")
     public String gender;
+    public String lastsync;
 //first name
         public Nurse() {
         }
@@ -33,13 +34,31 @@ public class Nurse {
         this.gender = gender;
     }
 
-    public Nurse(String nid, String uname, String password, String firstname, String lastname, String gender) {
+    public Nurse(String nid, String uname, String password, String firstname, String lastname, String gender, String lastsync) {
         this.nid = nid;
         this.uname = uname;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.gender = gender;
+        this.lastsync = lastsync;
+    }
+
+//    public Nurse(String nid, String uname, String password, String firstname, String lastname, String gender) {
+//        this.nid = nid;
+//        this.uname = uname;
+//        this.password = password;
+//        this.firstname = firstname;
+//        this.lastname = lastname;
+//        this.gender = gender;
+//    }
+
+    public String getLastsync() {
+        return lastsync;
+    }
+
+    public void setLastsync(String lastsync) {
+        this.lastsync = lastsync;
     }
 
     public String getNid() {

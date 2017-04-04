@@ -86,13 +86,7 @@
 
                 />
         </android.support.design.widget.TextInputLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/Forgot"
-            android:paddingTop="10dp"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +94,7 @@
             android:layout_marginTop="10dp"
             android:padding="16dp"
             android:text="Log In"
-            android:id="@+id/butt"/>
+            android:id="@+id/butt" android:filterTouchesWhenObscured="true"/>
 
 
 
