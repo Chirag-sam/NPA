@@ -1,5 +1,6 @@
 package com.example.admin.npa;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -8,25 +9,24 @@ import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOError;
-import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -81,154 +81,195 @@ public class QuestionsActivity extends AppCompatActivity {
     ImageButton mNext;
     DatabaseOpenHelper mHelper;
     PatientJ p;
-    ArrayList<Question> l=new ArrayList<>();
-    int posx=0;
+    ArrayList<Question> l = new ArrayList<>();
+    int posx = 0;
+    @BindView(R.id.surveyname)
+    TextView mSurveyname;
+    @BindView(R.id.spinner)
+    Spinner mSpinner;
+    @BindView(R.id.date)
+    TextView mDate;
+    @OnClick(R.id.date)
+    void setdate()
+    {       Calendar newCalendar=Calendar.getInstance();;
+            DatePickerDialog datePickerDialog = new DatePickerDialog(QuestionsActivity.this, (view1, year, monthOfYear, dayOfMonth) -> {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                SimpleDateFormat dateFormatter=new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+                mDate.setText(dateFormatter.format(newDate.getTime()));
+            },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.show();
+
+    }
+    ArrayList<String>score=new ArrayList<>();
+    ArrayList<String>options=new ArrayList<>();
     @OnClick(R.id.back)
-    void setbackqn()
-    {
-        if (posx>0) {
-            posx=posx-1;
+    void setbackqn() {
+        if (posx > 0) {
+            posx = posx - 1;
             setAnsType(posx);
-        }
-        else {
+        } else {
             posx = 0;
             setAnsType(posx);
         }
     }
-    @OnClick (R.id.next)
-    void setnextquest()
-    {
-        if (posx< l.size()){
-        int i=Integer.parseInt(l.get(posx).getRestype());
 
-        switch (i) {
+    @OnClick(R.id.next)
+    void setnextquest() {
+        if (posx < l.size()) {
+            int i = Integer.parseInt(l.get(posx).getRestype());
 
-            case 1:     //Checkbox
+            switch (i) {
+                case 1:     //EditText
 
-                if (mCh1.isChecked()||mCh2.isChecked()||mCh3.isChecked()||mCh4.isChecked()||mCh5.isChecked())
-                {   String x="";
-                    int sc=0;
-                    if (mCh1.isChecked())
-                    {   sc+=1;
-                        x=x.concat(mCh1.getText().toString()+",");
-                    }
-                    if (mCh2.isChecked())
-                    {   sc+=2;
-                        x=x.concat(mCh2.getText().toString()+",");
-                    }
-                    if (mCh3.isChecked())
-                    {   sc+=3;
-                        x=x.concat(mCh3.getText().toString()+",");
-                    }
-                    if (mCh4.isChecked())
-                    {   sc+=4;
-                        x=x.concat(mCh4.getText().toString()+",");
-                    }
-                    if (mCh5.isChecked())
-                    {   sc+=5;
-                        x=x.concat(mCh5.getText().toString()+",");
-                    }
-                    l.get(posx).setScore(String.valueOf(sc));
-                    l.get(posx).setAnswer(x);
-                    l.get(posx).setMaxscore("15");
-                    Log.e("nextqb", "setnextquest: "+x);
-                    posx=posx+1;
-                    setAnsType(posx);
-                    }
-                else {
-                    Toast.makeText(QuestionsActivity.this,"Choose atleast one",Toast.LENGTH_SHORT).show();
-                }
-                break;
 
-            case 2:
-                //Radio
-                if(mMcqone.getCheckedRadioButtonId()==-1)
-                    Toast.makeText(QuestionsActivity.this,"Choose one",Toast.LENGTH_SHORT).show();
-                else {
-                    int selected = mMcqone.getCheckedRadioButtonId();
+                    if (TextUtils.isEmpty(mEdittextqn.getText().toString().trim()))
+                        Toast.makeText(QuestionsActivity.this, "Cant be empty", Toast.LENGTH_SHORT).show();
+                    else {
+                        l.get(posx).setAnswer(mEdittextqn.getText().toString());
+                        l.get(posx).setScore("1");
+                        l.get(posx).setMaxscore("1");
+                        posx = posx + 1;
+                        setAnsType(posx);
+                    }
+                    break;
+                case 2:     //Checkbox
+
+                    if (mCh1.isChecked() || mCh2.isChecked() || mCh3.isChecked() || mCh4.isChecked() || mCh5.isChecked()) {
+                        String x = "";
+                        int sc = 0;
+                        if (mCh1.isChecked()) {
+                            sc += 1;
+                            x = x.concat(mCh1.getText().toString() + ",");
+                        }
+                        if (mCh2.isChecked()) {
+                            sc += 2;
+                            x = x.concat(mCh2.getText().toString() + ",");
+                        }
+                        if (mCh3.isChecked()) {
+                            sc += 3;
+                            x = x.concat(mCh3.getText().toString() + ",");
+                        }
+                        if (mCh4.isChecked()) {
+                            sc += 4;
+                            x = x.concat(mCh4.getText().toString() + ",");
+                        }
+                        if (mCh5.isChecked()) {
+                            sc += 5;
+                            x = x.concat(mCh5.getText().toString() + ",");
+                        }
+                        l.get(posx).setScore(String.valueOf(sc));
+                        l.get(posx).setAnswer(x);
+                        l.get(posx).setMaxscore("15");
+                        Log.e("nextqb", "setnextquest: " + x);
+                        posx = posx + 1;
+                        setAnsType(posx);
+                    } else {
+                        Toast.makeText(QuestionsActivity.this, "Choose atleast one", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+                case 3:
+                    //Radio
+                    if (mMcqone.getCheckedRadioButtonId() == -1)
+                        Toast.makeText(QuestionsActivity.this, "Choose one", Toast.LENGTH_SHORT).show();
+                    else {
+                        int selected = mMcqone.getCheckedRadioButtonId();
 
 // Gets a reference to our "selected" radio button
-                    RadioButton b = (RadioButton) findViewById(selected);
-                    int sc=0;
+                        RadioButton b = (RadioButton) findViewById(selected);
+                        int sc = 0;
 // Now you can get the text or whatever you want from the "selected" radio button
-                    Log.e("asxz", "setnextquest: "+b.getText().toString() );
-                    if (b.getText().toString().equals("None"))
-                        sc=1;
-                    else if (b.getText().toString().equals("Mild"))
-                        sc=2;
-                    else if (b.getText().toString().equals("Moderate"))
-                        sc=3;
-                    else if (b.getText().toString().equals("Severe"))
-                        sc=4;
-                    else if (b.getText().toString().equals("Extreme"))
-                        sc=5;
-                    l.get(posx).setAnswer(b.getText().toString());
-                    l.get(posx).setScore(String.valueOf(sc));
+                        Log.e("asxz", "setnextquest: " + b.getText().toString());
+                        if (b.getText().toString().equals("None"))
+                            sc = 1;
+                        else if (b.getText().toString().equals("Mild"))
+                            sc = 2;
+                        else if (b.getText().toString().equals("Moderate"))
+                            sc = 3;
+                        else if (b.getText().toString().equals("Severe"))
+                            sc = 4;
+                        else if (b.getText().toString().equals("Extreme"))
+                            sc = 5;
+                        l.get(posx).setAnswer(b.getText().toString());
+                        l.get(posx).setScore(String.valueOf(sc));
+                        l.get(posx).setMaxscore("5");
+                        posx = posx + 1;
+                        setAnsType(posx);
+
+                    }
+
+
+                    break;
+                case 4://spinner
+                    if (mSpinner.getSelectedItem().toString().equals("Choose one from dropdown"))
+                        Toast.makeText(QuestionsActivity.this, "Choose one from dropdown", Toast.LENGTH_SHORT).show();
+                    else {
+                        l.get(posx).setAnswer(mSpinner.getSelectedItem().toString());
+                        l.get(posx).setScore(score.get(options.indexOf(mSpinner.getSelectedItem().toString())));
+
+                        Comparator<String> cmp = (o1, o2) -> Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+                        l.get(posx).setMaxscore(Collections.max(score,cmp));
+                        posx = posx + 1;
+                        setAnsType(posx);
+                    }
+                    break;
+                case 5://datepicker
+
+                       if (mDate.getText().toString().equals("MM/dd/yyyy"))
+                        Toast.makeText(QuestionsActivity.this, "Choose one from dropdown", Toast.LENGTH_SHORT).show();
+                    else {
+                        l.get(posx).setAnswer(mDate.getText().toString());
+                        l.get(posx).setScore("0");
+                        l.get(posx).setMaxscore("0");
+                        posx = posx + 1;
+                        setAnsType(posx);
+                    }
+                    break;
+                case 6:
+                    //Slider
+                    int y = mSeekBar.getProgress();
+                    l.get(posx).setAnswer(String.valueOf(y));
+                    l.get(posx).setScore(String.valueOf(y));
                     l.get(posx).setMaxscore("5");
-                    posx=posx+1;
+                    posx = posx + 1;
                     setAnsType(posx);
 
-                }
+
+                    break;
 
 
-                break;
-            case 3:
-                //Slider
-                int y=mSeekBar.getProgress();
-                l.get(posx).setAnswer(String.valueOf(y));
-                l.get(posx).setScore(String.valueOf(y));
-                l.get(posx).setMaxscore("5");
-                posx=posx+1;
-                setAnsType(posx);
-
-
-                break;
-            case 4:     //EditText
-
-
-                if (TextUtils.isEmpty(mEdittextqn.getText().toString().trim()))
-                    Toast.makeText(QuestionsActivity.this,"Cant be empty",Toast.LENGTH_SHORT).show();
-                else {
-                    l.get(posx).setAnswer(mEdittextqn.getText().toString());
-                    l.get(posx).setScore("1");
-                    l.get(posx).setMaxscore("1");
-                    posx=posx+1;
-                    setAnsType(posx);
-                }
-                break;
-
-
-            default:
-                break;
-        }
-        if (posx== l.size())
-        {
-            mHelper.addallresponse(l,p.getPid());
-            p.setStatus("completed");
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS",Locale.US);
-            String strDate = sdf.format(cal.getTime());
-            p.setRepdate(strDate);
-            p.setRepscore(String.valueOf(gettotal(l)));
-            p.setRepmaxscore(String.valueOf(getmaxtotal(l)));
-            mHelper.updatepatient(p);
-            Toast.makeText(QuestionsActivity.this,"Answers Have been saved!",Toast.LENGTH_LONG).show();
-            Intent x=new Intent(QuestionsActivity.this,ResultActivity.class);
-            x.putExtra("pid",p.getPid());
-            startActivity(x);
-            finish();
-        }
+                default:
+                    break;
+            }
+            if (posx == l.size()) {
+                mHelper.addallresponse(l, p.getPid());
+                p.setStatus("completed");
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS", Locale.US);
+                String strDate = sdf.format(cal.getTime());
+                p.setRepdate(strDate);
+                p.setRepscore(String.valueOf(gettotal(l)));
+                p.setRepmaxscore(String.valueOf(getmaxtotal(l)));
+                mHelper.updatepatient(p);
+                Toast.makeText(QuestionsActivity.this, "Answers Have been saved!", Toast.LENGTH_LONG).show();
+                Intent x = new Intent(QuestionsActivity.this, ResultActivity.class);
+                x.putExtra("pid", p.getPid());
+                startActivity(x);
+                finish();
+            }
 
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHelper = DatabaseOpenHelper.getInstance(this);
         Bundle bundle = getIntent().getExtras();
         String uid = bundle.getString("uid");
-        p=mHelper.getPatient(uid);
-        l=mHelper.getallquestions(p.getDisease());
+        p = mHelper.getPatient(uid);
+        l = mHelper.getallquestions(p.getDisease());
 
         setContentView(R.layout.questioncard);
         ButterKnife.bind(this);
@@ -243,103 +284,175 @@ public class QuestionsActivity extends AppCompatActivity {
             setContentView(arr[3]);
         }*/
     }
+
     public void setAnsType(int i) {
-        if (i<l.size()){
-        mQuestno.setText((i+1)+" of "+ l.size());
-        mQuestion.setText(l.get(i).getQdesc());
-        int j=Integer.parseInt(l.get(i).getRestype());
+        if (i < l.size()) {
+            mQuestno.setText((i + 1) + " of " + l.size());
+            mQuestion.setText(l.get(i).getQdesc());
+            int j = Integer.parseInt(l.get(i).getRestype());
 //            if (i==l.size()-1)
 //                mNext.setText("Finish");
 //            else mNext.setText("Next");
-        switch (j) {
+            switch (j) {
+                case 1:     //EditText
+                    mEdittextqn.setText(null);
+                    mMcqmany.setVisibility(View.GONE);
+                    mMcqone.setVisibility(View.GONE);
+                    mEdittextqntil.setVisibility(View.VISIBLE);
+                    mSpinner.setVisibility(View.GONE);
+                    mDate.setVisibility(View.GONE);
+                    mSeekBar.setVisibility(View.GONE);
+                    if (l.get(i).getAnswer() != null) {
+                        String x = l.get(i).getAnswer();
+                        mEdittextqn.setText(x);
+                    }
+                    break;
+                case 2:     //Checkbox
+                    mCh1.setChecked(false);
+                    mCh2.setChecked(false);
+                    mCh3.setChecked(false);
+                    mCh4.setChecked(false);
+                    mCh5.setChecked(false);
+                    mMcqmany.setVisibility(View.VISIBLE);
+                    mMcqone.setVisibility(View.GONE);
+                    mEdittextqntil.setVisibility(View.GONE);
+                    mSpinner.setVisibility(View.GONE);
+                    mDate.setVisibility(View.GONE);
+                    mSeekBar.setVisibility(View.GONE);
+                    if (l.get(i).getAnswer() != null) {
 
-            case 1:     //Checkbox
-                mCh1.setChecked(false);
-                mCh2.setChecked(false);
-                mCh3.setChecked(false);
-                mCh4.setChecked(false);
-                mCh5.setChecked(false);
-                mMcqmany.setVisibility(View.VISIBLE);
-                mMcqone.setVisibility(View.GONE);
-                mEdittextqntil.setVisibility(View.GONE);
-                mSeekBar.setVisibility(View.GONE);
-                if(l.get(i).getAnswer()!=null) {
+                        String x = l.get(i).getAnswer();
+                        Log.e("asjsajjsa.jV", "setAnsType: " + x);
+                        if (x.contains("None"))
+                            mCh1.setChecked(true);
 
-                    String x=l.get(i).getAnswer();
-                    Log.e("asjsajjsa.jV", "setAnsType: "+x);
-                    if (x.contains("None"))
-                        mCh1.setChecked(true);
+                        if (x.contains("Mild"))
+                            mCh2.setChecked(true);
 
-                     if (x.contains("Mild"))
-                       mCh2.setChecked(true);
+                        if (x.contains("Moderate"))
+                            mCh3.setChecked(true);
 
-                     if (x.contains("Moderate"))
-                        mCh3.setChecked(true);
+                        if (x.contains("Severe"))
+                            mCh4.setChecked(true);
 
-                     if (x.contains("Severe"))
-                        mCh4.setChecked(true);
-
-                     if (x.contains("Extreme"))
-                        mCh5.setChecked(true);
-
-
-                }
-
-                break;
-
-            case 2:     //Radio
-                mMcqone.clearCheck();
-                mMcqmany.setVisibility(View.GONE);
-                mMcqone.setVisibility(View.VISIBLE);
-                mEdittextqntil.setVisibility(View.GONE);
-                mSeekBar.setVisibility(View.GONE);
-                if (l.get(i).getAnswer()!=null) {
-                String x=l.get(i).getAnswer();
-                    Log.e("asxzcsa", "setAnsType: "+x);
-                    if (x.equals("None"))
-                        mRdb1.setChecked(true);
-                    else if (x.equals("Mild"))
-                        mRdb2.setChecked(true);
-                    else if (x.equals("Moderate"))
-                        mRdb3.setChecked(true);
-                    else if (x.equals("Severe"))
-                        mRdb4.setChecked(true);
-                    else if (x.equals("Extreme"))
-                        mRdb5.setChecked(true);
-
-                }
-                break;
-            case 3:      //Slider
-                mSeekBar.setProgress(0);
-                mMcqmany.setVisibility(View.GONE);
-                mMcqone.setVisibility(View.GONE);
-                mEdittextqntil.setVisibility(View.GONE);
-                mSeekBar.setVisibility(View.VISIBLE);
-                if (l.get(i).getAnswer()!=null) {
-                    String x=l.get(i).getAnswer();
-                    mSeekBar.setProgress(Integer.parseInt(x));
-
-                }
-                break;
-            case 4:     //EditText
-                mEdittextqn.setText(null);
-                mMcqmany.setVisibility(View.GONE);
-                mMcqone.setVisibility(View.GONE);
-                mEdittextqntil.setVisibility(View.VISIBLE);
-                mSeekBar.setVisibility(View.GONE);
-                if (l.get(i).getAnswer()!=null) {
-                    String x=l.get(i).getAnswer();
-                    mEdittextqn.setText(x);
-                }
-                break;
+                        if (x.contains("Extreme"))
+                            mCh5.setChecked(true);
 
 
-            default:    //Wrong Input
-                mMcqmany.setVisibility(View.GONE);
-                mMcqone.setVisibility(View.GONE);
-                mEdittextqntil.setVisibility(View.GONE);
-                mSeekBar.setVisibility(View.GONE);
-                break;
+                    }
+
+                    break;
+
+                case 3:     //Radio
+                    mMcqone.clearCheck();
+                    mMcqmany.setVisibility(View.GONE);
+                    mMcqone.setVisibility(View.VISIBLE);
+                    mEdittextqntil.setVisibility(View.GONE);
+                    mSpinner.setVisibility(View.GONE);
+                    mDate.setVisibility(View.GONE);
+                    mSeekBar.setVisibility(View.GONE);
+                    if (l.get(i).getAnswer() != null) {
+                        String x = l.get(i).getAnswer();
+                        Log.e("asxzcsa", "setAnsType: " + x);
+                        if (x.equals("None"))
+                            mRdb1.setChecked(true);
+                        else if (x.equals("Mild"))
+                            mRdb2.setChecked(true);
+                        else if (x.equals("Moderate"))
+                            mRdb3.setChecked(true);
+                        else if (x.equals("Severe"))
+                            mRdb4.setChecked(true);
+                        else if (x.equals("Extreme"))
+                            mRdb5.setChecked(true);
+
+                    }
+                    break;
+                case 4://dropdown
+                    mSpinner.setVisibility(View.VISIBLE);
+                    mMcqmany.setVisibility(View.GONE);
+                    mMcqone.setVisibility(View.GONE);
+                    mEdittextqntil.setVisibility(View.GONE);
+                    mDate.setVisibility(View.GONE);
+                    mSeekBar.setVisibility(View.GONE);
+                    getoptionsandscorespinner(l.get(i).getOption(),options,score);
+                        ArrayAdapter<String> spinneradapt = new ArrayAdapter<>(this,
+                            android.R.layout.simple_dropdown_item_1line, options);
+                    mSpinner.setAdapter(spinneradapt);
+                    if (l.get(i).getAnswer() != null) {
+                        String x = l.get(i).getAnswer();
+                        mSpinner.setSelection(options.indexOf(x));
+
+                    }
+                    break;
+                case 5://datepicker
+                    mSpinner.setVisibility(View.GONE);
+                    mMcqmany.setVisibility(View.GONE);
+                    mMcqone.setVisibility(View.GONE);
+                    mEdittextqntil.setVisibility(View.GONE);
+                    mDate.setVisibility(View.VISIBLE);
+                    mSeekBar.setVisibility(View.GONE);
+
+                    if (l.get(i).getAnswer() != null) {
+                        mDate.setText(l.get(i).getAnswer());
+
+                    }
+                    else mDate.setText("MM/dd/yyyy");
+                    break;
+                case 6:      //Slider
+                    mSeekBar.setProgress(0);
+                    mMcqmany.setVisibility(View.GONE);
+                    mMcqone.setVisibility(View.GONE);
+                    mEdittextqntil.setVisibility(View.GONE);
+                    mSpinner.setVisibility(View.GONE);
+                    mDate.setVisibility(View.GONE);
+                    mSeekBar.setVisibility(View.VISIBLE);
+                    if (l.get(i).getAnswer() != null) {
+                        String x = l.get(i).getAnswer();
+                        mSeekBar.setProgress(Integer.parseInt(x));
+
+                    }
+                    break;
+
+
+                default:    //Wrong Input
+                    mMcqmany.setVisibility(View.GONE);
+                    mMcqone.setVisibility(View.GONE);
+                    mEdittextqntil.setVisibility(View.GONE);
+                    mSeekBar.setVisibility(View.GONE);
+                    mSpinner.setVisibility(View.GONE);
+                    mDate.setVisibility(View.GONE);
+                    break;
+            }
         }
-    }}
+    }
+    void getoptionsandscore(String x,ArrayList opt,ArrayList sco)
+    {
+        String a[] = x.split("[,;]");
+        opt = new ArrayList<String>();
+        sco = new ArrayList<String>();
+
+        for(int i=0; i<a.length;i+=2)
+        {
+
+            opt.add(a[i]);
+            sco.add(a[i+1]);
+
+        }
+    }
+    void getoptionsandscorespinner(String x,ArrayList opt,ArrayList sco)
+    {
+        String a[] = x.split("[,;]");
+        opt.clear();
+        sco.clear();
+        opt.add("Choose one from dropdown");
+        sco.add("0");
+        for(int i=0; i<a.length;i+=2)
+        {
+
+            opt.add(a[i]);
+            sco.add(a[i+1]);
+
+        }
+    }
+
 }

@@ -25,6 +25,8 @@ public class PatientJ {
     public String dob;
     @SerializedName("diseaseid")
     public String disease;
+    @SerializedName("surveyid")
+    public String surveyid;
     @SerializedName("appdate")
     public String appdate;
     public String status;
@@ -35,7 +37,7 @@ public class PatientJ {
     @SerializedName("repmaxscore")
     public String repmaxscore;
 
-    public PatientJ(String pid, String nurseid, String fname, String lname, String gender, String dob, String disease, String appdate, String status, String repdate, String repscore, String repmaxscore) {
+    public PatientJ(String pid, String nurseid, String fname, String lname, String gender, String dob, String disease, String surveyid, String appdate, String status, String repdate, String repscore, String repmaxscore) {
         this.pid = pid;
         this.nurseid = nurseid;
         this.fname = fname;
@@ -43,6 +45,7 @@ public class PatientJ {
         this.gender = gender;
         this.dob = dob;
         this.disease = disease;
+        this.surveyid = surveyid;
         this.appdate = appdate;
         this.status = status;
         this.repdate = repdate;
@@ -74,12 +77,21 @@ public class PatientJ {
         this.repscore = repscore;
     }
 
+    public String getSurveyid() {
+        return surveyid;
+    }
+
+    public void setSurveyid(String surveyid) {
+        this.surveyid = surveyid;
+    }
 
 
     public PatientJ() {
     }
 
-    public PatientJ(String pid, String nurseid, String fname, String lname, String gender, String dob, String disease, String appdate, String status) {
+
+
+    public PatientJ(String pid, String nurseid, String fname, String lname, String gender, String dob, String disease, String surveyid, String appdate, String status) {
         this.pid = pid;
         this.nurseid = nurseid;
         this.fname = fname;
@@ -87,6 +99,7 @@ public class PatientJ {
         this.gender = gender;
         this.dob = dob;
         this.disease = disease;
+        this.surveyid = surveyid;
         this.appdate = appdate;
         this.status = status;
     }
