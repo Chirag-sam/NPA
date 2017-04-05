@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,8 +40,7 @@ public class QuestionsActivity extends AppCompatActivity {
     int arr[] = {R.layout.questionlayoutmcqmany, R.layout.questionlayoutmcqone, R.layout.questionlayoutslider, R.layout.questionedittext};
     @BindView(R.id.questno)
     TextView mQuestno;
-    @BindView(R.id.cv0)
-    CardView mCv0;
+
     @BindView(R.id.question)
     TextView mQuestion;
     @BindView(R.id.ch1)
@@ -76,9 +76,9 @@ public class QuestionsActivity extends AppCompatActivity {
     @BindView(R.id.cv)
     CardView mCv;
     @BindView(R.id.back)
-    Button mBack;
+    ImageButton mBack;
     @BindView(R.id.next)
-    Button mNext;
+    ImageButton mNext;
     DatabaseOpenHelper mHelper;
     PatientJ p;
     ArrayList<Question> l=new ArrayList<>();
@@ -248,9 +248,9 @@ public class QuestionsActivity extends AppCompatActivity {
         mQuestno.setText((i+1)+" of "+ l.size());
         mQuestion.setText(l.get(i).getQdesc());
         int j=Integer.parseInt(l.get(i).getRestype());
-            if (i==l.size()-1)
-                mNext.setText("Finish");
-            else mNext.setText("Next");
+//            if (i==l.size()-1)
+//                mNext.setText("Finish");
+//            else mNext.setText("Next");
         switch (j) {
 
             case 1:     //Checkbox
