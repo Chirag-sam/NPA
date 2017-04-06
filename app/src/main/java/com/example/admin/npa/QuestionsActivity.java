@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -43,28 +46,10 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @BindView(R.id.question)
     TextView mQuestion;
-    @BindView(R.id.ch1)
-    CheckBox mCh1;
-    @BindView(R.id.ch2)
-    CheckBox mCh2;
-    @BindView(R.id.ch3)
-    CheckBox mCh3;
-    @BindView(R.id.ch4)
-    CheckBox mCh4;
-    @BindView(R.id.ch5)
-    CheckBox mCh5;
+
     @BindView(R.id.mcqmany)
     LinearLayout mMcqmany;
-    @BindView(R.id.rdb1)
-    RadioButton mRdb1;
-    @BindView(R.id.rdb2)
-    RadioButton mRdb2;
-    @BindView(R.id.rdb3)
-    RadioButton mRdb3;
-    @BindView(R.id.rdb4)
-    RadioButton mRdb4;
-    @BindView(R.id.rdb5)
-    RadioButton mRdb5;
+
     @BindView(R.id.mcqone)
     RadioGroup mMcqone;
     @BindView(R.id.seekBar)
@@ -103,6 +88,8 @@ public class QuestionsActivity extends AppCompatActivity {
     }
     ArrayList<String>score=new ArrayList<>();
     ArrayList<String>options=new ArrayList<>();
+    private final ArrayList<RadioButton> allRb = new ArrayList<>();
+    private final ArrayList<CheckBox> allCb = new ArrayList<>();
     @OnClick(R.id.back)
     void setbackqn() {
         if (posx > 0) {
@@ -134,70 +121,55 @@ public class QuestionsActivity extends AppCompatActivity {
                     }
                     break;
                 case 2:     //Checkbox
-
-                    if (mCh1.isChecked() || mCh2.isChecked() || mCh3.isChecked() || mCh4.isChecked() || mCh5.isChecked()) {
-                        String x = "";
-                        int sc = 0;
-                        if (mCh1.isChecked()) {
-                            sc += 1;
-                            x = x.concat(mCh1.getText().toString() + ",");
+                    String the_choices = "";
+                    int sc=0;
+                    boolean at_leaset_one_checked = false;
+                    for (CheckBox cb : allCb) {
+                        if (cb.isChecked()) {
+                            at_leaset_one_checked = true;
+                            the_choices = the_choices + cb.getText().toString() + ", ";
+                            sc=Integer.parseInt(score.get(options.indexOf(cb.getText().toString())));
                         }
-                        if (mCh2.isChecked()) {
-                            sc += 2;
-                            x = x.concat(mCh2.getText().toString() + ",");
-                        }
-                        if (mCh3.isChecked()) {
-                            sc += 3;
-                            x = x.concat(mCh3.getText().toString() + ",");
-                        }
-                        if (mCh4.isChecked()) {
-                            sc += 4;
-                            x = x.concat(mCh4.getText().toString() + ",");
-                        }
-                        if (mCh5.isChecked()) {
-                            sc += 5;
-                            x = x.concat(mCh5.getText().toString() + ",");
-                        }
-                        l.get(posx).setScore(String.valueOf(sc));
-                        l.get(posx).setAnswer(x);
-                        l.get(posx).setMaxscore("15");
-                        Log.e("nextqb", "setnextquest: " + x);
-                        posx = posx + 1;
-                        setAnsType(posx);
-                    } else {
-                        Toast.makeText(QuestionsActivity.this, "Choose atleast one", Toast.LENGTH_SHORT).show();
                     }
+                    if (!at_leaset_one_checked)
+                        Toast.makeText(QuestionsActivity.this, "Choose atleast one option!", Toast.LENGTH_SHORT).show();
+
+
+                    if (the_choices.length() > 2) {
+                        the_choices = the_choices.substring(0, the_choices.length() - 2);
+                        l.get(posx).setScore(String.valueOf(sc));
+                        int max=0;
+                        for(String x:score)
+                            max+=Integer.parseInt(x);
+                        l.get(posx).setAnswer(the_choices);
+                        l.get(posx).setMaxscore(String.valueOf(max));
+                        posx = posx + 1;
+                        setAnsType(posx);}
+
                     break;
 
                 case 3:
                     //Radio
-                    if (mMcqone.getCheckedRadioButtonId() == -1)
-                        Toast.makeText(QuestionsActivity.this, "Choose one", Toast.LENGTH_SHORT).show();
-                    else {
-                        int selected = mMcqone.getCheckedRadioButtonId();
+                    String the_choice = "";
+                    boolean at_leaset_one_selected = false;
+                    for (RadioButton rb : allRb) {
+                        if (rb.isChecked()) {
+                            at_leaset_one_selected = true;
+                            the_choice = rb.getText().toString();
+                        }
+                    }
+                    if (!at_leaset_one_selected)
+                        Toast.makeText(QuestionsActivity.this, "Choose an option!", Toast.LENGTH_SHORT).show();
 
-// Gets a reference to our "selected" radio button
-                        RadioButton b = (RadioButton) findViewById(selected);
-                        int sc = 0;
-// Now you can get the text or whatever you want from the "selected" radio button
-                        Log.e("asxz", "setnextquest: " + b.getText().toString());
-                        if (b.getText().toString().equals("None"))
-                            sc = 1;
-                        else if (b.getText().toString().equals("Mild"))
-                            sc = 2;
-                        else if (b.getText().toString().equals("Moderate"))
-                            sc = 3;
-                        else if (b.getText().toString().equals("Severe"))
-                            sc = 4;
-                        else if (b.getText().toString().equals("Extreme"))
-                            sc = 5;
-                        l.get(posx).setAnswer(b.getText().toString());
-                        l.get(posx).setScore(String.valueOf(sc));
-                        l.get(posx).setMaxscore("5");
+                    if (the_choice.length() > 0) {
+                        l.get(posx).setAnswer(the_choice);
+                        l.get(posx).setScore(score.get(options.indexOf(the_choice)));
+                        Comparator<String> cmp = (o1, o2) -> Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+                        l.get(posx).setMaxscore(Collections.max(score,cmp));
                         posx = posx + 1;
                         setAnsType(posx);
-
                     }
+
 
 
                     break;
@@ -308,35 +280,35 @@ public class QuestionsActivity extends AppCompatActivity {
                     }
                     break;
                 case 2:     //Checkbox
-                    mCh1.setChecked(false);
-                    mCh2.setChecked(false);
-                    mCh3.setChecked(false);
-                    mCh4.setChecked(false);
-                    mCh5.setChecked(false);
+
                     mMcqmany.setVisibility(View.VISIBLE);
+                    mMcqmany.removeAllViews();
                     mMcqone.setVisibility(View.GONE);
                     mEdittextqntil.setVisibility(View.GONE);
                     mSpinner.setVisibility(View.GONE);
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.GONE);
-                    if (l.get(i).getAnswer() != null) {
 
-                        String x = l.get(i).getAnswer();
-                        Log.e("asjsajjsa.jV", "setAnsType: " + x);
-                        if (x.contains("None"))
-                            mCh1.setChecked(true);
+                    getoptionsandscore(l.get(i).getOption(),options,score);
+                    allCb.clear();
+                    for (String choice : options) {
+                        CheckBox cb = new CheckBox(QuestionsActivity.this);
+                        cb.setText(choice);
+                        cb.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+                        cb.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        mMcqmany.addView(cb);
+                        allCb.add(cb);
 
-                        if (x.contains("Mild"))
-                            mCh2.setChecked(true);
+                    }
+                        if (l.get(i).getAnswer() != null) {
+                            String x = l.get(i).getAnswer();
+                            for (String choice : options) {
+                                if (x.contains(choice))
+                                {
+                                    allCb.get(options.indexOf(choice)).setChecked(true);
+                                }
 
-                        if (x.contains("Moderate"))
-                            mCh3.setChecked(true);
-
-                        if (x.contains("Severe"))
-                            mCh4.setChecked(true);
-
-                        if (x.contains("Extreme"))
-                            mCh5.setChecked(true);
+                            }
 
 
                     }
@@ -351,19 +323,24 @@ public class QuestionsActivity extends AppCompatActivity {
                     mSpinner.setVisibility(View.GONE);
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.GONE);
+                    getoptionsandscore(l.get(i).getOption(),options,score);
+                    mMcqone.removeAllViews();
+                    allRb.clear();
+
+                    for (String choice : options) {
+                        RadioButton rb = new RadioButton(QuestionsActivity.this);
+                        rb.setText(choice);
+
+                        rb.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                        rb.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        mMcqone.addView(rb);
+
+                        allRb.add(rb);
+                    }
+
                     if (l.get(i).getAnswer() != null) {
                         String x = l.get(i).getAnswer();
-                        Log.e("asxzcsa", "setAnsType: " + x);
-                        if (x.equals("None"))
-                            mRdb1.setChecked(true);
-                        else if (x.equals("Mild"))
-                            mRdb2.setChecked(true);
-                        else if (x.equals("Moderate"))
-                            mRdb3.setChecked(true);
-                        else if (x.equals("Severe"))
-                            mRdb4.setChecked(true);
-                        else if (x.equals("Extreme"))
-                            mRdb5.setChecked(true);
+                        allRb.get(options.indexOf(x)).setChecked(true);
 
                     }
                     break;
@@ -428,9 +405,8 @@ public class QuestionsActivity extends AppCompatActivity {
     void getoptionsandscore(String x,ArrayList opt,ArrayList sco)
     {
         String a[] = x.split("[,;]");
-        opt = new ArrayList<String>();
-        sco = new ArrayList<String>();
-
+        opt.clear();
+        sco.clear();
         for(int i=0; i<a.length;i+=2)
         {
 

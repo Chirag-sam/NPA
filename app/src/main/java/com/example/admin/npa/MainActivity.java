@@ -106,15 +106,15 @@ public class MainActivity extends AppCompatActivity {
                 mHelper.addallpatients(list,n.getNid());
 
                 ArrayList<Question>questions=new ArrayList<>();
-                questions.add(new Question("1r","How Would You Describe your pain?","4","maybe,20;lol,10;deeznuts,5;","DIA-123"));
-                questions.add(new Question("2r","Does your pain radiate?","4","maybe,20;lol,10;deeznuts,5;","DIA-123"));
+                questions.add(new Question("1r","How Would You Describe your pain?","3","maybe,20;lol,10;deeznuts,5;","DIA-123"));
+                questions.add(new Question("2r","Does your pain radiate?","2","maybe,20;lol,10;deeznuts,5;","DIA-123"));
                 questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","6",null,"DIA-123"));
                 questions.add(new Question("4r","What provokes your pain?","1",null,"DIA-123"));
                 questions.add(new Question("5r","Did this happen Before","5",null,"DIA-123"));
 
                 questions.add(new Question("1m","When Did the symptoms start?","5",null,"TUB-123"));
-                questions.add(new Question("2m","Is the pain progressing?","4","maybe,20;lol,10;deeznuts,5;","TUB-123"));
-                questions.add(new Question("3m","Does your body show any signs of fever?","4","maybe,20;lol,10;deeznuts,5;","TUB-123"));
+                questions.add(new Question("2m","Is the pain progressing?","2","maybe,20;lol,10;deeznuts,5;zxcxzc,12;123123,5;","TUB-123"));
+                questions.add(new Question("3m","Does your body show any signs of fever?","2","maybe,20;lol,10;deeznuts,5;jsdcf,9;23zx5,123;","TUB-123"));
                 questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","6",null,"TUB-123"));
                 questions.add(new Question("5m","Describe your pain in words.","1",null,"TUB-123"));
 

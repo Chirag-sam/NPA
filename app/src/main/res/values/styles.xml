@@ -29,6 +29,7 @@
 
     </style>
 
+
     <style name="AccentButton2" parent="Widget.AppCompat.Button">
         <item name="colorButtonNormal">@color/colorWhite</item>
         <item name="android:textColor">@color/colorPrimary</item>
