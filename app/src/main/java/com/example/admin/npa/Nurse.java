@@ -15,10 +15,9 @@ public class Nurse {
         public String uname;
          //@SerializedName("password")
         public String password;
-        @SerializedName("fname")
-        public String firstname;
-        @SerializedName("lname")
-         public String lastname;
+        @SerializedName("nname")
+        public String nname;
+
     @SerializedName("gender")
     public String gender;
     public String lastsync;
@@ -34,21 +33,21 @@ public class Nurse {
         this.gender = gender;
     }
 
-    public Nurse(String nid, String uname, String password, String firstname, String lastname, String gender, String lastsync) {
+    public Nurse(String nid, String uname, String password, String nname, String gender, String lastsync) {
         this.nid = nid;
         this.uname = uname;
         this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.nname = nname;
+
         this.gender = gender;
         this.lastsync = lastsync;
     }
 
-//    public Nurse(String nid, String uname, String password, String firstname, String lastname, String gender) {
+//    public Nurse(String nid, String uname, String password, String nname, String lastname, String gender) {
 //        this.nid = nid;
 //        this.uname = uname;
 //        this.password = password;
-//        this.firstname = firstname;
+//        this.nname = nname;
 //        this.lastname = lastname;
 //        this.gender = gender;
 //    }
@@ -86,18 +85,11 @@ public class Nurse {
     }
 
     public String getFirstname() {
-        return firstname;
+        return nname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstname(String nname) {
+        this.nname = nname;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
 }

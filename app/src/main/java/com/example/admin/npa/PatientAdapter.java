@@ -67,7 +67,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     }
 
 
-    static
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -97,7 +97,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
             if (item.getGender().equals("Male"))
                 iv.setImageResource(R.drawable.ic_man_shape);
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
-            name.setText(item.getFname() + " " + item.getLname()+", "+getage(item.getDob()));
+            name.setText(item.getFname() +", "+getage(item.getDob()));
             date.setText(item.getAppdate());
 
 

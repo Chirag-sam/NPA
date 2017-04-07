@@ -136,7 +136,7 @@ public class ResultActivity extends AppCompatActivity {
             if (p.getGender().equals("Male"))
                 mIv.setImageResource(R.drawable.ic_man_shape);
             else mIv.setImageResource(R.drawable.ic_woman_silhouette);
-            mName.setText(p.getFname() + " " + p.getLname() + ", " + getage(p.getDob()));
+            mName.setText(p.getFname() + ", " + getage(p.getDob()));
             mDate.setText(p.getAppdate());
             mIllness.setText(p.getDisease());
 
@@ -222,11 +222,11 @@ public class ResultActivity extends AppCompatActivity {
             if (p.getGender().equals("Male"))
                 iv.setImageResource(R.drawable.ic_man_shape);
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
-            name.setText(p.getFname() + " " + p.getLname() + ", " + getage(p.getDob()));
+            name.setText(p.getFname() +", " + getage(p.getDob()));
             date.setText(p.getAppdate());
             illness.setText(p.getDisease());
             riskscore.setText("Asessment Score: " + gettotal(list) + "/" + getmaxtotal(list));
-            providername.setText("Assessed by: " + n.getFirstname() + " " + n.getLastname());
+            providername.setText("Assessed by: " + n.getFirstname());
             appointmentdate.setText("Appointment Date: " + p.getAppdate());
             reportdate.setText("Assessment Date: " + p.getRepdate());
             float percent=getpercentage(list);

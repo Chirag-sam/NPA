@@ -103,12 +103,12 @@ public class MainActivity extends AppCompatActivity {
                 // Log error here since request failed
                 p.dismiss();
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
-                list.add(new PatientJ("1", "12", "Dolores", "Abernathy", "Female", "10/10/1997", "DIA-123", "DIA-123", "23/10/17", "pending"));
-                list.add(new PatientJ("2", "12", "Peter", "Abernathy", "Male", "10/10/1957", "TUB-123", "TUB-123", "23/10/17", "pending"));
-                list.add(new PatientJ("3", "12", "Bernard", "Lowe", "Male", "10/10/1967", "CBR-331", "CBR-331", "23/10/17", "pending"));
-                list.add(new PatientJ("4", "12", "Elsie", "Hughes", "Female", "10/10/1987", "DIA-123", "DIA-123", "23/10/17", "pending"));
-                list.add(new PatientJ("5", "12", "Robert", "Ford", "Male", "10/10/1997", "DIA-123", "DIA-123", "23/10/17", "pending"));
-                list.add(new PatientJ("6", "12", "Maeve", "M", "Female", "10/10/1987", "CBR-331", "CBR-331", "23/10/17", "pending"));
+                list.add(new PatientJ("1", "12", "Dolores Abernathy", "Female", "10/10/1997", "DIA-123", "DIA-123", "23/10/17", "pending"));
+                list.add(new PatientJ("2", "12", "Peter Abernathy", "Male", "10/10/1957", "TUB-123", "TUB-123", "23/10/17", "pending"));
+                list.add(new PatientJ("3", "12", "Bernard Lowe", "Male", "10/10/1967", "CBR-331", "CBR-331", "23/10/17", "pending"));
+                list.add(new PatientJ("4", "12", "Elsie Hughes", "Female", "10/10/1987", "DIA-123", "DIA-123", "23/10/17", "pending"));
+                list.add(new PatientJ("5", "12", "Robert Ford", "Male", "10/10/1997", "DIA-123", "DIA-123", "23/10/17", "pending"));
+                list.add(new PatientJ("6", "12", "Maeve M", "Female", "10/10/1987", "CBR-331", "CBR-331", "23/10/17", "pending"));
 
                 mHelper.addallpatients(list, n.getNid());
 
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mHelper.addallqns(questions);
                 mWelcome.setText(
-                        "Name: " + n.getFirstname() + " " + n.getLastname() +
+                        "Name: " + n.getFirstname() + " " +
                                 "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
                                 "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
                                 "\nLast Sync :" + n.getLastsync()
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         n = mHelper.getNurseDetails();
         mWelcome.setText(
-                "Name: " + n.getFirstname() + " " + n.getLastname() +
+                "Name: " + n.getFirstname() + " " +
                         "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
                         "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
                         "\nLast Sync :" + n.getLastsync()
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mWelcome.setText(
-                "Name: " + n.getFirstname() + " " + n.getLastname() +
+                "Name: " + n.getFirstname() +
                         "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
                         "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
                         "\nLast Sync :" + n.getLastsync()

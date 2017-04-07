@@ -15,10 +15,9 @@ public class PatientJ {
     @SerializedName("nurseid")
     public String nurseid;
 
-    @SerializedName("fname")
-    public String fname;
-    @SerializedName("lname")
-    public String lname;
+    @SerializedName("name")
+    public String pname;
+
     @SerializedName("gender")
     public String gender;
     @SerializedName("dob")
@@ -37,11 +36,10 @@ public class PatientJ {
     @SerializedName("repmaxscore")
     public String repmaxscore;
 
-    public PatientJ(String pid, String nurseid, String fname, String lname, String gender, String dob, String disease, String surveyid, String appdate, String status, String repdate, String repscore, String repmaxscore) {
+    public PatientJ(String pid, String nurseid, String pname, String gender, String dob, String disease, String surveyid, String appdate, String status, String repdate, String repscore, String repmaxscore) {
         this.pid = pid;
         this.nurseid = nurseid;
-        this.fname = fname;
-        this.lname = lname;
+        this.pname = pname;
         this.gender = gender;
         this.dob = dob;
         this.disease = disease;
@@ -91,11 +89,10 @@ public class PatientJ {
 
 
 
-    public PatientJ(String pid, String nurseid, String fname, String lname, String gender, String dob, String disease, String surveyid, String appdate, String status) {
+    public PatientJ(String pid, String nurseid, String pname, String gender, String dob, String disease, String surveyid, String appdate, String status) {
         this.pid = pid;
         this.nurseid = nurseid;
-        this.fname = fname;
-        this.lname = lname;
+        this.pname = pname;
         this.gender = gender;
         this.dob = dob;
         this.disease = disease;
@@ -121,20 +118,14 @@ public class PatientJ {
     }
 
     public String getFname() {
-        return fname;
+        return pname;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setFname(String pname) {
+        this.pname = pname;
     }
 
-    public String getLname() {
-        return lname;
-    }
 
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
 
     public String getGender() {
         return gender;
