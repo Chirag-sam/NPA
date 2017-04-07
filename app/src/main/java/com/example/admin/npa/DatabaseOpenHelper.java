@@ -20,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION =23;
+    private static final int DATABASE_VERSION =24;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";

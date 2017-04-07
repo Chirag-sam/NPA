@@ -22,11 +22,20 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.example.admin.npa.MainActivity">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/logom"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+
+
+            />
         <android.support.v7.widget.CardView
 
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+            android:layout_below="@+id/logom"
             android:id="@+id/cv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -12,11 +12,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-    Nurse n=new Nurse();
+
+    Nurse n = new Nurse();
     DatabaseOpenHelper mHelper;
     @BindView(R.id.iv)
     ImageView iv;
@@ -47,20 +49,25 @@ public class MainActivity extends AppCompatActivity {
     AppCompatButton mButt3;
     @BindView(R.id.welcome)
     TextView mWelcome;
-    private DrawerLayout dl;
+    @BindView(R.id.logom)
+    ImageView logom;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
+    @BindView(R.id.dl)
+    DrawerLayout dl;
+
     private ActionBarDrawerToggle abdt;
 
 
     @OnClick(R.id.butt1)
     void sync() {
-        List<PatientJ> list=new ArrayList<>();
+        List<PatientJ> list = new ArrayList<>();
 
 
-
-        ProgressDialog p=new ProgressDialog(this);
-        RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
-        PostReport postReport=new PostReport( mHelper.getAllPatients(),mHelper.getallpatientsResponse());
-        Call<PostReport> call0= client.postreporttoserver(postReport);
+        ProgressDialog p = new ProgressDialog(this);
+        RetrofitInterface client = RetrofitBuilder.createService(RetrofitInterface.class);
+        PostReport postReport = new PostReport(mHelper.getAllPatients(), mHelper.getallpatientsResponse());
+        Call<PostReport> call0 = client.postreporttoserver(postReport);
         call0.enqueue(new Callback<PostReport>() {
             @Override
             public void onResponse(Call<PostReport> call, Response<PostReport> response) {
@@ -80,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<PatientJ>> call, Response<List<PatientJ>> response) {
                 int statusCode = response.code();
-            //    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
-                List<PatientJ> ls=new ArrayList<PatientJ>();
-                ls= response.body();
-                mHelper.addallpatients(ls,n.getNid());
+                //    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
+                List<PatientJ> ls = new ArrayList<PatientJ>();
+                ls = response.body();
+                mHelper.addallpatients(ls, n.getNid());
 
                 p.dismiss();
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
@@ -96,50 +103,46 @@ public class MainActivity extends AppCompatActivity {
                 // Log error here since request failed
                 p.dismiss();
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
-                list.add(new PatientJ("1","12","Dolores","Abernathy","Female","10/10/1997","DIA-123","DIA-123","23/10/17","pending"));
-                list.add(new PatientJ("2","12","Peter","Abernathy","Male","10/10/1957","TUB-123","TUB-123","23/10/17","pending"));
-                list.add(new PatientJ("3","12","Bernard","Lowe","Male","10/10/1967","CBR-331","CBR-331","23/10/17","pending"));
-                list.add(new PatientJ("4","12","Elsie","Hughes","Female","10/10/1987","DIA-123","DIA-123","23/10/17","pending"));
-                list.add(new PatientJ("5","12","Robert","Ford","Male","10/10/1997","DIA-123","DIA-123","23/10/17","pending"));
-                list.add(new PatientJ("6","12","Maeve","M","Female","10/10/1987","CBR-331","CBR-331","23/10/17","pending"));
+                list.add(new PatientJ("1", "12", "Dolores", "Abernathy", "Female", "10/10/1997", "DIA-123", "DIA-123", "23/10/17", "pending"));
+                list.add(new PatientJ("2", "12", "Peter", "Abernathy", "Male", "10/10/1957", "TUB-123", "TUB-123", "23/10/17", "pending"));
+                list.add(new PatientJ("3", "12", "Bernard", "Lowe", "Male", "10/10/1967", "CBR-331", "CBR-331", "23/10/17", "pending"));
+                list.add(new PatientJ("4", "12", "Elsie", "Hughes", "Female", "10/10/1987", "DIA-123", "DIA-123", "23/10/17", "pending"));
+                list.add(new PatientJ("5", "12", "Robert", "Ford", "Male", "10/10/1997", "DIA-123", "DIA-123", "23/10/17", "pending"));
+                list.add(new PatientJ("6", "12", "Maeve", "M", "Female", "10/10/1987", "CBR-331", "CBR-331", "23/10/17", "pending"));
 
-                mHelper.addallpatients(list,n.getNid());
+                mHelper.addallpatients(list, n.getNid());
 
-                ArrayList<Question>questions=new ArrayList<>();
-                questions.add(new Question("1r","How Would You Describe your pain?","3","maybe,20;lol,10;deeznuts,5;","DIA-123"));
-                questions.add(new Question("2r","Does your pain radiate?","2","maybe,20;lol,10;deeznuts,5;","DIA-123"));
-                questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?","6",null,"DIA-123"));
-                questions.add(new Question("4r","What provokes your pain?","1",null,"DIA-123"));
-                questions.add(new Question("5r","Did this happen Before","5",null,"DIA-123"));
+                ArrayList<Question> questions = new ArrayList<>();
+                questions.add(new Question("1r", "How Would You Describe your pain?", "3", "maybe,20;lol,10;deeznuts,5;", "DIA-123"));
+                questions.add(new Question("2r", "Does your pain radiate?", "2", "maybe,20;lol,10;deeznuts,5;", "DIA-123"));
+                questions.add(new Question("3r", "What does your pain feel like on a scale of 0 to 5?", "6", null, "DIA-123"));
+                questions.add(new Question("4r", "What provokes your pain?", "1", null, "DIA-123"));
+                questions.add(new Question("5r", "Did this happen Before", "5", null, "DIA-123"));
 
-                questions.add(new Question("1m","When Did the symptoms start?","5",null,"TUB-123"));
-                questions.add(new Question("2m","Is the pain progressing?","2","maybe,20;lol,10;deeznuts,5;zxcxzc,12;123123,5;","TUB-123"));
-                questions.add(new Question("3m","Does your body show any signs of fever?","2","maybe,20;lol,10;deeznuts,5;jsdcf,9;23zx5,123;","TUB-123"));
-                questions.add(new Question("4m","What does your pain feel like on a scale of 0 to 5?","6",null,"TUB-123"));
-                questions.add(new Question("5m","Describe your pain in words.","1",null,"TUB-123"));
+                questions.add(new Question("1m", "When Did the symptoms start?", "5", null, "TUB-123"));
+                questions.add(new Question("2m", "Is the pain progressing?", "2", "maybe,20;lol,10;deeznuts,5;zxcxzc,12;123123,5;", "TUB-123"));
+                questions.add(new Question("3m", "Does your body show any signs of fever?", "2", "maybe,20;lol,10;deeznuts,5;jsdcf,9;23zx5,123;", "TUB-123"));
+                questions.add(new Question("4m", "What does your pain feel like on a scale of 0 to 5?", "6", null, "TUB-123"));
+                questions.add(new Question("5m", "Describe your pain in words.", "1", null, "TUB-123"));
 
-                questions.add(new Question("1c","When Did the symptoms start?","5",null,"CBR-331"));
-                questions.add(new Question("2c","Is the pain progressing?","4","maybe,20;lol,10;deeznuts,5;","CBR-331"));
-                questions.add(new Question("3c","Does your body show any signs of fever?","4","maybe,20;lol,10;deeznuts,5;","CBR-331"));
-                questions.add(new Question("4c","Have you taken any medications,if so what ?","1",null,"CBR-331"));
-                questions.add(new Question("5c","Any prior medical history","2",null,"CBR-331"));
-
+                questions.add(new Question("1c", "When Did the symptoms start?", "5", null, "CBR-331"));
+                questions.add(new Question("2c", "Is the pain progressing?", "4", "maybe,20;lol,10;deeznuts,5;", "CBR-331"));
+                questions.add(new Question("3c", "Does your body show any signs of fever?", "4", "maybe,20;lol,10;deeznuts,5;", "CBR-331"));
+                questions.add(new Question("4c", "Have you taken any medications,if so what ?", "1", null, "CBR-331"));
+                questions.add(new Question("5c", "Any prior medical history", "2", "maybe,20;lol,10;deeznuts,5;zxcxzc,12;123123,5;", "CBR-331"));
 
 
                 mHelper.addallqns(questions);
                 mWelcome.setText(
-                        "Name: "+n.getFirstname()+" "+n.getLastname()+
-                                "\nCompleted Assessments :"+mHelper.getcountcompleted()+"/"+(mHelper.getcountpending()+mHelper.getcountcompleted())+
-                                "\nUnsynced Assessments  :"+mHelper.getcountcompleted()+
-                                "\nLast Sync :"+n.getLastsync()
-
+                        "Name: " + n.getFirstname() + " " + n.getLastname() +
+                                "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
+                                "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
+                                "\nLast Sync :" + n.getLastsync()
 
 
                 );
             }
         });
-
-
 
 
     }
@@ -159,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Glide.with(this).load("https://thecambridgeroom.files.wordpress.com/2012/11/images.jpg").thumbnail(0.2f).into(logom);
         // db.addNurse(new Nurse("Vijay","329","sad","zxc","asd","asd","asd"));
         dl = (DrawerLayout) findViewById(R.id.dl);
         abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
@@ -166,13 +170,12 @@ public class MainActivity extends AppCompatActivity {
         dl.addDrawerListener(abdt);
         abdt.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        n=mHelper.getNurseDetails();
+        n = mHelper.getNurseDetails();
         mWelcome.setText(
-                "Name: "+n.getFirstname()+" "+n.getLastname()+
-                "\nCompleted Assessments :"+mHelper.getcountcompleted()+"/"+(mHelper.getcountpending()+mHelper.getcountcompleted())+
-                "\nUnsynced Assessments  :"+mHelper.getcountcompleted()+
-                "\nLast Sync :"+n.getLastsync()
-
+                "Name: " + n.getFirstname() + " " + n.getLastname() +
+                        "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
+                        "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
+                        "\nLast Sync :" + n.getLastsync()
 
 
         );
@@ -251,11 +254,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mWelcome.setText(
-                "Name: "+n.getFirstname()+" "+n.getLastname()+
-                        "\nCompleted Assessments :"+mHelper.getcountcompleted()+"/"+(mHelper.getcountpending()+mHelper.getcountcompleted())+
-                        "\nUnsynced Assessments  :"+mHelper.getcountcompleted()+
-                        "\nLast Sync :"+n.getLastsync()
-
+                "Name: " + n.getFirstname() + " " + n.getLastname() +
+                        "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
+                        "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
+                        "\nLast Sync :" + n.getLastsync()
 
 
         );
