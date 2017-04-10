@@ -26,6 +26,9 @@ public class PatientJ {
     public String disease;
     @SerializedName("surveyid")
     public String surveyid;
+
+    @SerializedName("surveyname")
+    public String surveyname;
     @SerializedName("appdate")
     public String appdate;
     public String status;
@@ -36,7 +39,7 @@ public class PatientJ {
     @SerializedName("repmaxscore")
     public String repmaxscore;
 
-    public PatientJ(String pid, String nurseid, String pname, String gender, String dob, String disease, String surveyid, String appdate, String status, String repdate, String repscore, String repmaxscore) {
+    public PatientJ(String pid, String nurseid, String pname, String gender, String dob, String disease, String surveyid, String surveyname, String appdate, String status, String repdate, String repscore, String repmaxscore) {
         this.pid = pid;
         this.nurseid = nurseid;
         this.pname = pname;
@@ -44,11 +47,20 @@ public class PatientJ {
         this.dob = dob;
         this.disease = disease;
         this.surveyid = surveyid;
+        this.surveyname = surveyname;
         this.appdate = appdate;
         this.status = status;
         this.repdate = repdate;
         this.repscore = repscore;
         this.repmaxscore = repmaxscore;
+    }
+
+    public String getSurveyname() {
+        return surveyname;
+    }
+
+    public void setSurveyname(String surveyname) {
+        this.surveyname = surveyname;
     }
 
     public String getRepmaxscore() {
@@ -88,8 +100,7 @@ public class PatientJ {
     }
 
 
-
-    public PatientJ(String pid, String nurseid, String pname, String gender, String dob, String disease, String surveyid, String appdate, String status) {
+    public PatientJ(String pid, String nurseid, String pname, String gender, String dob, String disease, String surveyid, String surveyname, String appdate, String status) {
         this.pid = pid;
         this.nurseid = nurseid;
         this.pname = pname;
@@ -97,9 +108,11 @@ public class PatientJ {
         this.dob = dob;
         this.disease = disease;
         this.surveyid = surveyid;
+        this.surveyname = surveyname;
         this.appdate = appdate;
         this.status = status;
     }
+
 
     public String getPid() {
         return pid;

@@ -2,6 +2,8 @@ package com.example.admin.npa;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +11,12 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -41,21 +45,33 @@ public class LogIn extends AppCompatActivity {
     @BindView(R.id.butt)
     Button butt;
     DatabaseOpenHelper mHelper;
-    List<Nurse> ls=new ArrayList<>();
+    List<Nurse> ls = new ArrayList<>();
+    @BindView(R.id.svvv)
+    ScrollView svvv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         ButterKnife.bind(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
         if (getIntent().getBooleanExtra("Exit me", false)) {
             finish();
         }
+        AnimationDrawable animationDrawable = (AnimationDrawable) svvv.getBackground();
 
+        animationDrawable.setEnterFadeDuration(2500);
+        animationDrawable.setExitFadeDuration(2500);
+
+        animationDrawable.start();
         mHelper = DatabaseOpenHelper.getInstance(this);
-        if(mHelper.getLoginsession())
-        { startActivity(new Intent(LogIn.this, MainActivity.class));
-            finish();}
+        if (mHelper.getLoginsession()) {
+            startActivity(new Intent(LogIn.this, MainActivity.class));
+            finish();
+        }
 
     }
 
@@ -99,17 +115,17 @@ public class LogIn extends AppCompatActivity {
             focusView.requestFocus();
         } else {
 
-            ProgressDialog p=new ProgressDialog(this);
-            RetrofitInterface client=RetrofitBuilder.createService(RetrofitInterface.class);
-            Call<Nurse> call = client.Login(email,password);
+            ProgressDialog p = new ProgressDialog(this);
+            RetrofitInterface client = RetrofitBuilder.createService(RetrofitInterface.class);
+            Call<Nurse> call = client.Login(email, password);
             p.setMessage("Authenticating");
             p.show();
             call.enqueue(new Callback<Nurse>() {
                 @Override
                 public void onResponse(Call<Nurse> call, Response<Nurse> response) {
                     int statusCode = response.code();
-                    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
-                     Nurse N= response.body();
+                    Log.e("sadxc", "onResponse: " + call.toString() + response.body().toString());
+                    Nurse N = response.body();
                     N.setUname(email);
                     N.setPassword(password);
                     mHelper.addNurse(N);
@@ -123,9 +139,9 @@ public class LogIn extends AppCompatActivity {
                     edittextdialtil.setError("Invalid Username");
                     edittextdialtil1.setError("Invalid Password");
 
-                mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint James","Male","23/2/17"));
+                    mHelper.addNurse(new Nurse("1", "a@a.com", "aaaaaa", "Flint James", "Male", "23/2/17"));
                     Log.e("Fail", "onFailure: ");
-                 //    Log error here since request failed
+                    //    Log error here since request failed
                     p.dismiss();
 //                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
 //                    startActivity(new Intent(LogIn.this, MainActivity.class));

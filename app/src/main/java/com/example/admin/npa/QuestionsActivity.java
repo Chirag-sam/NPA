@@ -186,7 +186,18 @@ public class QuestionsActivity extends AppCompatActivity {
                         setAnsType(posx);
                     }
                     break;
-                case 5://datepicker
+                case 5:
+                    //Slider
+                    int y = mSeekBar.getProgress();
+                    l.get(posx).setAnswer(String.valueOf(y));
+                    l.get(posx).setScore(String.valueOf(y));
+                    l.get(posx).setMaxscore("5");
+                    posx = posx + 1;
+                    setAnsType(posx);
+
+
+                    break;
+                case 6://datepicker
 
                        if (mDate.getText().toString().equals("MM/dd/yyyy"))
                         Toast.makeText(QuestionsActivity.this, "Choose one from dropdown", Toast.LENGTH_SHORT).show();
@@ -198,17 +209,7 @@ public class QuestionsActivity extends AppCompatActivity {
                         setAnsType(posx);
                     }
                     break;
-                case 6:
-                    //Slider
-                    int y = mSeekBar.getProgress();
-                    l.get(posx).setAnswer(String.valueOf(y));
-                    l.get(posx).setScore(String.valueOf(y));
-                    l.get(posx).setMaxscore("5");
-                    posx = posx + 1;
-                    setAnsType(posx);
 
-
-                    break;
 
 
                 default:
@@ -361,21 +362,8 @@ public class QuestionsActivity extends AppCompatActivity {
 
                     }
                     break;
-                case 5://datepicker
-                    mSpinner.setVisibility(View.GONE);
-                    mMcqmany.setVisibility(View.GONE);
-                    mMcqone.setVisibility(View.GONE);
-                    mEdittextqntil.setVisibility(View.GONE);
-                    mDate.setVisibility(View.VISIBLE);
-                    mSeekBar.setVisibility(View.GONE);
 
-                    if (l.get(i).getAnswer() != null) {
-                        mDate.setText(l.get(i).getAnswer());
-
-                    }
-                    else mDate.setText("MM/dd/yyyy");
-                    break;
-                case 6:      //Slider
+                case 5:      //Slider
                     mSeekBar.setProgress(0);
                     mMcqmany.setVisibility(View.GONE);
                     mMcqone.setVisibility(View.GONE);
@@ -389,7 +377,20 @@ public class QuestionsActivity extends AppCompatActivity {
 
                     }
                     break;
+                case 6://datepicker
+                    mSpinner.setVisibility(View.GONE);
+                    mMcqmany.setVisibility(View.GONE);
+                    mMcqone.setVisibility(View.GONE);
+                    mEdittextqntil.setVisibility(View.GONE);
+                    mDate.setVisibility(View.VISIBLE);
+                    mSeekBar.setVisibility(View.GONE);
 
+                    if (l.get(i).getAnswer() != null) {
+                        mDate.setText(l.get(i).getAnswer());
+
+                    }
+                    else mDate.setText("MM/dd/yyyy");
+                    break;
 
                 default:    //Wrong Input
                     mMcqmany.setVisibility(View.GONE);
