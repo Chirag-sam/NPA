@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,12 +104,12 @@ public class MainActivity extends AppCompatActivity {
                 // Log error here since request failed
                 p.dismiss();
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
-                list.add(new PatientJ("1", "12", "Dolores Abernathy", "Female", "10/10/1997", "DIA-123", "DIA-123","Diabetes", "23/10/17", "pending"));
-                list.add(new PatientJ("2", "12", "Peter Abernathy", "Male", "10/10/1957", "TUB-123", "TUB-123","Tuberculosis", "23/10/17", "pending"));
-                list.add(new PatientJ("3", "12", "Bernard Lowe", "Male", "10/10/1967", "CBR-331", "CBR-331","Cancer", "23/10/17", "pending"));
-                list.add(new PatientJ("4", "12", "Elsie Hughes", "Female", "10/10/1987", "DIA-123", "DIA-123","Diabetes", "23/10/17", "pending"));
-                list.add(new PatientJ("5", "12", "Robert Ford", "Male", "10/10/1997", "DIA-123", "DIA-123","Diabetes", "23/10/17", "pending"));
-                list.add(new PatientJ("6", "12", "Maeve M", "Female", "10/10/1987", "CBR-331", "CBR-331","Cancer", "23/10/17", "pending"));
+                list.add(new PatientJ("1", "12", "Dolores Abernathy", "Female", "10/10/1997", "DIA-123", "DIA-123","Diabetes","Diabetes 123wqsas", "23/10/17", "pending"));
+                list.add(new PatientJ("2", "12", "Peter Abernathy", "Male", "10/10/1957", "TUB-123", "TUB-123","Tuberculosis","Tuberculosis 123waszx", "23/10/17", "pending"));
+                list.add(new PatientJ("3", "12", "Bernard Lowe", "Male", "10/10/1967", "CBR-331", "CBR-331","Cancer","Cancer asdxczczx", "23/10/17", "pending"));
+                list.add(new PatientJ("4", "12", "Elsie Hughes", "Female", "10/10/1987", "DIA-123", "DIA-123","Diabetes","Diabetes saxczzxczx", "23/10/17", "pending"));
+                list.add(new PatientJ("5", "12", "Robert Ford", "Male", "10/10/1997", "DIA-123", "DIA-123","Diabetes","Diabetes asdxczc", "23/10/17", "pending"));
+                list.add(new PatientJ("6", "12", "Maeve M", "Female", "10/10/1987", "CBR-331", "CBR-331","Cancer","Cancer sadxzczxc", "23/10/17", "pending"));
 
                 mHelper.addallpatients(list, n.getNid());
 
@@ -162,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Glide.with(this).load("https://thecambridgeroom.files.wordpress.com/2012/11/images.jpg").thumbnail(0.2f).into(logom);
         // db.addNurse(new Nurse("Vijay","329","sad","zxc","asd","asd","asd"));
         dl = (DrawerLayout) findViewById(R.id.dl);
         abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
@@ -171,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
         abdt.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         n = mHelper.getNurseDetails();
+        Glide.with(this).load(n.getHosplogo())
+                .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).into(logom);
+
         mWelcome.setText(
                 "Name: " + n.getFirstname() + " " +
                         "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
@@ -207,12 +210,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.tac) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
                     builder.setTitle("Terms and conditions");
-                    builder.setMessage("T & C");
+                    builder.setMessage(n.getTcs());
                     builder.setPositiveButton("OK", null);
                     // builder.setNegativeButton("Cancel", null);
                     builder.show();
-                } else if (id == R.id.settings) {
-
                 }
 
                 return true;

@@ -2,25 +2,23 @@ package com.example.admin.npa;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,8 +50,10 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @BindView(R.id.mcqone)
     RadioGroup mMcqone;
-    @BindView(R.id.seekBar)
-    SeekBar mSeekBar;
+    //    @BindView(R.id.seekBar)
+//    SeekBar mSeekBar;
+    @BindView(R.id.lin1)
+    LinearLayout mSeekBar;
     @BindView(R.id.edittextqn)
     EditText mEdittextqn;
     @BindView(R.id.edittextqntil)
@@ -74,23 +74,31 @@ public class QuestionsActivity extends AppCompatActivity {
     Spinner mSpinner;
     @BindView(R.id.date)
     TextView mDate;
+    CustomSeekBar customSeekBar;
+    @BindView(R.id.back1)
+    Button mBack1;
+    @BindView(R.id.next2)
+    Button mNext2;
+
     @OnClick(R.id.date)
-    void setdate()
-    {       Calendar newCalendar=Calendar.getInstance();;
-            DatePickerDialog datePickerDialog = new DatePickerDialog(QuestionsActivity.this, (view1, year, monthOfYear, dayOfMonth) -> {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                SimpleDateFormat dateFormatter=new SimpleDateFormat("MM/dd/yyyy", Locale.US);
-                mDate.setText(dateFormatter.format(newDate.getTime()));
-            },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-            datePickerDialog.show();
+    void setdate() {
+        Calendar newCalendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(QuestionsActivity.this, (view1, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+            mDate.setText(dateFormatter.format(newDate.getTime()));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
 
     }
-    ArrayList<String>score=new ArrayList<>();
-    ArrayList<String>options=new ArrayList<>();
+
+    ArrayList<String> score = new ArrayList<>();
+    ArrayList<String> options = new ArrayList<>();
     private final ArrayList<RadioButton> allRb = new ArrayList<>();
     private final ArrayList<CheckBox> allCb = new ArrayList<>();
-    @OnClick(R.id.back)
+
+    @OnClick({R.id.back,R.id.back1})
     void setbackqn() {
         if (posx > 0) {
             posx = posx - 1;
@@ -101,7 +109,7 @@ public class QuestionsActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick(R.id.next)
+    @OnClick({R.id.next,R.id.next2})
     void setnextquest() {
         if (posx < l.size()) {
             int i = Integer.parseInt(l.get(posx).getRestype());
@@ -122,13 +130,13 @@ public class QuestionsActivity extends AppCompatActivity {
                     break;
                 case 2:     //Checkbox
                     String the_choices = "";
-                    int sc=0;
+                    int sc = 0;
                     boolean at_leaset_one_checked = false;
                     for (CheckBox cb : allCb) {
                         if (cb.isChecked()) {
                             at_leaset_one_checked = true;
                             the_choices = the_choices + cb.getText().toString() + ", ";
-                            sc=Integer.parseInt(score.get(options.indexOf(cb.getText().toString())));
+                            sc = Integer.parseInt(score.get(options.indexOf(cb.getText().toString())));
                         }
                     }
                     if (!at_leaset_one_checked)
@@ -138,13 +146,14 @@ public class QuestionsActivity extends AppCompatActivity {
                     if (the_choices.length() > 2) {
                         the_choices = the_choices.substring(0, the_choices.length() - 2);
                         l.get(posx).setScore(String.valueOf(sc));
-                        int max=0;
-                        for(String x:score)
-                            max+=Integer.parseInt(x);
+                        int max = 0;
+                        for (String x : score)
+                            max += Integer.parseInt(x);
                         l.get(posx).setAnswer(the_choices);
                         l.get(posx).setMaxscore(String.valueOf(max));
                         posx = posx + 1;
-                        setAnsType(posx);}
+                        setAnsType(posx);
+                    }
 
                     break;
 
@@ -165,11 +174,10 @@ public class QuestionsActivity extends AppCompatActivity {
                         l.get(posx).setAnswer(the_choice);
                         l.get(posx).setScore(score.get(options.indexOf(the_choice)));
                         Comparator<String> cmp = (o1, o2) -> Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
-                        l.get(posx).setMaxscore(Collections.max(score,cmp));
+                        l.get(posx).setMaxscore(Collections.max(score, cmp));
                         posx = posx + 1;
                         setAnsType(posx);
                     }
-
 
 
                     break;
@@ -181,14 +189,14 @@ public class QuestionsActivity extends AppCompatActivity {
                         l.get(posx).setScore(score.get(options.indexOf(mSpinner.getSelectedItem().toString())));
 
                         Comparator<String> cmp = (o1, o2) -> Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
-                        l.get(posx).setMaxscore(Collections.max(score,cmp));
+                        l.get(posx).setMaxscore(Collections.max(score, cmp));
                         posx = posx + 1;
                         setAnsType(posx);
                     }
                     break;
                 case 5:
                     //Slider
-                    int y = mSeekBar.getProgress();
+                    int y = customSeekBar.getSeekBar().getProgress();
                     l.get(posx).setAnswer(String.valueOf(y));
                     l.get(posx).setScore(String.valueOf(y));
                     l.get(posx).setMaxscore("5");
@@ -199,7 +207,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     break;
                 case 6://datepicker
 
-                       if (mDate.getText().toString().equals("MM/dd/yyyy"))
+                    if (mDate.getText().toString().equals("MM/dd/yyyy"))
                         Toast.makeText(QuestionsActivity.this, "Choose one from dropdown", Toast.LENGTH_SHORT).show();
                     else {
                         l.get(posx).setAnswer(mDate.getText().toString());
@@ -209,7 +217,6 @@ public class QuestionsActivity extends AppCompatActivity {
                         setAnsType(posx);
                     }
                     break;
-
 
 
                 default:
@@ -238,6 +245,7 @@ public class QuestionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mHelper = DatabaseOpenHelper.getInstance(this);
         Bundle bundle = getIntent().getExtras();
         String uid = bundle.getString("uid");
@@ -246,6 +254,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
         setContentView(R.layout.questioncard);
         ButterKnife.bind(this);
+        mSurveyname.setText(p.getSurveyname());
         setAnsType(posx);
       /*  if (message.equals("1")) {
             setContentView(arr[0]);
@@ -290,7 +299,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.GONE);
 
-                    getoptionsandscore(l.get(i).getOption(),options,score);
+                    getoptionsandscore(l.get(i).getOption(), options, score);
                     allCb.clear();
                     for (String choice : options) {
                         CheckBox cb = new CheckBox(QuestionsActivity.this);
@@ -301,15 +310,14 @@ public class QuestionsActivity extends AppCompatActivity {
                         allCb.add(cb);
 
                     }
-                        if (l.get(i).getAnswer() != null) {
-                            String x = l.get(i).getAnswer();
-                            for (String choice : options) {
-                                if (x.contains(choice))
-                                {
-                                    allCb.get(options.indexOf(choice)).setChecked(true);
-                                }
-
+                    if (l.get(i).getAnswer() != null) {
+                        String x = l.get(i).getAnswer();
+                        for (String choice : options) {
+                            if (x.contains(choice)) {
+                                allCb.get(options.indexOf(choice)).setChecked(true);
                             }
+
+                        }
 
 
                     }
@@ -324,7 +332,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     mSpinner.setVisibility(View.GONE);
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.GONE);
-                    getoptionsandscore(l.get(i).getOption(),options,score);
+                    getoptionsandscore(l.get(i).getOption(), options, score);
                     mMcqone.removeAllViews();
                     allRb.clear();
 
@@ -352,8 +360,8 @@ public class QuestionsActivity extends AppCompatActivity {
                     mEdittextqntil.setVisibility(View.GONE);
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.GONE);
-                    getoptionsandscorespinner(l.get(i).getOption(),options,score);
-                        ArrayAdapter<String> spinneradapt = new ArrayAdapter<>(this,
+                    getoptionsandscorespinner(l.get(i).getOption(), options, score);
+                    ArrayAdapter<String> spinneradapt = new ArrayAdapter<>(this,
                             android.R.layout.simple_dropdown_item_1line, options);
                     mSpinner.setAdapter(spinneradapt);
                     if (l.get(i).getAnswer() != null) {
@@ -364,16 +372,19 @@ public class QuestionsActivity extends AppCompatActivity {
                     break;
 
                 case 5:      //Slider
-                    mSeekBar.setProgress(0);
+                    mSeekBar.removeAllViews();
                     mMcqmany.setVisibility(View.GONE);
                     mMcqone.setVisibility(View.GONE);
                     mEdittextqntil.setVisibility(View.GONE);
                     mSpinner.setVisibility(View.GONE);
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.VISIBLE);
+                    customSeekBar = new CustomSeekBar(this, 10, Color.DKGRAY);
+                    customSeekBar.addSeekBar(mSeekBar);
+                    customSeekBar.getSeekBar().setProgress(0);
                     if (l.get(i).getAnswer() != null) {
                         String x = l.get(i).getAnswer();
-                        mSeekBar.setProgress(Integer.parseInt(x));
+                        customSeekBar.getSeekBar().setProgress(Integer.parseInt(x));
 
                     }
                     break;
@@ -388,8 +399,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     if (l.get(i).getAnswer() != null) {
                         mDate.setText(l.get(i).getAnswer());
 
-                    }
-                    else mDate.setText("MM/dd/yyyy");
+                    } else mDate.setText("MM/dd/yyyy");
                     break;
 
                 default:    //Wrong Input
@@ -403,31 +413,29 @@ public class QuestionsActivity extends AppCompatActivity {
             }
         }
     }
-    void getoptionsandscore(String x,ArrayList opt,ArrayList sco)
-    {
+
+    void getoptionsandscore(String x, ArrayList opt, ArrayList sco) {
         String a[] = x.split("[,;]");
         opt.clear();
         sco.clear();
-        for(int i=0; i<a.length;i+=2)
-        {
+        for (int i = 0; i < a.length; i += 2) {
 
             opt.add(a[i]);
-            sco.add(a[i+1]);
+            sco.add(a[i + 1]);
 
         }
     }
-    void getoptionsandscorespinner(String x,ArrayList opt,ArrayList sco)
-    {
+
+    void getoptionsandscorespinner(String x, ArrayList opt, ArrayList sco) {
         String a[] = x.split("[,;]");
         opt.clear();
         sco.clear();
         opt.add("Choose one from dropdown");
         sco.add("0");
-        for(int i=0; i<a.length;i+=2)
-        {
+        for (int i = 0; i < a.length; i += 2) {
 
             opt.add(a[i]);
-            sco.add(a[i+1]);
+            sco.add(a[i + 1]);
 
         }
     }

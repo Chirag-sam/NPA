@@ -22,6 +22,9 @@ public class InstructionsActivity extends AppCompatActivity {
     @BindView(R.id.begin)
     Button begin;
     String uid;
+    Nurse n = new Nurse();
+    PatientJ p= new PatientJ();
+    DatabaseOpenHelper mHelper;
     @OnClick(R.id.begin)
     void gotonext()
     {
@@ -36,8 +39,13 @@ public class InstructionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructions);
         ButterKnife.bind(this);
-        Glide.with(this).load("https://thecambridgeroom.files.wordpress.com/2012/11/images.jpg").thumbnail(0.2f).into(logo);
         Bundle bundle = getIntent().getExtras();
         uid = bundle.getString("uid");
+        mHelper = DatabaseOpenHelper.getInstance(this);
+        n = mHelper.getNurseDetails();
+        p=mHelper.getPatient(uid);
+        Glide.with(this).load(n.getHosplogo()).thumbnail(0.2f).into(logo);
+        instructions.setText(p.getSurveydesc());
+
     }
 }

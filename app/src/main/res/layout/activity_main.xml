@@ -1,114 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/dl"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<ScrollView android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-                    android:gravity="center"
-        android:paddingBottom="16dp"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.example.admin.npa.MainActivity">
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/logom"
-            android:layout_marginBottom="10dp"
-            android:layout_centerHorizontal="true"
+                                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        xmlns:tools="http://schemas.android.com/tools"
+                                        android:id="@+id/dl"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+    >
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/activity_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:gravity="center"
+                        android:paddingBottom="16dp"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        tools:context="com.example.admin.npa.MainActivity">
+            <ImageView
+                android:id="@+id/logom"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
 
 
             />
-        <android.support.v7.widget.CardView
+            <android.support.v7.widget.CardView
 
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_below="@+id/logom"
-            android:id="@+id/cv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            card_view:cardBackgroundColor="@android:color/background_light"
-            card_view:cardCornerRadius="4dp"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logom"
+                android:clickable="false"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                card_view:cardBackgroundColor="@android:color/background_light"
+                card_view:cardCornerRadius="4dp"
 
-            card_view:cardElevation="3dp"
-            card_view:cardUseCompatPadding="true"
-            card_view:contentPadding="5dp">
-            <RelativeLayout android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/iv"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:gravity="center"
-        android:scaleType="fitCenter"
-        android:layout_marginRight="5dp"
-        card_view:srcCompat="@drawable/ic_nurse" />
-<TextView android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/iv"
-          android:id="@+id/welcome"
-
-
+                card_view:cardElevation="3dp"
+                card_view:cardUseCompatPadding="true"
+                card_view:contentPadding="5dp">
+                <RelativeLayout android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:scaleType="fitCenter"
+                        card_view:srcCompat="@drawable/ic_nurse"/>
+                    <TextView android:id="@+id/welcome"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_toRightOf="@id/iv"
 
 
-/>
-            </RelativeLayout>
+                    />
+                </RelativeLayout>
 
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/butt1"
-            android:layout_width="match_parent"
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/butt1"
+                android:layout_width="match_parent"
 
-            android:layout_height="55dp"
-            android:layout_below="@+id/cv"
+                android:layout_height="55dp"
+                android:layout_below="@+id/cv"
 
-            android:elevation="4dp"
-            android:filterTouchesWhenObscured="true" android:text="synchronize"
-            android:theme="@style/AccentButton1"/>
+                android:elevation="4dp"
+                android:filterTouchesWhenObscured="true" android:text="synchronize"
+                android:theme="@style/AccentButton1"/>
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/butt2"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_below="@+id/butt1"
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/butt2"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_below="@+id/butt1"
 
-        android:text="Pending Assessments"
-        android:theme="@style/AccentButton1" android:filterTouchesWhenObscured="true"/>
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/butt3"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_below="@+id/butt2"
+                android:filterTouchesWhenObscured="true"
+                android:text="Pending Assessments" android:theme="@style/AccentButton1"/>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/butt3"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_below="@+id/butt2"
 
-        android:text="Completed Assessments"
-        android:theme="@style/AccentButton1" android:filterTouchesWhenObscured="true"/>
+                android:filterTouchesWhenObscured="true"
+                android:text="Completed Assessments" android:theme="@style/AccentButton1"/>
 
-        <TextView android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_below="@+id/butt3"
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@+id/butt3"
 
-                  android:gravity="bottom|center"
-                  android:padding="10dp"
-                  android:text="@string/hikcp"
+                      android:gravity="bottom|center"
+                      android:padding="10dp"
+                      android:text="@string/hikcp"
 
-        />
-    </RelativeLayout>
-</ScrollView>
+            />
+        </RelativeLayout>
+    </ScrollView>
 
 
     <android.support.design.widget.NavigationView

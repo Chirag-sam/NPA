@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -139,7 +141,9 @@ public class LogIn extends AppCompatActivity {
                     edittextdialtil.setError("Invalid Username");
                     edittextdialtil1.setError("Invalid Password");
 
-                    mHelper.addNurse(new Nurse("1", "a@a.com", "aaaaaa", "Flint James", "Male", "23/2/17"));
+                    mHelper.addNurse(new Nurse("1", "a@a.com", "aaaaaa", "Flint James", "Male", "23/2/17",getString(R.string.instructions),"https://thecambridgeroom.files.wordpress.com/2012/11/images.jpg","Speciality Hospital"));
+                    Glide.with(LogIn.this).load("https://thecambridgeroom.files.wordpress.com/2012/11/images.jpg").downloadOnly(1024, 1024);
+
                     Log.e("Fail", "onFailure: ");
                     //    Log error here since request failed
                     p.dismiss();

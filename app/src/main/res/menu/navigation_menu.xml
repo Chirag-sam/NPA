@@ -6,12 +6,12 @@
         android:id="@+id/logout"
         android:checked="false"
         android:icon="@mipmap/ic_undo_black_24dp"
-        android:title="Log out" />
+        android:title="Log out"/>
     <item
         android:id="@+id/tac"
         android:checked="false"
         android:icon="@drawable/ic_assignment_black_24dp"
-        android:title="Terms and conditions" />
+        android:title="Terms and conditions"/>
 
 
 </menu>

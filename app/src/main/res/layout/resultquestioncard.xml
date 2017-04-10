@@ -20,17 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:id="@+id/qno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/qno"
-            android:text="12"
-            android:padding="4dp"
-            android:background="@drawable/circlebckgrnd"
-            android:textSize="18dp"
             android:layout_alignParentLeft="true"
-            android:gravity="center"
+            android:layout_alignParentTop="true"
             android:layout_marginRight="10dp"
-            android:layout_alignParentTop="true"/>
+            android:background="@drawable/circlebckgrnd"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="12"
+            android:textSize="18dp"/>
 
         <TextView
             android:id="@+id/qntext"
@@ -40,15 +40,15 @@
 
             android:text="When did the symptoms start?"
             android:textColor="@android:color/black"
-            android:textSize="20dp" />
+            android:textSize="20dp"/>
         <TextView
             android:id="@+id/answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/qno"
             android:layout_below="@+id/qntext"
+            android:layout_toRightOf="@+id/qno"
             android:text="Yesterday"
-            android:textSize="16dp" />
+            android:textSize="16dp"/>
 
 
     </RelativeLayout>

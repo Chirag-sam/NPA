@@ -1,172 +1,171 @@
-<ScrollView android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:fillViewport="false"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    tools:context="com.example.admin.npa.ResultActivity$ReportFragment">
-    <android.support.v7.widget.CardView
-
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/cv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardBackgroundColor="@android:color/background_light"
-        card_view:cardCornerRadius="4dp"
-
-        card_view:cardElevation="3dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:contentPadding="10dp">
-        <RelativeLayout
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/iv"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/illness"
-                android:layout_alignTop="@+id/name"
-                android:layout_marginRight="20dp"
-                card_view:srcCompat="@drawable/ic_man_shape"
+            android:layout_height="match_parent"
+            android:fillViewport="false"
+>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    tools:context="com.example.admin.npa.ResultActivity$ReportFragment">
+        <android.support.v7.widget.CardView
+
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:clickable="false"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardBackgroundColor="@android:color/background_light"
+            card_view:cardCornerRadius="4dp"
+
+            card_view:cardElevation="3dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:contentPadding="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/illness"
+                    android:layout_alignTop="@+id/name"
+                    android:layout_marginRight="20dp"
+                    card_view:srcCompat="@drawable/ic_man_shape"
                 />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/personpic"
-                android:layout_marginRight="10dp"
-                android:layout_alignTop="@+id/name"
+                <ImageView
+                    android:id="@+id/personpic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/name"
+                    android:layout_marginRight="10dp"
 
-                card_view:srcCompat="@drawable/ic_person_black_24dp"
-                android:layout_toRightOf="@+id/iv"/>
-            <TextView
-                android:id="@+id/name"
+                    android:layout_toRightOf="@+id/iv"
+                    card_view:srcCompat="@drawable/ic_person_black_24dp"/>
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/personpic"
+                    android:gravity="bottom"
+                    android:text="Name"
+
+                    android:textSize="18dp"/>
+                <ImageView
+                    android:id="@+id/datpic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/date"
+                    android:layout_below="@+id/name"
+                    android:layout_marginRight="10dp"
+
+                    android:layout_toRightOf="@+id/iv"
+                    card_view:srcCompat="@drawable/ic_date_range_black_24dp"/>
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/datpic"
+                    android:gravity="bottom"
+                    android:text="Date"
+
+                    android:textSize="16dp"/>
+                <ImageView
+                    android:id="@+id/diseasepic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/illness"
+                    android:layout_below="@+id/date"
+                    android:layout_marginRight="10dp"
+
+                    android:layout_toRightOf="@+id/iv"
+                    card_view:srcCompat="@drawable/ic_health_care"/>
+                <TextView
+                    android:id="@+id/illness"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/date"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@+id/diseasepic"
+                    android:gravity="bottom"
+                    android:text="Illness"
+                    android:textSize="16dp"/>
+
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cv"
+            android:clickable="false"
+            android:focusable="true"
+            card_view:cardBackgroundColor="@android:color/background_light"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="3dp"
+            card_view:cardUseCompatPadding="true"
+            card_view:contentPadding="8dp">
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:layout_toRightOf="@+id/personpic"
-                android:text="Name"
-
-                android:textSize="18dp" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/datpic"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/name"
-                android:layout_alignTop="@+id/date"
-
-                card_view:srcCompat="@drawable/ic_date_range_black_24dp"
-                android:layout_toRightOf="@+id/iv"/>
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/date"
-                android:gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_toRightOf="@+id/datpic"
-                android:text="Date"
-
-                android:textSize="16dp" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/diseasepic"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/date"
-                android:layout_alignTop="@+id/illness"
-
-                card_view:srcCompat="@drawable/ic_health_care"
-                android:layout_toRightOf="@+id/iv"/>
-            <TextView
-                android:layout_marginTop="8dp"
-                android:id="@+id/illness"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/date"
-                android:layout_toRightOf="@+id/diseasepic"
-                android:gravity="bottom"
-                android:text="Illness"
-                android:textSize="16dp" />
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/riskscore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Risk Score:50/100"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/providername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/riskscore"
+                    android:gravity="bottom"
+                    android:text="Provider Name:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/appointmentdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/providername"
+                    android:gravity="bottom"
+                    android:text="Appointment Date:"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/reportdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/appointmentdate"
+                    android:gravity="bottom"
+                    android:text="Reporting Date:"
+                    android:textSize="16dp"/>
 
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cv1"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/cv"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:focusable="true"
-        card_view:cardBackgroundColor="@android:color/background_light"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="3dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:contentPadding="8dp">
-        <RelativeLayout
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <com.example.admin.npa.GaugeView
+            android:id="@+id/gauge"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/riskscore"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Risk Score:50/100"
-                android:textSize="16dp" />
-            <TextView
-                android:id="@+id/providername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/riskscore"
-                android:gravity="bottom"
-                android:text="Provider Name:"
-                android:textSize="16dp" />
-            <TextView
-                android:id="@+id/appointmentdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/providername"
-                android:gravity="bottom"
-                android:text="Appointment Date:"
-                android:textSize="16dp" />
-            <TextView
-                android:id="@+id/reportdate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/appointmentdate"
-                android:gravity="bottom"
-                android:text="Reporting Date:"
-                android:textSize="16dp" />
+            android:layout_height="200dp"
+            android:layout_below="@+id/cv1"
+            android:layout_marginBottom="20dp"
+        />
 
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-
-
-<com.example.admin.npa.GaugeView
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_marginBottom="20dp"
-    android:layout_below="@+id/cv1"
-    android:id="@+id/gauge"
-    />
-
-
-
-</RelativeLayout>
+    </RelativeLayout>
 </ScrollView>

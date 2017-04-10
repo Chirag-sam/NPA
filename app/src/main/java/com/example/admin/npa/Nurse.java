@@ -21,9 +21,39 @@ public class Nurse {
     @SerializedName("gender")
     public String gender;
     public String lastsync;
+    @SerializedName("tcs")
+    public String tcs;
+    @SerializedName("hosplogo")
+    public String hosplogo;
+    @SerializedName("hospname")
+    public String hospname;
 //first name
         public Nurse() {
         }
+
+    public String getTcs() {
+        return tcs;
+    }
+
+    public void setTcs(String tcs) {
+        this.tcs = tcs;
+    }
+
+    public String getHosplogo() {
+        return hosplogo;
+    }
+
+    public void setHosplogo(String hosplogo) {
+        this.hosplogo = hosplogo;
+    }
+
+    public String getHospname() {
+        return hospname;
+    }
+
+    public void setHospname(String hospname) {
+        this.hospname = hospname;
+    }
 
     public String getGender() {
         return gender;
@@ -33,16 +63,19 @@ public class Nurse {
         this.gender = gender;
     }
 
-    public Nurse(String nid, String uname, String password, String nname, String gender, String lastsync) {
+
+
+    public Nurse(String nid, String uname, String password, String nname, String gender, String lastsync, String tcs, String hosplogo, String hospname) {
         this.nid = nid;
         this.uname = uname;
         this.password = password;
         this.nname = nname;
-
         this.gender = gender;
         this.lastsync = lastsync;
+        this.tcs = tcs;
+        this.hosplogo = hosplogo;
+        this.hospname = hospname;
     }
-
 //    public Nurse(String nid, String uname, String password, String nname, String lastname, String gender) {
 //        this.nid = nid;
 //        this.uname = uname;

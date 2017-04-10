@@ -17,7 +17,7 @@ public class Question {
     public String qdesc;
     @SerializedName("restype")
     public String restype;
-    @SerializedName("option")
+    @SerializedName("opscore")
     public String option;
     @SerializedName("surveyid")
     public String surveyid;

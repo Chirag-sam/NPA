@@ -20,7 +20,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static DatabaseOpenHelper sInstance;
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION =27;
+    private static final int DATABASE_VERSION =28;
 
     // Database Name
     private static final String DATABASE_NAME = "NPA";
@@ -35,6 +35,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String NURSE_NAME = "nname";
     private static final String NURSE_GENDER= "gender";
     private static final String NURSE_LASTSYNC= "lastsync";
+    private static final String NURSE_TC= "tc";
+    private static final String NURSE_HOSPLOGO= "hosplogo";
+    private static final String NURSE_HOSPNAME= "hospname";
 
     private static final String TABLE_PATIENT = "patient";
 
@@ -47,6 +50,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String PATIENT_ILLNESS = "Illness";
     private static final String PATIENT_SURVEYID = "surveyid";
     private static final String PATIENT_SURVEYNAME = "surveyname";
+    private static final String PATIENT_SURVEYDESC = "surveydesc";
     private static final String PATIENT_APPDATE = "appdate";
     private static final String PATIENT_STATUS = "status";
     private static final String PATIENT_REPDATE = "repdate";
@@ -102,7 +106,10 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 NURSE_PASS + " TEXT,"+
                 NURSE_NAME + " TEXT,"+
                 NURSE_GENDER+ " TEXT, "+
-                NURSE_LASTSYNC+ " TEXT "+
+                NURSE_LASTSYNC+ " TEXT, "+
+                NURSE_TC+ " TEXT, "+
+                NURSE_HOSPLOGO+ " TEXT, "+
+                NURSE_HOSPNAME+ " TEXT "+
 
 
                 ")";
@@ -117,6 +124,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 PATIENT_ILLNESS + " TEXT," +
                 PATIENT_SURVEYID + " TEXT," +
                 PATIENT_SURVEYNAME + " TEXT," +
+                PATIENT_SURVEYDESC+ " TEXT," +
                 PATIENT_APPDATE + " TEXT," +
                 PATIENT_STATUS + " TEXT," +
                 PATIENT_REPDATE+ " TEXT," +
@@ -171,6 +179,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(PATIENT_ILLNESS, N.getDisease());
         values.put(PATIENT_SURVEYID, N.getSurveyid());
         values.put(PATIENT_SURVEYNAME, N.getSurveyname());
+        values.put(PATIENT_SURVEYDESC, N.getSurveydesc());
         values.put(PATIENT_APPDATE, N.getAppdate());
         values.put(PATIENT_STATUS, N.getStatus());
         values.put(PATIENT_REPDATE, N.getRepdate());
@@ -194,6 +203,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(PATIENT_ILLNESS, N.getDisease());
         values.put(PATIENT_SURVEYID, N.getSurveyid());
         values.put(PATIENT_SURVEYNAME, N.getSurveyname());
+        values.put(PATIENT_SURVEYDESC, N.getSurveydesc());
         values.put(PATIENT_APPDATE, N.getAppdate());
         values.put(PATIENT_STATUS, N.getStatus());
         values.put(PATIENT_REPDATE, N.getRepdate());
@@ -265,6 +275,9 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(NURSE_NAME, N.getFirstname());
         values.put(NURSE_GENDER, N.getGender());
         values.put(NURSE_LASTSYNC, N.getLastsync());
+        values.put(NURSE_TC, N.getTcs());
+        values.put(NURSE_HOSPLOGO, N.getHosplogo());
+        values.put(NURSE_HOSPNAME, N.getHospname());
         long id = db.insert(TABLE_NURSE, null, values);
         db.close();
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
@@ -328,7 +341,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N=new Nurse(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5));
+            N=new Nurse(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
 
         }
         cursor.close();
@@ -401,7 +414,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // Move to first row
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
-            N = new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12));
+            N = new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13));
 
         }
         cursor.close();
@@ -468,7 +481,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-              patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9)));
+              patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10)));
 
                 // Adding contact to list
             } while (cursor.moveToNext());
@@ -490,7 +503,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12)));
+                patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13)));
 
                 // Adding contact to list
             } while (cursor.moveToNext());
@@ -512,7 +525,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
 
-                patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12)));
+                patientlist.add(new PatientJ(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13)));
 
 
                 // Adding contact to list

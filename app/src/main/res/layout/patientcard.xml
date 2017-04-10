@@ -16,61 +16,60 @@
     card_view:cardElevation="3dp"
     card_view:cardUseCompatPadding="true"
     card_view:contentPadding="10dp">
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/datpic"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" android:layout_alignParentTop="true"
+            card_view:srcCompat="@drawable/ic_man_shape"/>
+
+        <ImageView
+            android:id="@+id/personpic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/name"
+            android:layout_marginRight="10dp"
+
+            android:layout_toRightOf="@+id/iv"
+            card_view:srcCompat="@drawable/ic_person_black_24dp"/>
+        <TextView
+            android:id="@+id/name"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/iv"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                card_view:srcCompat="@drawable/ic_man_shape"
-                android:layout_alignBottom="@+id/datpic"
-                android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"/>
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/personpic"
+            android:gravity="bottom"
+            android:text="Name"
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/personpic"
-                android:layout_marginRight="10dp"
-                android:layout_alignTop="@+id/name"
+            android:textSize="18sp"/>
+        <ImageView
+            android:id="@+id/datpic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/date"
+            android:layout_below="@+id/name"
+            android:layout_marginRight="10dp"
 
-                card_view:srcCompat="@drawable/ic_person_black_24dp"
-                android:layout_toRightOf="@+id/iv"/>
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:layout_toRightOf="@+id/personpic"
-                android:text="Name"
+            android:layout_toRightOf="@+id/iv"
+            card_view:srcCompat="@drawable/ic_date_range_black_24dp"/>
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/datpic"
+            android:gravity="bottom"
+            android:text="Date"
 
-                android:textSize="18sp" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/datpic"
-                android:layout_marginRight="10dp"
-                android:layout_below="@+id/name"
-                android:layout_alignTop="@+id/date"
-
-                card_view:srcCompat="@drawable/ic_date_range_black_24dp"
-                android:layout_toRightOf="@+id/iv"/>
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/date"
-                android:gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
-                android:layout_toRightOf="@+id/datpic"
-                android:text="Date"
-
-                android:textSize="16sp" />
+            android:textSize="16sp"/>
 
 
-
-        </RelativeLayout>
-        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
 
 
