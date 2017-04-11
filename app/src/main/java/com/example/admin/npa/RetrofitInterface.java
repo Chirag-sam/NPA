@@ -23,13 +23,14 @@ import retrofit2.http.Query;
  */
 
 public interface RetrofitInterface {
+    //seagate root
     @GET("json_Validate.jsp")
     Call<Nurse> Login(
             @Query("username") String username,
             @Query("password") String password);
 
-    @GET("json_Sync.jsp")
-    Call<List<PatientJ>> getallpatients(
+    @GET("json_sync2.jsp")
+    Call<PostReport> getallpatients(
             @Query("nid") String nid);
 
     @POST("https://jsonplaceholder.typicode.com/posts")

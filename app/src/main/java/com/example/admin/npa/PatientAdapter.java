@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -112,6 +113,7 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
     }
 
     public static String getage(String date) {
+        date=dateconversion(date);
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         Calendar cal = Calendar.getInstance();
         Calendar currentDate = Calendar.getInstance();
@@ -129,6 +131,21 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         Integer ageInt = age;
 
         return ageInt.toString();
+    }
+    public  static String dateconversion(String old)
+    {
+        Date date = null;
+        String newtime=old;
+        try {
+
+
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(old);
+            newtime=new SimpleDateFormat("MM/dd/yyyy").format(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return newtime;
     }
 }
                                 

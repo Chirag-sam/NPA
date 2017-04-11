@@ -226,7 +226,7 @@ public class QuestionsActivity extends AppCompatActivity {
                 mHelper.addallresponse(l, p.getPid());
                 p.setStatus("completed");
                 Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS", Locale.US);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
                 String strDate = sdf.format(cal.getTime());
                 p.setRepdate(strDate);
                 p.setRepscore(String.valueOf(gettotal(l)));
@@ -250,7 +250,7 @@ public class QuestionsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String uid = bundle.getString("uid");
         p = mHelper.getPatient(uid);
-        l = mHelper.getallquestions(p.getDisease());
+        l = mHelper.getallquestions(p.getSurveyid());
 
         setContentView(R.layout.questioncard);
         ButterKnife.bind(this);
@@ -379,9 +379,11 @@ public class QuestionsActivity extends AppCompatActivity {
                     mSpinner.setVisibility(View.GONE);
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.VISIBLE);
+                    getoptionsandscorespinner(l.get(i).getOption(), options, score);
                     customSeekBar = new CustomSeekBar(this, 10, Color.DKGRAY);
                     customSeekBar.addSeekBar(mSeekBar);
                     customSeekBar.getSeekBar().setProgress(0);
+
                     if (l.get(i).getAnswer() != null) {
                         String x = l.get(i).getAnswer();
                         customSeekBar.getSeekBar().setProgress(Integer.parseInt(x));

@@ -9,14 +9,17 @@ import java.util.List;
  */
 
 public class PostReport {
-    @SerializedName("patients")
+    @SerializedName("Patient")
     List<PatientJ> mPatientJs;
-    @SerializedName("response")
+    @SerializedName("Questions")
     List<Question>response;
 
     public PostReport(List<PatientJ> patientJs, List<Question> response) {
         mPatientJs = patientJs;
         this.response = response;
+    }
+
+    public PostReport() {
     }
 
     public List<PatientJ> getPatientJs() {

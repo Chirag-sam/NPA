@@ -15,7 +15,7 @@ public class Nurse {
         public String uname;
          //@SerializedName("password")
         public String password;
-        @SerializedName("nname")
+        @SerializedName("name")
         public String nname;
 
     @SerializedName("gender")
