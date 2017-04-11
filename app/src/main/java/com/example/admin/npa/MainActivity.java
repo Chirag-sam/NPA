@@ -104,6 +104,15 @@ public class MainActivity extends AppCompatActivity {
                 lasts=strDate;
                 n.setLastsync(lasts);
                 mHelper.updatenurse(n);
+
+                mWelcome.setText(
+                        "Name: " + n.getFirstname() + " " +
+                                "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
+                                "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
+                                "\nLast Sync :" + n.getLastsync()
+
+
+                );
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
 
             }
@@ -144,14 +153,6 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 //                mHelper.addallqns(questions);
-//                mWelcome.setText(
-//                        "Name: " + n.getFirstname() + " " +
-//                                "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
-//                                "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
-//                                "\nLast Sync :" + n.getLastsync()
-//
-//
-//                );
             }
         });
 

@@ -199,7 +199,9 @@ public class QuestionsActivity extends AppCompatActivity {
                     int y = customSeekBar.getSeekBar().getProgress();
                     l.get(posx).setAnswer(String.valueOf(y));
                     l.get(posx).setScore(String.valueOf(y));
-                    l.get(posx).setMaxscore("5");
+                    Comparator<String> cmp = (o1, o2) -> Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
+                    l.get(posx).setMaxscore(Collections.max(score, cmp));
+
                     posx = posx + 1;
                     setAnsType(posx);
 
@@ -380,7 +382,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.VISIBLE);
                     getoptionsandscorespinner(l.get(i).getOption(), options, score);
-                    customSeekBar = new CustomSeekBar(Integer.parseInt(score.get(0)), Color.DKGRAY,this,options,score);
+                    customSeekBar = new CustomSeekBar(score.size(), Color.DKGRAY,this,options,score);
                     customSeekBar.addSeekBar(mSeekBar);
                     customSeekBar.getSeekBar().setProgress(0);
 
