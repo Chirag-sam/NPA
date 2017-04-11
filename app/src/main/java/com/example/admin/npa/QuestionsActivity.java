@@ -197,8 +197,8 @@ public class QuestionsActivity extends AppCompatActivity {
                 case 5:
                     //Slider
                     int y = customSeekBar.getSeekBar().getProgress();
-                    l.get(posx).setAnswer(String.valueOf(y));
-                    l.get(posx).setScore(String.valueOf(y));
+                    l.get(posx).setAnswer(String.valueOf(options.get(y)));
+                    l.get(posx).setScore(String.valueOf(score.get(y)));
                     Comparator<String> cmp = (o1, o2) -> Integer.valueOf(o1).compareTo(Integer.valueOf(o2));
                     l.get(posx).setMaxscore(Collections.max(score, cmp));
 
