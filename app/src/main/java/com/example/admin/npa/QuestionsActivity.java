@@ -380,7 +380,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.VISIBLE);
                     getoptionsandscorespinner(l.get(i).getOption(), options, score);
-                    customSeekBar = new CustomSeekBar(this, 10, Color.DKGRAY);
+                    customSeekBar = new CustomSeekBar(Integer.parseInt(score.get(0)), Color.DKGRAY,this,options,score);
                     customSeekBar.addSeekBar(mSeekBar);
                     customSeekBar.getSeekBar().setProgress(0);
 

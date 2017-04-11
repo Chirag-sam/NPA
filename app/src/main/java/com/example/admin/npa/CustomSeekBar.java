@@ -12,17 +12,23 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class CustomSeekBar {
 
     int maxCount, textColor;
     Context mContext;
     LinearLayout mSeekLin;
     SeekBar mSeekBar;
+    ArrayList<String> option;
+    ArrayList<String> opscore;
 
-    public CustomSeekBar(Context context, int maxCount, int textColor) {
-        this.mContext = context;
+    public CustomSeekBar(int maxCount, int textColor, Context mContext, ArrayList<String> option, ArrayList<String> opscore) {
         this.maxCount = maxCount;
         this.textColor = textColor;
+        this.mContext = mContext;
+        this.option = option;
+        this.opscore = opscore;
     }
 
     public SeekBar getSeekBar() {
@@ -62,9 +68,9 @@ public class CustomSeekBar {
     }
 
     private void addLabelsBelowSeekBar() {
-        for (int count = 0; count < maxCount; count++) {
+        for (int count = 1; count < option.size(); count++) {
             TextView textView = new TextView(mContext);
-            textView.setText(String.valueOf(count + 1));
+            textView.setText(String.valueOf(option.get(count)));
             textView.setTextColor(textColor);
             textView.setGravity(Gravity.LEFT);
             mSeekLin.addView(textView);
