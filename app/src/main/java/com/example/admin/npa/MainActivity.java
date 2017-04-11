@@ -20,8 +20,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle abdt;
 
-
+    String lasts;
     @OnClick(R.id.butt1)
     void sync() {
         List<PatientJ> list = new ArrayList<>();
@@ -95,6 +98,12 @@ public class MainActivity extends AppCompatActivity {
                 mHelper.addallqns(ls.getResponse());
 
                 p.dismiss();
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.US);
+                String strDate = sdf.format(cal.getTime());
+                lasts=strDate;
+                n.setLastsync(lasts);
+                mHelper.updatenurse(n);
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
 
             }
@@ -174,12 +183,16 @@ public class MainActivity extends AppCompatActivity {
         n = mHelper.getNurseDetails();
         Glide.with(this).load(n.getHosplogo())
                 .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).into(logom);
-
+        if (n.getLastsync()!=null)
+        {
+            lasts=n.getLastsync();
+        }
+        else lasts="Sync To Update";
         mWelcome.setText(
                 "Name: " + n.getFirstname() + " " +
                         "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
                         "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
-                        "\nLast Sync :" + n.getLastsync()
+                        "\nLast Sync :" + lasts
 
 
         );
@@ -259,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                 "Name: " + n.getFirstname() +
                         "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
                         "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
-                        "\nLast Sync :" + n.getLastsync()
+                        "\nLast Sync :" + lasts
 
 
         );

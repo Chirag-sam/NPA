@@ -284,6 +284,25 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     }
 
+
+    public void updatenurse(Nurse N) {
+        SQLiteDatabase db =getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(NURSE_ID, N.getNid());
+        values.put(NURSE_UNAME, N.getUname());
+        values.put(NURSE_PASS, N.getPassword());
+        values.put(NURSE_NAME, N.getFirstname());
+        values.put(NURSE_GENDER, N.getGender());
+        values.put(NURSE_LASTSYNC, N.getLastsync());
+        values.put(NURSE_TC, N.getTcs());
+        values.put(NURSE_HOSPLOGO, N.getHosplogo());
+        values.put(NURSE_HOSPNAME, N.getHospname());
+        long id = db.update(TABLE_NURSE, values, NURSE_ID+" = '"+N.getNid()+"'",null);
+        db.close();
+        Log.d(TAG, "New Nurse inserted into sqlite: " + id);
+
+    }
     public void addResponse(Question N,String uid) {
         SQLiteDatabase db = getWritableDatabase();
 
