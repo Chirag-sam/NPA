@@ -381,14 +381,14 @@ public class QuestionsActivity extends AppCompatActivity {
                     mSpinner.setVisibility(View.GONE);
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.VISIBLE);
-                    getoptionsandscorespinner(l.get(i).getOption(), options, score);
+                    getoptionsandscore(l.get(i).getOption(), options, score);
                     customSeekBar = new CustomSeekBar(score.size(), Color.DKGRAY,this,options,score);
                     customSeekBar.addSeekBar(mSeekBar);
                     customSeekBar.getSeekBar().setProgress(0);
 
                     if (l.get(i).getAnswer() != null) {
                         String x = l.get(i).getAnswer();
-                        customSeekBar.getSeekBar().setProgress(Integer.parseInt(x));
+                        customSeekBar.getSeekBar().setProgress(options.indexOf(x));
 
                     }
                     break;
@@ -423,6 +423,18 @@ public class QuestionsActivity extends AppCompatActivity {
         opt.clear();
         sco.clear();
         for (int i = 0; i < a.length; i += 2) {
+
+            opt.add(a[i]);
+            sco.add(a[i + 1]);
+
+        }
+    }
+
+    void getoptionsandscoreslider(String x, ArrayList opt, ArrayList sco) {
+        String a[] = x.split("[,;]");
+        opt.clear();
+        sco.clear();
+        for (int i = 2; i < a.length; i += 2) {
 
             opt.add(a[i]);
             sco.add(a[i + 1]);

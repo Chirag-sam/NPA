@@ -143,13 +143,13 @@ public class LogIn extends AppCompatActivity {
 
 //                    mHelper.addNurse(new Nurse("1", "a@a.com", "aaaaaa", "Flint James", "Male", "23/2/17",getString(R.string.instructions),"https://thecambridgeroom.files.wordpress.com/2012/11/images.jpg","Speciality Hospital"));
 //                    Glide.with(LogIn.this).load("https://thecambridgeroom.files.wordpress.com/2012/11/images.jpg").downloadOnly(1024, 1024);
-
+//                    startActivity(new Intent(LogIn.this, MainActivity.class));
+//                    finish();
                     Log.e("Fail", "onFailure: ");
                     //    Log error here since request failed
                     p.dismiss();
 //                    mHelper.addNurse(new Nurse("1","a@a.com","aaaaaa","Flint","23/2/17","Male"));
-//                    startActivity(new Intent(LogIn.this, MainActivity.class));
-//                  finish();
+
 //
                 }
             });

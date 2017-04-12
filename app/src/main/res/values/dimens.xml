@@ -4,6 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+
+
     <declare-styleable name="GaugeView">
         <attr name="showOuterShadow" format="boolean"/>
         <attr name="showOuterBorder" format="boolean"/>

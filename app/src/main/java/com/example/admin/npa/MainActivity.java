@@ -138,7 +138,9 @@ public class MainActivity extends AppCompatActivity {
 //
                     // Log error here since request failed
                     p.dismiss();
+
                     Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
+//                    List<PatientJ>list=new ArrayList<PatientJ>();
 //                list.add(new PatientJ("1", "12", "Dolores Abernathy", "Female", "10/10/1997", "DIA-123", "DIA-123","Diabetes","Diabetes 123wqsas", "23/10/17", "pending"));
 //                list.add(new PatientJ("2", "12", "Peter Abernathy", "Male", "10/10/1957", "TUB-123", "TUB-123","Tuberculosis","Tuberculosis 123waszx", "23/10/17", "pending"));
 //                list.add(new PatientJ("3", "12", "Bernard Lowe", "Male", "10/10/1967", "CBR-331", "CBR-331","Cancer","Cancer asdxczczx", "23/10/17", "pending"));
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 //                questions.add(new Question("1m", "When Did the symptoms start?", "6", null, "TUB-123"));
 //                questions.add(new Question("2m", "Is the pain progressing?", "2", "maybe,20;lol,10;deeznuts,5;zxcxzc,12;123123,5;", "TUB-123"));
 //                questions.add(new Question("3m", "Does your body show any signs of fever?", "2", "maybe,20;lol,10;deeznuts,5;jsdcf,9;23zx5,123;", "TUB-123"));
-//                questions.add(new Question("4m", "What does your pain feel like on a scale of 0 to 5?", "5", null, "TUB-123"));
+//                questions.add(new Question("4m", "What does your pain feel like on a scale of 0 to 5?", "5", "0,10;2,2;4,4;8,8;10,10;", "TUB-123"));
 //                questions.add(new Question("5m", "Describe your pain in words.", "1", null, "TUB-123"));
 //
 //                questions.add(new Question("1c", "When Did the symptoms start?", "6", null, "CBR-331"));

@@ -7,6 +7,7 @@ package com.example.admin.npa;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -42,7 +43,7 @@ public class CustomSeekBar {
             parent.setOrientation(LinearLayout.VERTICAL);
             mSeekBar = new SeekBar(mContext);
 
-            mSeekBar.setMax(maxCount - 1);
+            mSeekBar.setMax(maxCount-1 );
 
             // Add LinearLayout for labels below SeekBar
             mSeekLin = new LinearLayout(mContext);
@@ -68,10 +69,11 @@ public class CustomSeekBar {
     }
 
     private void addLabelsBelowSeekBar() {
-        for (int count = 1; count < option.size(); count++) {
+        for (int count = 0; count < option.size(); count++) {
             TextView textView = new TextView(mContext);
             textView.setText(String.valueOf(option.get(count)));
             textView.setTextColor(textColor);
+
             textView.setGravity(Gravity.LEFT);
             mSeekLin.addView(textView);
             textView.setLayoutParams((count == maxCount - 1) ? getLayoutParams(0.0f) : getLayoutParams(1.0f));
