@@ -33,7 +33,6 @@ public class PatientAdapter extends RecyclerView.Adapter<PatientAdapter.ViewHold
         this.type=type;
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
