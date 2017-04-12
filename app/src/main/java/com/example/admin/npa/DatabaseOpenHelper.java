@@ -388,6 +388,25 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         // return user
 
     }
+    public boolean synctype() {
+        String selectQuery = "SELECT  count(*) FROM " + TABLE_PATIENT;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        int icount = cursor.getInt(0);
+        cursor.close();
+        db.close();
+        Log.e(TAG, "synctype: "+icount );
+        if(icount>=1)
+            return true;
+        else {
+            return false;}
+
+        // return user
+
+    }
 
     public int getcountcompleted()
     {

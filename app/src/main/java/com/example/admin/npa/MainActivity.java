@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -64,66 +65,80 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle abdt;
 
     String lasts;
+    boolean synctype=false;
     @OnClick(R.id.butt1)
     void sync() {
-        List<PatientJ> list = new ArrayList<>();
-
 
         ProgressDialog p = new ProgressDialog(this);
         RetrofitInterface client = RetrofitBuilder.createService(RetrofitInterface.class);
-        PostReport postReport = new PostReport(mHelper.getAllPatients(), mHelper.getallpatientsResponse());
-        Call<PostReport> call0 = client.postreporttoserver(new Gson().toJson(postReport,PostReport.class));
-        call0.enqueue(new Callback<PostReport>() {
-            @Override
-            public void onResponse(Call<PostReport> call, Response<PostReport> response) {
+        synctype=mHelper.synctype();
+        if (synctype) {
+            p.setMessage("Syncing Patients");
+            p.show();
+            PostReport postReport = new PostReport(mHelper.getAllPatients(), mHelper.getallpatientsResponse());
+            Call<Void> call0 = client.postreporttoserver(new Gson().toJson(postReport, PostReport.class));
+            call0.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
 
-            }
+                    Log.e("sasasxzxz", "onResponse: "+"saxz"+response.code());
+                        mHelper.deleteResponseComplete();
+                        mHelper.deleteQuestionComplete();
+                        mHelper.deletePatientComplete();
+                        Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+                    p.dismiss();
 
-            @Override
-            public void onFailure(Call<PostReport> call, Throwable t) {
+                }
 
-            }
-        });
-        Call<PostReport> call = client.getallpatients(n.getNid());
-        p.setMessage("Syncing Patients");
-        p.show();
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
 
-        call.enqueue(new Callback<PostReport>() {
-            @Override
-            public void onResponse(Call<PostReport> call, Response<PostReport> response) {
-                int statusCode = response.code();
-                //    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
-                PostReport ls = new PostReport();
-                ls = response.body();
-                mHelper.addallpatients(ls.getPatientJs(), n.getNid());
-                mHelper.addallqns(ls.getResponse());
-
-                p.dismiss();
-                Calendar cal = Calendar.getInstance();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.US);
-                String strDate = sdf.format(cal.getTime());
-                lasts=strDate;
-                n.setLastsync(lasts);
-                mHelper.updatenurse(n);
-
-                mWelcome.setText(
-                        "Name: " + n.getFirstname() + " " +
-                                "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
-                                "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
-                                "\nLast Sync :" + n.getLastsync()
-
-
-                );
-                Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<PostReport> call, Throwable t) {
-//
-                // Log error here since request failed
-                p.dismiss();
                 Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
+                p.dismiss();
+                }
+            });
+        }else {
+
+            Call<PostReport> call = client.getallpatients(n.getNid());
+            p.setMessage("Syncing Patients");
+            p.show();
+
+            call.enqueue(new Callback<PostReport>() {
+                @Override
+                public void onResponse(Call<PostReport> call, Response<PostReport> response) {
+                    int statusCode = response.code();
+                    //    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
+                    PostReport ls = new PostReport();
+                    ls = response.body();
+                    mHelper.addallpatients(ls.getPatientJs(), n.getNid());
+                    mHelper.addallqns(ls.getResponse());
+
+                    p.dismiss();
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.US);
+                    String strDate = sdf.format(cal.getTime());
+                    lasts = strDate;
+                    n.setLastsync(lasts);
+                    mHelper.updatenurse(n);
+
+                    mWelcome.setText(
+                            "Name: " + n.getFirstname() + " " +
+                                    "\nCompleted Assessments :" + mHelper.getcountcompleted() + "/" + (mHelper.getcountpending() + mHelper.getcountcompleted()) +
+                                    "\nUnsynced Assessments  :" + mHelper.getcountcompleted() +
+                                    "\nLast Sync :" + n.getLastsync()
+
+
+                    );
+                    Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+                    p.dismiss();
+                }
+
+                @Override
+                public void onFailure(Call<PostReport> call, Throwable t) {
+//
+                    // Log error here since request failed
+                    p.dismiss();
+                    Snackbar.make(findViewById(R.id.activity_main), "Sync Failed", Snackbar.LENGTH_LONG).show();
 //                list.add(new PatientJ("1", "12", "Dolores Abernathy", "Female", "10/10/1997", "DIA-123", "DIA-123","Diabetes","Diabetes 123wqsas", "23/10/17", "pending"));
 //                list.add(new PatientJ("2", "12", "Peter Abernathy", "Male", "10/10/1957", "TUB-123", "TUB-123","Tuberculosis","Tuberculosis 123waszx", "23/10/17", "pending"));
 //                list.add(new PatientJ("3", "12", "Bernard Lowe", "Male", "10/10/1967", "CBR-331", "CBR-331","Cancer","Cancer asdxczczx", "23/10/17", "pending"));
@@ -154,9 +169,9 @@ public class MainActivity extends AppCompatActivity {
 //
 //
 //                mHelper.addallqns(questions);
-            }
-        });
-
+                }
+            });
+        }
 
     }
 
@@ -200,40 +215,34 @@ public class MainActivity extends AppCompatActivity {
         );
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                int id = menuItem.getItemId();
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            int id = menuItem.getItemId();
 
-                if (id == R.id.logout) {
+            if (id == R.id.logout) {
 
 
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
-                    builder.setMessage("Are You Sure?");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            mHelper.deleteNurseComplete();
-                            mHelper.deletePatientComplete();
-                            mHelper.deleteQuestionComplete();
-                            mHelper.deleteResponseComplete();
-                            startActivity(new Intent(MainActivity.this, LogIn.class));
-                            finish();
-                        }
-                    });
-                    builder.setNegativeButton("No", null);
-                    builder.show();
-                } else if (id == R.id.tac) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
-                    builder.setTitle("Terms and conditions");
-                    builder.setMessage(n.getTcs());
-                    builder.setPositiveButton("OK", null);
-                    // builder.setNegativeButton("Cancel", null);
-                    builder.show();
-                }
-
-                return true;
+                final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
+                builder.setMessage("Are You Sure?");
+                builder.setPositiveButton("Yes", (dialogInterface, i) -> {
+                    mHelper.deleteNurseComplete();
+                    mHelper.deletePatientComplete();
+                    mHelper.deleteQuestionComplete();
+                    mHelper.deleteResponseComplete();
+                    startActivity(new Intent(MainActivity.this, LogIn.class));
+                    finish();
+                });
+                builder.setNegativeButton("No", null);
+                builder.show();
+            } else if (id == R.id.tac) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
+                builder.setTitle("Terms and conditions");
+                builder.setMessage(n.getTcs());
+                builder.setPositiveButton("OK", null);
+                // builder.setNegativeButton("Cancel", null);
+                builder.show();
             }
+
+            return true;
         });
 
 
@@ -244,14 +253,11 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
         builder.setMessage("Are You Sure you want to exit?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        builder.setPositiveButton("Yes", (dialogInterface, i) -> {
 
 
-                finish();
-                System.exit(0);
-            }
+            finish();
+            System.exit(0);
         });
         builder.setNegativeButton("No", null);
         builder.show();

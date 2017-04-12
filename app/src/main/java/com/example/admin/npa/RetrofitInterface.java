@@ -35,7 +35,7 @@ public interface RetrofitInterface {
             @Query("nid") String nid);
     @FormUrlEncoded
     @POST("json_Response.jsp")
-    Call<PostReport> postreporttoserver(@Field("Json")
+    Call<Void> postreporttoserver(@Field("Json")
             String postReport);
     //1	20170322110413929	Shade2105	pen121	Vignesh	B	Male
 
