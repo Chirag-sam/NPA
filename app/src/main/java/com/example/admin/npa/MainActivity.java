@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         ProgressDialog p = new ProgressDialog(this);
         RetrofitInterface client = RetrofitBuilder.createService(RetrofitInterface.class);
         PostReport postReport = new PostReport(mHelper.getAllPatients(), mHelper.getallpatientsResponse());
-        Call<PostReport> call0 = client.postreporttoserver(postReport);
+        Call<PostReport> call0 = client.postreporttoserver(new Gson().toJson(postReport,PostReport.class));
         call0.enqueue(new Callback<PostReport>() {
             @Override
             public void onResponse(Call<PostReport> call, Response<PostReport> response) {

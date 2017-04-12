@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -32,10 +33,10 @@ public interface RetrofitInterface {
     @GET("json_sync2.jsp")
     Call<PostReport> getallpatients(
             @Query("nid") String nid);
-
-    @POST("https://jsonplaceholder.typicode.com/posts")
-    Call<PostReport> postreporttoserver(
-            @Body PostReport postReport);
+    @FormUrlEncoded
+    @POST("json_Response.jsp")
+    Call<PostReport> postreporttoserver(@Field("Json")
+            String postReport);
     //1	20170322110413929	Shade2105	pen121	Vignesh	B	Male
 
 //http://192.168.0.101:8080/HIK2.0/Dashboard/json_Sync.jsp?nid=20170322110413929
