@@ -29,6 +29,8 @@
         <activity android:name=".MainActivity"/>
         <activity
             android:name=".PendingAppointments"
+            android:label="Pending Assessments"
+
             android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -42,6 +44,8 @@
         <activity android:name=".temporary"/>
         <activity
             android:name=".CompletedAppointments"
+            android:label="Completed Assessments"
+
             android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->

@@ -139,6 +139,7 @@ Glide.with(LogIn.this).load(N.getHosplogo()).downloadOnly(1024, 1024);
 
                 @Override
                 public void onFailure(Call<Nurse> call, Throwable t) {
+                    p.dismiss();
                     edittextdialtil.setError("Invalid Username");
                     edittextdialtil1.setError("Invalid Password");
 

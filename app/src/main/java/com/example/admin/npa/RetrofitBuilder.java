@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitBuilder {
-    public static final  String API_BASE_URL = "http://192.168.0.101:8081/HIK2.0/Dashboard/";
+    public static final  String API_BASE_URL = "http://ec2-52-26-130-218.us-west-2.compute.amazonaws.com:8080/hik/Dashboard/";
 
     public static  OkHttpClient.Builder httpClient = new OkHttpClient.Builder().addNetworkInterceptor(new StethoInterceptor());
 

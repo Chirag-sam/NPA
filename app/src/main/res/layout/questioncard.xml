@@ -133,6 +133,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:theme="@style/AppTheme1"
+
                         android:visibility="gone"
                         android:padding="10dp"
 
