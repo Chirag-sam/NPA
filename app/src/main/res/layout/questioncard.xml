@@ -15,9 +15,21 @@
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
     >
+        <ImageView
+            android:id="@+id/hospimage"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_toLeftOf="@+id/next"
+            android:layout_toRightOf="@+id/back"
+
+            android:gravity="center"
+            android:padding="8dp"
+
+        />
 
         <TextView
             android:id="@+id/surveyname"
+            android:layout_below="@+id/hospimage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/next"

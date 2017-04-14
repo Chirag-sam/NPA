@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +45,8 @@ public class InstructionsActivity extends AppCompatActivity {
         mHelper = DatabaseOpenHelper.getInstance(this);
         n = mHelper.getNurseDetails();
         p=mHelper.getPatient(uid);
-        Glide.with(this).load(n.getHosplogo()).thumbnail(0.2f).into(logo);
+        setTitle(p.getSurveyname());
+        Glide.with(this).load(n.getHosplogo()).diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).placeholder(R.mipmap.ic_placeholder).into(logo);
         instructions.setText(p.getSurveydesc());
 
     }

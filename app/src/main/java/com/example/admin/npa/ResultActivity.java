@@ -71,6 +71,7 @@ public class ResultActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -196,6 +197,11 @@ public class ResultActivity extends AppCompatActivity {
         @BindView(R.id.gauge)
         GaugeView gauge;
 
+        @BindView(R.id.cv1)
+        CardView mCv1;
+        @BindView(R.id.patientid)
+        TextView mPatientid;
+
 
         public ReportFragment() {
         }
@@ -222,14 +228,15 @@ public class ResultActivity extends AppCompatActivity {
             if (p.getGender().equals("Male"))
                 iv.setImageResource(R.drawable.ic_man_shape);
             else iv.setImageResource(R.drawable.ic_woman_silhouette);
-            name.setText(p.getFname() +", " + getage(p.getDob()));
+            name.setText(p.getFname() + ", " + getage(p.getDob()));
             date.setText(p.getAppdate());
             illness.setText(p.getDisease());
+            mPatientid.setText("Patient Id: "+p.getPid()+"\nDate of Birth: "+p.getDob());
             riskscore.setText("Asessment Score: " + gettotal(list) + "/" + getmaxtotal(list));
             providername.setText("Assessed by: " + n.getFirstname());
             appointmentdate.setText("Appointment Date: " + p.getAppdate());
             reportdate.setText("Assessment Date: " + p.getRepdate());
-            float percent=getpercentage(list);
+            float percent = getpercentage(list);
             gauge.setTargetValue(percent);
 
 //            indicator.setPivotX(30f);

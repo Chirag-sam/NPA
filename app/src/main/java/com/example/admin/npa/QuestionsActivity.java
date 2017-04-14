@@ -16,12 +16,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,6 +83,8 @@ public class QuestionsActivity extends AppCompatActivity {
     Button mBack1;
     @BindView(R.id.next2)
     Button mNext2;
+    @BindView(R.id.hospimage)
+    ImageView mHospimage;
 
     @OnClick(R.id.date)
     void setdate() {
@@ -98,7 +104,7 @@ public class QuestionsActivity extends AppCompatActivity {
     private final ArrayList<RadioButton> allRb = new ArrayList<>();
     private final ArrayList<CheckBox> allCb = new ArrayList<>();
 
-    @OnClick({R.id.back,R.id.back1})
+    @OnClick({R.id.back, R.id.back1})
     void setbackqn() {
         if (posx > 0) {
             posx = posx - 1;
@@ -109,7 +115,7 @@ public class QuestionsActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.next,R.id.next2})
+    @OnClick({R.id.next, R.id.next2})
     void setnextquest() {
         if (posx < l.size()) {
             int i = Integer.parseInt(l.get(posx).getRestype());
@@ -253,9 +259,11 @@ public class QuestionsActivity extends AppCompatActivity {
         String uid = bundle.getString("uid");
         p = mHelper.getPatient(uid);
         l = mHelper.getallquestions(p.getSurveyid());
-
+        Nurse n=mHelper.getNurseDetails();
         setContentView(R.layout.questioncard);
         ButterKnife.bind(this);
+        Glide.with(this).load(n.getHosplogo()) .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).placeholder(R.mipmap.ic_placeholder).into(mHospimage);
+
         mSurveyname.setText(p.getSurveyname());
         setAnsType(posx);
       /*  if (message.equals("1")) {
@@ -382,7 +390,7 @@ public class QuestionsActivity extends AppCompatActivity {
                     mDate.setVisibility(View.GONE);
                     mSeekBar.setVisibility(View.VISIBLE);
                     getoptionsandscore(l.get(i).getOption(), options, score);
-                    customSeekBar = new CustomSeekBar(score.size(), Color.DKGRAY,this,options,score);
+                    customSeekBar = new CustomSeekBar(score.size(), Color.DKGRAY, this, options, score);
                     customSeekBar.addSeekBar(mSeekBar);
                     customSeekBar.getSeekBar().setProgress(0);
 

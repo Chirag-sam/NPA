@@ -71,7 +71,7 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/butt1"
                 android:layout_width="match_parent"
-
+                android:drawableLeft="@mipmap/ic_sync"
                 android:layout_height="55dp"
                 android:layout_below="@+id/cv"
 
@@ -84,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_below="@+id/butt1"
-
+                android:drawableLeft="@mipmap/ic_pending"
                 android:filterTouchesWhenObscured="true"
                 android:text="Pending Assessments" android:theme="@style/AccentButton1"/>
             <android.support.v7.widget.AppCompatButton
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_below="@+id/butt2"
-
+                android:drawableLeft="@mipmap/ic_completed"
                 android:filterTouchesWhenObscured="true"
                 android:text="Completed Assessments" android:theme="@style/AccentButton1"/>
 

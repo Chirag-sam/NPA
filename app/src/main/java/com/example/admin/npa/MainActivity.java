@@ -82,11 +82,25 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<Void> call, Response<Void> response) {
 
                     Log.e("sasasxzxz", "onResponse: "+"saxz"+response.code());
+
                         mHelper.deleteResponseComplete();
                         mHelper.deleteQuestionComplete();
                         mHelper.deletePatientComplete();
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss", Locale.US);
+                    String strDate = sdf.format(cal.getTime());
+                    lasts = strDate;
+                    n.setLastsync(lasts);
+                    mHelper.updatenurse(n);
                         Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
+                    mWelcome.setText(
+                            "Press Sync To get Pending Appointments" +
+                                    "\nLast Sync :" + lasts
+
+
+                    );
                     p.dismiss();
+
 
                 }
 
@@ -201,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         n = mHelper.getNurseDetails();
         Glide.with(this).load(n.getHosplogo())
-                .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).into(logom);
+                .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).placeholder(R.mipmap.ic_placeholder).into(logom);
         if (n.getLastsync()!=null)
         {
             lasts=n.getLastsync();
