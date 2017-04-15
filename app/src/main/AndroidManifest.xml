@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.admin.npa"
+          package="com.notadeveloper.app.npa"
           >
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".MyApplication"
+        android:name="com.notadeveloper.app.npa.MyApplication"
         android:allowBackup="true"
 
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SplashActivity"
+            android:name="com.notadeveloper.app.npa.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,49 +22,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LogIn"
+            android:name="com.notadeveloper.app.npa.LogIn"
             android:theme="@style/AppTheme1">
 
         </activity>
-        <activity android:name=".MainActivity"/>
+        <activity android:name="com.notadeveloper.app.npa.MainActivity"/>
         <activity
-            android:name=".PendingAppointments"
+            android:name="com.notadeveloper.app.npa.PendingAppointments"
             android:label="Pending Assessments"
 
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.notadeveloper.app.npa.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value="com.notadeveloper.app.npa.MainActivity"/>
         </activity>
         <activity
-            android:name=".QuestionsActivity"
+            android:name="com.notadeveloper.app.npa.QuestionsActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".temporary"/>
         <activity
-            android:name=".CompletedAppointments"
+            android:name="com.notadeveloper.app.npa.CompletedAppointments"
             android:label="Completed Assessments"
 
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.notadeveloper.app.npa.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value="com.notadeveloper.app.npa.MainActivity"/>
         </activity>
         <activity
-            android:name=".ResultActivity"
+            android:name="com.notadeveloper.app.npa.ResultActivity"
             android:label="@string/title_activity_result"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.notadeveloper.app.npa.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value="com.notadeveloper.app.npa.MainActivity"/>
         </activity>
-        <activity android:name=".InstructionsActivity"/>
+        <activity android:name="com.notadeveloper.app.npa.InstructionsActivity"/>
 
     </application>
 

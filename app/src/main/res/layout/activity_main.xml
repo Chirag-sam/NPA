@@ -21,7 +21,7 @@
                         android:paddingLeft="@dimen/activity_horizontal_margin"
                         android:paddingRight="@dimen/activity_horizontal_margin"
                         android:paddingTop="@dimen/activity_vertical_margin"
-                        tools:context="com.example.admin.npa.MainActivity">
+                        tools:context="com.notadeveloper.app.npa.MainActivity">
             <ImageView
                 android:id="@+id/logom"
                 android:layout_width="100dp"
@@ -71,9 +71,9 @@
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/butt1"
                 android:layout_width="match_parent"
-                android:drawableLeft="@mipmap/ic_sync"
                 android:layout_height="55dp"
                 android:layout_below="@+id/cv"
+                android:drawableLeft="@mipmap/ic_sync"
 
                 android:elevation="4dp"
                 android:filterTouchesWhenObscured="true" android:text="synchronize"

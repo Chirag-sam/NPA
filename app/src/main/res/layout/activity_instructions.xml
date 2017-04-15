@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="top"
-    tools:context="com.example.admin.npa.InstructionsActivity">
+    tools:context="com.notadeveloper.app.npa.InstructionsActivity">
     <ImageView
         android:id="@+id/logo"
         android:layout_width="100dp"
@@ -32,7 +32,6 @@
         android:text="Begin Assessment"
         android:theme="@style/AccentButton1"/>
     <ScrollView
-        android:id="@+id/svv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/hikc"
