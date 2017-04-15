@@ -24,3 +24,7 @@
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
 -dontwarn okio.**
+-keepattributes *Annotation*
+-keepclassmembers class com.notadeveloper.app.kooc.** {
+  *;
+  }

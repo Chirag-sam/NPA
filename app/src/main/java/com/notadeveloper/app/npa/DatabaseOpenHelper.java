@@ -19,7 +19,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String TAG = DatabaseOpenHelper.class.getSimpleName();
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 28;
+    private static final int DATABASE_VERSION = 29;
     // Database Name
     private static final String DATABASE_NAME = "NPA";
     // Login table name
@@ -33,7 +33,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
     private static final String NURSE_LASTSYNC = "lastsync";
     private static final String NURSE_TC = "tc";
     private static final String NURSE_HOSPLOGO = "hosplogo";
-    private static final String NURSE_HOSPNAME = "hospname";
+    private static final String NURSE_PRACTICE = "practicelogo";
     private static final String TABLE_PATIENT = "patient";
     // Login Table Columns names
     private static final String PATIENT_ID = "pid";
@@ -96,7 +96,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
                 NURSE_LASTSYNC + " TEXT, " +
                 NURSE_TC + " TEXT, " +
                 NURSE_HOSPLOGO + " TEXT, " +
-                NURSE_HOSPNAME + " TEXT " +
+                NURSE_PRACTICE + " TEXT " +
 
 
                 ")";
@@ -267,7 +267,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(NURSE_LASTSYNC, N.getLastsync());
         values.put(NURSE_TC, N.getTcs());
         values.put(NURSE_HOSPLOGO, N.getHosplogo());
-        values.put(NURSE_HOSPNAME, N.getHospname());
+        values.put(NURSE_PRACTICE, N.getPracticelogo());
         long id = db.insert(TABLE_NURSE, null, values);
         db.close();
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);
@@ -287,7 +287,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
         values.put(NURSE_LASTSYNC, N.getLastsync());
         values.put(NURSE_TC, N.getTcs());
         values.put(NURSE_HOSPLOGO, N.getHosplogo());
-        values.put(NURSE_HOSPNAME, N.getHospname());
+        values.put(NURSE_PRACTICE, N.getPracticelogo());
         long id = db.update(TABLE_NURSE, values, NURSE_ID + " = '" + N.getNid() + "'", null);
         db.close();
         Log.d(TAG, "New Nurse inserted into sqlite: " + id);

@@ -209,7 +209,10 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         n = mHelper.getNurseDetails();
         Glide.with(this).load(n.getHosplogo())
-                .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).placeholder(R.mipmap.ic_placeholder).into(logom);
+                .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).placeholder(R.mipmap.ic_placeholder).into(iv);
+        Glide.with(this).load(n.getPracticelogo())
+                .diskCacheStrategy(DiskCacheStrategy.ALL).thumbnail(0.2f).placeholder(R.drawable.nurse).into(logom);
+
         if (n.getLastsync() != null) {
             lasts = n.getLastsync();
         } else lasts = "Sync To Update";

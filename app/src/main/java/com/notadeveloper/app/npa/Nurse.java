@@ -23,14 +23,14 @@ public class Nurse {
     private String tcs;
     @SerializedName("hosplogo")
     private String hosplogo;
-    @SerializedName("hospname")
-    private String hospname;
+    @SerializedName("practicelogo")
+    private String practicelogo;
 
     //first name
     public Nurse() {
     }
 
-    public Nurse(String nid, String uname, String password, String nname, String gender, String lastsync, String tcs, String hosplogo, String hospname) {
+    public Nurse(String nid, String uname, String password, String nname, String gender, String lastsync, String tcs, String hosplogo, String practicelogo) {
         this.nid = nid;
         this.uname = uname;
         this.password = password;
@@ -39,7 +39,26 @@ public class Nurse {
         this.lastsync = lastsync;
         this.tcs = tcs;
         this.hosplogo = hosplogo;
-        this.hospname = hospname;
+        this.practicelogo = practicelogo;
+    }
+
+    public String getPracticelogo() {
+        return practicelogo;
+    }
+    //    public Nurse(String nid, String uname, String password, String nname, String gender, String lastsync, String tcs, String hosplogo, String hospname) {
+//        this.nid = nid;
+//        this.uname = uname;
+//        this.password = password;
+//        this.nname = nname;
+//        this.gender = gender;
+//        this.lastsync = lastsync;
+//        this.tcs = tcs;
+//        this.hosplogo = hosplogo;
+//        this.hospname = hospname;
+//    }
+
+    public void setPracticelogo(String practicelogo) {
+        this.practicelogo = practicelogo;
     }
 
     public String getTcs() {
@@ -58,13 +77,7 @@ public class Nurse {
         this.hosplogo = hosplogo;
     }
 
-    public String getHospname() {
-        return hospname;
-    }
 
-    public void setHospname(String hospname) {
-        this.hospname = hospname;
-    }
 
     public String getGender() {
         return gender;

@@ -131,7 +131,10 @@ public class LogIn extends AppCompatActivity {
                     N.setUname(email);
                     N.setPassword(password);
                     mHelper.addNurse(N);
-                    Glide.with(LogIn.this).load(N.getHosplogo()).downloadOnly(1024, 1024);
+                    Glide.with(LogIn.this).load(N.getHosplogo()).downloadOnly(512, 512);
+                    if (N.getPracticelogo() != null)
+                        Glide.with(LogIn.this).load(N.getPracticelogo()).downloadOnly(512, 512);
+
                     p.dismiss();
                     startActivity(new Intent(LogIn.this, MainActivity.class));
                     finish();
