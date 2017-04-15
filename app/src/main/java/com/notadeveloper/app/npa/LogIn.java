@@ -130,7 +130,11 @@ public class LogIn extends AppCompatActivity {
                     Nurse N = response.body();
                     N.setUname(email);
                     N.setPassword(password);
+                    final String IMAGE_BASE_URL = "http://ec2-52-26-130-218.us-west-2.compute.amazonaws.com:8080/hik";
+                    N.setHosplogo(IMAGE_BASE_URL + N.getHosplogo().substring(2));
+                    N.setPracticelogo(IMAGE_BASE_URL + N.getPracticelogo().substring(2));
                     mHelper.addNurse(N);
+
                     Glide.with(LogIn.this).load(N.getHosplogo()).downloadOnly(512, 512);
                     if (N.getPracticelogo() != null)
                         Glide.with(LogIn.this).load(N.getPracticelogo()).downloadOnly(512, 512);

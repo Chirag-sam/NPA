@@ -247,7 +247,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (id == R.id.tac) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this, R.style.pop);
                 builder.setTitle("Terms and conditions");
-                builder.setMessage(n.getTcs());
+//                builder.setMessage(n.getTcs());
+                builder.setMessage(getString(R.string.instructions));
+
                 builder.setPositiveButton("OK", null);
                 // builder.setNegativeButton("Cancel", null);
                 builder.show();
