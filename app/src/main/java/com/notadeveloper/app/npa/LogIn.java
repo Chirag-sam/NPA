@@ -3,7 +3,6 @@ package com.notadeveloper.app.npa;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,6 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -49,6 +46,7 @@ public class LogIn extends AppCompatActivity {
     List<Nurse> ls = new ArrayList<>();
     @BindView(R.id.svvv)
     ScrollView svvv;
+
     private DatabaseOpenHelper mHelper;
 
     @Override
@@ -56,10 +54,10 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         ButterKnife.bind(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = getWindow(); // in Activity's onCreate() for instance
-            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            Window w = getWindow(); // in Activity's onCreate() for instance
+//            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+//        }
         if (getIntent().getBooleanExtra("Exit me", false)) {
             finish();
         }
@@ -130,7 +128,7 @@ public class LogIn extends AppCompatActivity {
                     Nurse N = response.body();
                     N.setUname(email);
                     N.setPassword(password);
-                    final String IMAGE_BASE_URL = "http://ec2-52-26-130-218.us-west-2.compute.amazonaws.com:8080/hik";
+                    final String IMAGE_BASE_URL = "http://ec2-35-160-179-108.us-west-2.compute.amazonaws.com:8080/hik";
                     N.setHosplogo(IMAGE_BASE_URL + N.getHosplogo().substring(2));
                     N.setPracticelogo(IMAGE_BASE_URL + N.getPracticelogo().substring(2));
                     mHelper.addNurse(N);
