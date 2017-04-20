@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
+
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/svvv"
     android:layout_width="match_parent"
@@ -77,12 +77,14 @@
                     />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
+                    xmlns:app="http://schemas.android.com/tools"
                     android:id="@+id/edittextdialtil1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="center_horizontal"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/colorAccent"
+
+
                 >
                     <EditText
                         android:id="@+id/edittextdial1"
