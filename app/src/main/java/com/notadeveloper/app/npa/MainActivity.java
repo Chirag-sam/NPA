@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     //    Log.e("sadxc", "onResponse: "+call.toString()+response.body().toString());
                     PostReport ls = new PostReport();
                     ls = response.body();
+                    if (ls != null) {
                     mHelper.addallpatients(ls.getPatientJs(), n.getNid());
                     mHelper.addallqns(ls.getResponse());
 
@@ -137,7 +138,13 @@ public class MainActivity extends AppCompatActivity {
 
                     );
                     Snackbar.make(findViewById(R.id.activity_main), "Sync Successfull", Snackbar.LENGTH_LONG).show();
-                    p.dismiss();
+                        p.dismiss();
+                    } else {
+                        p.dismiss();
+
+                        Snackbar.make(findViewById(R.id.activity_main), "Sync Failed- Json Syntax Error", Snackbar.LENGTH_LONG).show();
+//
+                    }
                 }
 
                 @Override
